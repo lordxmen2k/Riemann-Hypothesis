@@ -175,3 +175,9 @@ paper-cut layers, vintage NASA poster, cyberpunk neon, art deco, ink and line ar
 **Drawn: watercolour.** Sanity-checked against the subject and retained: a watercolour rendering
 of the critical strip, with the critical line as a luminous horizon and the zeros as drifting
 marks, suits a book about a conjecture that lives in a narrow vertical band.
+
+**Implementation.** The plate was generated as an original watercolour artwork. The legibility
+scrim is baked into a 300 DPI JPEG by `build/make_cover_art.py`, and the typography is set in
+LaTeX over it in the book's own fonts (`source/cover_front.tex`, `source/cover_back.tex`), so
+the cover type is vector. The same artwork drawn with a raster scrim layer cost 17 MB in the
+finished PDF; baked into the plate and set in LaTeX it costs 1.5 MB.
