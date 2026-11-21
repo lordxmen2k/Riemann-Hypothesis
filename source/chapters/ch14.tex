@@ -1,267 +1,217 @@
 % =====================================================================
-%  Chapter 14 — The Verdict, Part II
+%  Chapter 14 — Step 8
 % =====================================================================
 
-\chapter{A Protocol for Settling This}
-\label{ch:protocol}
+\chapter{Step Eight: Automorphy, the Trace Formula, and the Tower}
+\label{ch:automorphy}
 
-A finding of ``unresolved'' is only useful if it comes with a way to resolve
-it. This chapter gives one, in the order a careful reader should actually
-work, with the commands where they exist and the reading tasks where they do
-not.
-
-The protocol is not a contribution to the mathematics. It is a work plan, and
-its purpose is to make the remaining work finite and checkable.
-
-\section{Phase 1: mechanical (hours to days)}
-
-\subsection{Build}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-git clone <the author's distribution, or the mirror>
-cd lean
-elan toolchain install $(cat lean-toolchain)
-lake exe cache get
-lake build Main
-\end{Verbatim}
-The cache step matters: it fetches Mathlib's prebuilt \texttt{.olean} files
-for the pinned revision, which turns the dependency from a multi-hour compile
-into a download. This book's own attempt confirmed that the pinned revision
-\code{0df444a360eaa60ab8c11dca51a86af692955474} is available from the
-community cache.
-\end{seamnote}
-
-Record the elapsed time and peak memory. The mirror's README notes that no
-build time or memory figures have been published; a reader who publishes them
-does the next reader a genuine service.
-
-\subsection{Axioms}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-# in a scratch file importing the submission
-import Main
-#print axioms Main.riemannHypothesis
-#print axioms Main.riemannZeta_eq_zero_re
-#print axioms Main.LFunction_ne_zero_of_half_lt_re
-#print axioms Main.LFunction_eq_zero_re
-#print axioms Main.LFunction_eq_zero_re_of_isPrimitive
-\end{Verbatim}
-\end{seamnote}
-
-The expected output is exactly:
-
-\begin{Verbatim}
-'Main.riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
-\end{Verbatim}
-
-and the same for the other four. Anything else --- \texttt{sorryAx},
-\texttt{Lean.ofReduceBool}, a custom axiom --- is a finding, and a
-disqualifying one.
-
-\subsection{Independent kernel replay}
-
-This step exists to remove the elaborator from the trust chain. The toolchain
-is \texttt{lean4export}\idx{lean4export} to export the compiled environment, an independent
-kernel implementation such as NanoDa\idx{NanoDa} to re-check it, and \texttt{landrun} to
-run Lean in a sandbox. \texttt{lean4checker} provides a third-party route to
-the same assurance. The Lean FRO documents these tools; they are cited in the
-arXiv literature as ``Lean FRO, 2025/2026''.
-
-\begin{seamnote}{Commands (indicative)}
-\begin{Verbatim}
-lake exe export .olean Main.olean > main.json
-# then check main.json with an external kernel, e.g.
-#   python3 -m lean4checker main.json
-# or with a NanoDa-based harness
-\end{Verbatim}
-The exact invocation depends on the tool's current interface; check the
-tool's own documentation rather than trusting this sketch.
-\end{seamnote}
-
-\subsection{Re-run the static scan}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-rg --no-ignore -c '^\s*axiom\s' -g '*.lean' . | wc -l
-rg --no-ignore -c '\bsorry\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '\badmit\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '\bnative_decide\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '^\s*opaque\s' -g '*.lean' . | wc -l
-rg --no-ignore -n '\baddDecl\b' -g '*.lean' .
-rg --no-ignore -n 'maxHeartbeats 0' -g '*.lean' .
-rg --no-ignore -l '\b(elab|macro|syntax)\b' -g '*.lean' .
-\end{Verbatim}
-Compare with \tabref{tab:scan}. Any disagreement with the published scan
-should be resolved before going further, since a disagreement means one of
-the two scans is wrong about something.
-\end{seamnote}
-
-\section{Phase 2: the structural trace (days)}
-
-\subsection{Confirm the chain}
-
-Walk the eight links of Chapter~7 in the source and confirm that each
-declaration is present, with the statement quoted there, and that each proof
-term is what the book says it is. This is cheap and it protects against the
-possibility that the version you downloaded is not the version that was
-announced.
-
-\subsection{Confirm the statement is Mathlib's}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-grep -n "def RiemannHypothesis" \
-  .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-grep -n "def riemannZeta" \
-  .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-\end{Verbatim}
-Both should come back with \texttt{Mathlib}'s own definitions. The mirror
-records \texttt{RiemannHypothesis} at line 185 and \texttt{riemannZeta} at
-line 121 at the pinned commit.
-\end{seamnote}
-
-This is the single most important check in the whole protocol, because it is
-the one that cannot be got wrong in a way that is hard to detect. If
-\texttt{riemannZeta} in the top-level theorem is not Mathlib's, the artifact
-proves nothing about the Riemann hypothesis no matter how clean it is.
-
-\section{Phase 3: statement review (weeks to months)}
-
-This is the phase that has not been done, and the phase that decides the
-question. It cannot be automated, and this book cannot do it, because it
-requires comparing the formalized statements against the published literature
-in four substantial fields.
-
-\subsection{Step 1: the automorphy bundle}
-
-Read \code{UpperTheory.V.Af.Hypotheses\_2} field by field against the
-published statements.
-
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\texttt{conjC : ClozelConjC}.] The formal statement is a specific
-mathematical assertion about conjugate algebraicity of cuspidal
-representations. Locate Clozel's published statement and compare quantifier
-by quantifier. In particular: is the formal statement a \emph{consequence} of
-published results, as the derivation chain
-\texttt{clozelConjC\_of\_steps} suggests, and if so, is the chain sound? The
-chain's components are named in the source and each has its own file; the
-question is whether each is the classical theorem.
-\item[\texttt{borelC : BorelInjC}.] Borel injectivity is proved in many cases
-and conjectured in general. \emph{Which cases does the formalized statement
-cover?} If it is stated for all $E$ and all $a$ without restriction, and the
-classical result is restricted, that is a finding.
-\item[\code{gkR : GelfandKazhdanReal}.] Compare against the Gelfand--Kazhdan
-correspondence for $\mathrm{GL}_2$.
-\item[\texttt{newform : NewformRep}.] This is the field that supplies the
-automorphic representation. \emph{What exactly does it assert?} It is the
-modularity input, and its content determines whether the automorphy step is a
-theorem or a transfer.
-\item[\texttt{galR}, \texttt{smoR}, \texttt{bc}.] Base change and the strong
-multiplicity-one property for $\mathrm{GL}_2$; compare with the published
-statements.
-\end{description}
-
-\subsection{Step 2: the admissibility and vanishing packages}
-
-Trace where instances of \code{GlobalTheory.Ord2.admitted} are
-\emph{constructed}, as opposed to assumed. The structure has seven fields:
-continuity, determinant $\pm 1$, oddness, irreducibility, level away from $l$,
-modularity with a newform and an attached character, and the flag condition.
-Each field is a real mathematical condition. The question is whether the
-instances satisfy them, and where the newform in the \texttt{modular} field
-comes from.
-
-Then check the application of \texttt{VanishOrd}: the Selmer-vanishing
-statement is applied to representations that are admitted; is it applied in a
-setting where the hypotheses of the underlying Iwasawa-theoretic theorem
-hold?
-
-\subsection{Step 3: the theta lift}
-
-Read \texttt{UpperTheory.TP.TLiftK} against the classical theta-lift
-existence statement, and then read the twenty components of
-\code{UpperTheory.TP.Tools\_k} --- in particular
-\texttt{siegelWeilAniso\_of\_k}, \texttt{epsOf\_of\_k}, and
-\texttt{hgtEx\_of\_k} --- against the theorems they are named for.
-
-\subsection{Step 4: the applications}
-
-The hardest part, and the one that no mechanical check can help with. A
-faithful formalisation of a classical theorem can still be \emph{applied}
-where the classical theorem does not apply: at a prime that ramifies, to a
-representation that is not cuspidal, to a lift outside the orthogonal
-complement, at a place that the argument assumes is unramified but is not.
-
-\subsection{Step 5: the remark against the code}
-
-Finally, return to the remark with the code in hand and ask the two questions
-the remark refuses to answer:
+The argument has to establish that the objects it manipulates are automorphic,
+and that the analytic estimates it wants are available. Those are two different
+jobs, and the remark's item 16 tries to do both in one sentence.
 
 \begin{quote}
-\textbf{Question 1.} Item 14 says the method would stop at 2/3 a priori, and
-item 20 says GRH the next day. \emph{Where in the development is the step
-that crosses the ceiling?} If it can be located, the question is answered. If
-it cannot be located, that is the most important negative finding available,
-and it should be published.
-
-\textbf{Question 2.} Item 17 says the $H^1_o$ classes not killed by twisting
-require a significant weakening of Vandiver. \emph{Is there a formalized
-statement corresponding to that weakening, and is it proved?} If yes, the
-author has proved something nobody has. If no, then item 17 describes an
-obstacle the artifact does not remove.
+\small
+``Relative trace formula, seen in a different half-plane argument via sixfold
+cover of $\mathrm{GL}_5$ automorphy of $\mu$ and reducing via
+Cauchy--Schwartz to a bound on the norm of a suitably projected Poincar\'e
+series, approximate orthogonality of the columns of the integral structure.''
 \end{quote}
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig_protocol.pdf}
-\caption{The protocol, in order. The first three steps are mechanical and
-have effectively been done. The last three are mathematical, have not been
-done, and are the ones that decide the question.}
-\label{fig:protocol}
-\end{figure}
+\section{The relative trace formula and what it is for}
 
-\section{What a result at each step would mean}
+The relative trace formula is the transfer principle for inner forms. If
+$G$ is an inner form of $G'$, there is a $\mathbb{Z}_p$-Galois spectral
+sequence
+\begin{equation}
+H^*(\mathbb{G}, \mathbb{F}_p) \;\Longrightarrow\;
+H^*_{f-is}(G, \mathbb{F}_p) \oplus H^*_{f-c}(G, \mathbb{F}_p),
+\end{equation}
+whose differentials involve the relative cohomology $H^*(G', \mathbb{F}_p)^{
+\mathcal{H}}$, the continuous cohomology of the Weil restriction. In the
+arithmetic of Selmer groups this is how one computes: the Selmer group of a
+representation over one group is related to the Selmer group over another, via
+a map that is an isomorphism on a subspace.
 
-\begin{table}[H]
-\centering
-\caption{Outcomes.}
-\label{tab:outcomes}
-\begin{tabular}{@{}p{0.28\textwidth}p{0.56\textwidth}@{}}
-\toprule
-\textbf{Step} & \textbf{If it succeeds} \\
-\midrule
-Build & The artifact is complete and reproducible. Confirms the claim of
-October--November 2026 on a third machine. \\
-Axiom check & The formal layer is sound. Removes the crudest hypotheses from
-consideration. \\
-Kernel replay & The result does not depend on the elaborator or on the
-repository's metaprogramming. \\
-Statement review & \textbf{The claim is settled, in one direction or the
-other.} This is the step that matters. \\
-\bottomrule
-\end{tabular}
-\end{table}
+The point for this argument is narrower and specific. The method wants to
+produce a large collection of automorphic objects --- the lifts, the periods,
+the integral structure --- and it wants the arithmetic of their cohomology to
+be under control. The relative trace formula is the device that transfers
+control from the group where the analysis is easy (the totally definite
+unitary group, where the Selmer groups are known and the periods are
+compact) to the group where it is needed.
 
-It is worth being explicit that a statement review could \emph{refute} the
-claim. If a reader finds that \texttt{ClozelConjC} as formalized is strictly
-weaker than Clozel's published statement, or that the instances of
-\texttt{admitted} are not constructed but assumed, the chain breaks, and the
-result would be a negative finding about the artifact rather than about the
-Riemann hypothesis. That would be a valuable outcome, and it is the kind of
-outcome that only a review can produce.
+\begin{quote}
+``Seen in a different half-plane argument'': the transfer is not being used
+in the usual direction. The remark's phrasing means that the trace formula is
+being used to move a statement across the complex half-plane, in a way the
+author does not describe further.
+\end{quote}
+
+\section{Why the automorphy of mu is the bottleneck}
+
+The remark singles out one object: ``automorphy of $\mu$``. Recall from
+Chapter~\ref{ch:step4} that $\mu$ is the family of Hecke characters indexing
+the stages of the chain. The claim is that $\mu$ is automorphic --- that is,
+that the characters used to index the lifts are themselves the characters of
+automorphic forms.
+
+The remark gives the mechanism:
+
+\begin{quote}
+\small
+``$\mu$ is automorphic from $\theta$ on sixfold cover of $\mathrm{GL}_5$ as a
+period integral of thetas, quadric has natural interpretation on corresponding
+CM e.g.\ $\mathbb{C}/\mathbb{Z}[\omega]$ as Weil, put Poincar\'e bundle on the
+edges to get $\theta$s.''
+\end{quote}
+
+The structure is recognisable. One wants the characters $\mu$ to be
+automorphic. One route to automorphy is to exhibit them as Fourier
+coefficients of automorphic forms. The remark's route: a sixfold cover of
+$\mathrm{GL}_5$, on which there is a natural structure --- the quadric, which
+in the unitary setting corresponds to a CM curve such as
+$\mathbb{C}/\mathbb{Z}[\omega]$, viewed through the Weil representation ---
+and the Poincar\'e bundle, put on the edges, produces the theta series whose
+coefficients are the $\mu$.
+
+So the claim is a construction: build a variety, put a line bundle on it,
+take the theta series of that line bundle, and read the characters off its
+Fourier coefficients.
+
+\begin{seamnote}{Where this lives in the development}
+\code{Development/AutomorphicArithmetic/AutomorphicVarieties/TheoremsMuLinked/}
+is the subtree that carries this: \code{GaloisRepresentationTypes/} (including
+\code{ReducibleThreeDim.lean} and \code{ConductorAtMapInjectiveCoeff.lean}),
+\code{FreeFlag.lean}, \code{Number.lean}. And the deepest input of all is
+\code{GlobalTheory.Mem.LiteralAutomorphy.LitN}, the ``literal automorphy''
+that \code{Af.Hypotheses\_2} takes as its first field --- see
+Chapter~\ref{ch:inputs}.
+\end{seamnote}
+
+The sixfold cover of $\mathrm{GL}_5$ deserves a remark of its own. A
+sixfold cover of a group is a finite-index subgroup, and a finite-index
+subgroup of $\mathrm{GL}_5$ has a very different set of representations from
+$\mathrm{GL}_5$ itself. That it is *six*-fold is not incidental: the number
+controls the ratio of the relevant indices, and therefore the constant in the
+estimates. This is the kind of detail that only shows up in the formalisation,
+and it is exactly the kind of detail that an outside reader cannot check
+without reading the code.
+
+\section{The Poincar\'e series, and the Cauchy--Schwarz step}
+
+The remark continues: ``reducing via Cauchy--Schwartz to a bound on the norm of
+a suitably projected Poincar\'e series, approximate orthogonality of the columns
+of the integral structure''.
+
+The Poincar\'e series of a unitary group is the automorphic form of the
+highest weight type, obtained by summing the matrix coefficients of the
+Borel subgroup. Its norm is the quantity that controls the size of the space
+of cusp forms, and hence the number of lifts available.
+
+The argument's structure is the standard one:
+
+\begin{enumerate}
+\item There is a space of lifts, of dimension $d$ at each stage, and one wants
+it to be large.
+\item The size of the space is controlled by the norm of the Poincar\'e series,
+which is computed by an integral over a quotient, and the integral is
+estimated by Cauchy--Schwarz: $\left|\int f g\right|^2 \le \int|f|^2 \int|g|^2$.
+\item The two integrals are the norms of the Poincar\'e series and of the
+projection, and the second is controlled by the \emph{approximate orthogonality
+of the columns of the integral structure}: the columns --- the different
+Hecke characters, or the different components of the decomposition --- are
+almost orthogonal, so the projection norm is small.
+\end{enumerate}
+
+Step 3 is where the averaging of Chapter~\ref{ch:averaging} earns its keep.
+The integral structure --- the way the decomposition is glued across the
+characters --- is precisely what makes the columns approximately orthogonal,
+and that is what makes Cauchy--Schwarz give a good bound rather than a useless
+one.
+
+\begin{quote}
+\textbf{Where this is formalised.} The column-wise bounds are in
+\code{Formalism/SharpRestriction/Divisibility/ChainOperators/PerCol.lean}
+(\code{perColSmol}, the scalar compatibility of the per-column map) and
+\code{Formalism/SharpRestriction/GrowthBounds/SegmentDegree/PerCol.lean};
+the integrality that the columns must respect is the \code{AIntO} of
+Chapter~\ref{ch:step2}; and the Poincar\'e-series side of the estimate is in
+\code{Development/WeilBound/CoreStatements/AutomorphicKernels/}, the largest
+subtree in the Weil-bound development at 932 files.
+\end{quote}
+
+\section{The arithmetic growth: the tower again}
+
+The last ingredient the remark's item 18 supplies:
+
+\begin{quote}
+\small
+``Covolumes, theta series' index, congruences between lifts and forms.''
+\end{quote}
+
+Three quantities that must agree:
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[\textbf{Covolumes}] The volume of the quotient
+$G\backslash \mathrm{U}(E,n)$, which enters every period integral and every
+norm. Its computation requires the class number of the order, and hence the
+arithmetic of the CM field --- the same arithmetic the Iwasawa tower
+supplies.
+\item[\textbf{The index of the theta series}] The index of the lattice
+generated by the theta series of the Hermitian forms. This is the
+quantitative counterpart of the divisibility of Chapter~\ref{ch:step2}: it
+says how many of the forms are linearly independent, and hence how many
+lifts are genuinely available rather than coincident.
+\item[\textbf{Congruences between lifts and forms}] The congruences that
+relate the index of one stage's theta series to the next. These are what make
+the tower a tower: the congruence at stage $j$ is what makes the lift at
+stage $j+1$ well defined.
+\end{description}
+
+So the three items are the three things that must be consistent across the
+chain: the volumes (the analytic scale), the indices (the algebraic
+independent count), and the congruences (the compatibility). Together with
+the Iwasawa tower of Chapter~\ref{ch:averaging}, they are what make a chain of
+length $m$ exist rather than merely be conceivable.
+
+\section{What step 8 has and has not shown}
+
+\begin{enumerate}
+\item \textbf{Automorphy of $\mu$ via a sixfold cover of $\mathrm{GL}_5$.} A
+construction: a variety, a line bundle, the theta series, and the characters
+read off as Fourier coefficients. In the literature, automorphy of characters
+in this generality is exactly the sort of thing that is known in special cases
+and open in general; the development's \code{TheoremsMuLinked} subtree is
+where the work is done.
+\item \textbf{The Poincar\'e-series bound via Cauchy--Schwarz.} Standard
+analytic technology, applied to the projected space.
+\item \textbf{Approximate orthogonality of the columns.} The property the
+integral structure must have, and the reason the averaging of
+Chapter~\ref{ch:averaging} is needed at all.
+\item \textbf{Volumes, indices, congruences.} The three compatibility
+conditions across the chain.
+\end{enumerate}
+
+The honest note is this: items 1 and 3 are where the argument is most exposed,
+and they are the two places where the remark's own vocabulary is least
+informative. ``Sixfold cover of $\mathrm{GL}_5$'' and ``congruences between
+lifts and forms'' are not descriptions that let a reader check anything. They
+are pointers.
 
 \begin{keytakeaways}
-
-\item Phase 1 --- build, axiom check, kernel replay, static scan --- is
-mechanical and has effectively been done. It is cheap and reproducible.
-\item Phase 2 --- confirming the chain and confirming that the statement is
-Mathlib's --- takes days and protects against working with the wrong version.
-\item Phase 3 --- statement review of the five load-bearing inputs, their
-applications, and the remark against the code --- is weeks to months of
-specialist work, and it is the step that decides the question.
-\item A successful review could refute the claim as well as confirm it. That
-is what makes it worth doing.
+\item The relative trace formula transfers control of the cohomology from the
+group where the analysis is easy to the group where it is needed, in a
+direction the remark calls ``a different half-plane argument''.
+\item Automorphy of the characters $\mu$ is obtained by exhibiting them as
+Fourier coefficients of theta series on a sixfold cover of $\mathrm{GL}_5$,
+with the quadric interpreted on a CM curve.
+\item The analytic estimate is a Cauchy--Schwarz bound on the norm of a
+projected Poincar\'e series, and it works only because the columns of the
+integral structure are approximately orthogonal.
+\item Volumes, theta indices and congruences are the three quantities that must
+agree across the chain; they are where the Iwasawa tower enters.
+\item The two least transparent items --- the sixfold cover and the
+congruences --- are also the two most load-bearing, and they are where an
+outside reader is most dependent on the code.
 \end{keytakeaways}

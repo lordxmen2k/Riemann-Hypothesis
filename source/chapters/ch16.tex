@@ -1,0 +1,193 @@
+% =====================================================================
+%  Chapter 16 — The map
+% =====================================================================
+
+\chapter{The Method in the Source: A Step-to-Declaration Map}
+\label{ch:map}
+
+This chapter is the apparatus that makes the preceding ten chapters
+checkable. For each step of the method it gives the subtree of the submitted
+development where the mathematics lives, and the specific declarations a reader
+should look at.
+
+Everything here was read from the submitted source tree at the pinned
+revision. Paths are relative to the archive root.
+
+\section{Where to start if you want to check one step}
+
+\begin{center}
+\begin{tabular}{@{}lp{0.30\textwidth}p{0.44\textwidth}@{}}
+\toprule
+\textbf{If you want to check} & \textbf{Go to} & \textbf{And read} \\
+\midrule
+the statement of the claim & \code{src/Statements.lean} &
+\code{RiemannZetaZerosOnLine}, \code{DirichletLNonvanishingRightOfHalf} \\
+the reduction to RH & \code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} &
+\code{riemannHypothesis\_of\_everyCharacter} \\
+the theta lift & \code{.../ThetaParseval/HalfIndexLattices/TLiftK.lean} &
+\code{UpperTheory.TP.TLiftK} \\
+the chain and its cost & \code{Formalism/ThetaLiftIndependence/Statement.lean} &
+\code{KerComp}, \code{ChainInt}, \code{ChainIntM} \\
+the two thirds & \code{Formalism/SharpRestriction/GrowthBounds/SegmentDegree/} &
+\code{ThresholdPowerBoundOfCounts.lean}, \code{AtypicalPathSmallWeight.lean} \\
+the seesaw & \code{.../Divisibility/FunctionModelRallisFromInputs.lean} &
+\code{bB}, \code{vth}, \code{PerNZ}, \code{Conclusion1} \\
+the averaging & \code{Formalism/BehrendSets/Statement.lean} &
+\code{BehrendFree}, \code{BehrendBound}, \code{TranslateMean} \\
+the vanishing & \code{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean} &
+\code{admitted}, \code{VanishOrd} \\
+the bottom of the chain & \code{.../SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean} &
+\code{lefschetz\_fixedPoint\_finite\_etale\_correspondence} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The full map}
+
+\begin{longtable}{@{}p{0.13\textwidth}p{0.40\textwidth}p{0.41\textwidth}@{}}
+\toprule
+\textbf{Step} & \textbf{Subtree} & \textbf{Key declarations} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & \code{Development/WeilBound/RepresentationTheoryGL/SiegelWeilProof/} (635
+files), \code{.../ThetaLifts/LeviDeterminants/} (116) &
+\code{FrameBasis}, \code{ExistsColsDetNeZero}, \code{DomWeil},
+\code{sigRapid\_of}, \code{cuspRapid\_of} \\
+2 & \code{Formalism/SharpRestriction/Divisibility/},
+\code{.../Divisibility/KudlaSiegelWeil.lean} &
+\code{AIntO}, \code{projector\_statement\_of\_integrality},
+\code{thP}, \code{pow\_two\_pow\_add\_inv\_succ},
+\code{pow\_two\_pow\_add\_inv\_mem\_adjoin}, \code{exists\_sqrt\_two} \\
+3 & \code{Development/WeilBound/RepresentationTheoryGL/RegularisedSiegelWeil/}
+(153), \code{.../CoreStatements/HomogeneousNonvanishing/} (105),
+\code{AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/} &
+\code{weilCoefficient\_splits\_localFactor\_twistPlace},
+\code{weilCoefficient\_pureTensor\_eq\_smul\_inner},
+\code{weilCoefficient\_externalProduct\_eq\_mul\_orthogonalSum},
+\code{GramMatrixTwistedLieModels} \\
+4 & \code{Formalism/ThetaLiftIndependence/},
+\code{Development/WeilBound/ThetaLifts/} &
+\code{chainOp}, \code{chainOpM}, \code{KerComp}, \code{KerAdjoint},
+\code{ChainInt}, \code{ChainIntM}, \code{OrbitSum} \\
+5 & \code{Formalism/SharpRestriction/GrowthBounds/SegmentDegree/} (67 files),
+\code{.../Divisibility/ChainOperators/}, \code{.../Divisibility/CutKapD.lean},
+\code{.../Divisibility/CutDivD.lean} &
+\code{threshold\_arith\_letter\_case}, \code{threshold\_arith\_w\_case},
+\code{threshold\_power\_bound\_of\_counts}, \code{Typ}, \code{GoodA},
+\code{order\_numeric\_bound\_of\_oldest}, \code{rank\_input\_holds},
+\code{kappa\_degree\_bound\_holds}, \code{sum\_char},
+\code{LocalAdditiveCharacterExpansion}, \code{projector\_statement\_of\_stability} \\
+6 & \code{.../Divisibility/FunctionModelRallisFromInputs.lean},
+\code{.../DecoratedLatticeProofs/ThetaInnerProductFormulaDefiniteOfRallisConverge.lean} &
+\code{bB}, \code{vth}, \code{PerNZ}, \code{IsAutRep}, \code{IsDv}, \code{IsMu},
+\code{Hyp3}, \code{TParity}, \code{NCGaps}, \code{car}, \code{cenY},
+\code{ThetaDescentTowerConditions}, \code{Conclusion1} \\
+7 & \code{Formalism/BehrendSets/}, \code{.../BehrendVariance/} &
+\code{BehrendFree}, \code{BehrendBound}, \code{ThickSet}, \code{TranslateMean},
+\code{OrbitOne}, \code{WindowTwo}, \code{SumSq}, \code{SumLin},
+\code{ShortOrdLarge}, \code{ShortOrdSq}, \code{ShortOrdLin}, \code{OrdGrp},
+\code{frob}, \code{OrdCard}, \code{OrdIff} \\
+8 & \code{Development/AutomorphicArithmetic/AutomorphicVarieties/TheoremsMuLinked/},
+\code{Development/WeilBound/CoreStatements/AutomorphicKernels/} (932),
+\code{.../CoreStatements/PublishedTheorems/} (540) &
+\code{GlobalTheory.Mem.LiteralAutomorphy.LitN}, the Galois-representation
+types in \code{TheoremsMuLinked/GaloisRepresentationTypes/}, and the
+Poincar\'e-series machinery in \code{AutomorphicKernels/} \\
+9 & \code{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean},
+\code{.../Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean} &
+\code{admitted}, \code{VanishOrd}, \code{Nf}, \code{Unr}, \code{Gr},
+\code{Triv}, \code{GrZero}, \code{nonempty\_hyps\_of\_allRows} \\
+\bottomrule
+\end{longtable}
+
+\section{The chain from the headline theorem to the bottom of the mathematics}
+
+This is the path traced in Chapter~\ref{ch:chain}, collected in one place.
+
+\begin{longtable}{@{}p{0.36\textwidth}p{0.56\textwidth}@{}}
+\toprule
+\textbf{Declaration} & \textbf{File} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\code{riemannHypothesis} & \code{src/Main.lean} \\
+\code{UpperTheory.FinalTheorems.riemannHypothesis} & \code{CharacterBoxes/MainConclusion.lean} \\
+\code{UpperTheory.riemannHypothesis\_of\_everyCharacter} & \code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} \\
+\code{UpperTheory.EveryCharacter} & \code{CharacterBoxes/EveryCharacter.lean} \\
+\code{UpperTheory.FinalTheorems.everyCharacter} & \code{CharacterBoxes/MainConclusion.lean} \\
+\code{UpperTheory.Gal.Int.galoisLocalGlobalStrong\_recParameter} & \code{.../IntegralStructures/RowSrc.lean} \\
+\code{UpperTheory.Gal.Int.galoisRepresentations\_of\_thetaLift} & \code{.../IntegralStructures/GaloisRepresentationsOfThetaLift.lean} \\
+\code{UpperTheory.Gal.Int.galoisLocalGlobalStrong\_of\_geometry\_lift} & \code{.../IntegralStructures/Development.lean} \\
+\code{UpperTheory.Gal.Int.Geo.geoOne\_holds} & \code{.../GeometricFlagBases/WeightOneGeometricRealization.lean} \\
+\code{UpperTheory.Gal.Int.Geo.weight\_one\_geometric\_realization} & same file \\
+\code{GlobalTheory.T.lefschetz\_fixedPoint\_finite\_etale\_correspondence} & \code{.../SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean} \\
+\code{UpperTheory.Cb.lefschetz\_fixedPoint\_finite\_etale\_correspondence} & \code{.../EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean} \\
+\bottomrule
+\end{longtable}
+
+\section{The trees, by size}
+
+A reader who wants to understand the shape of the argument before reading any of
+it can start with the sizes, which were computed from the submission.
+
+\begin{center}
+\begin{tabular}{@{}lrl@{}}
+\toprule
+\textbf{Directory} & \textbf{Files} & \textbf{What it holds} \\
+\midrule
+\code{Development/} & 141{,}928 & the theorems themselves \\
+\quad \code{WeilBound/} & --- & the Weil bound: Siegel--Weil, theta lifts,
+frame estimates \\
+\quad \quad \code{CoreStatements/AutomorphicKernels/} & 932 & automorphic
+kernels, Poincar\'e series \\
+\quad \quad \code{CoreStatements/PublishedTheorems/} & 540 & the published
+results the development imports \\
+\quad \quad \code{RepresentationTheoryGL/SiegelWeilProof/} & 635 & the
+Siegel--Weil proof \\
+\quad \quad \code{RepresentationTheoryGL/RegularisedSiegelWeil/} & 153 & the
+regularised form \\
+\quad \quad \code{ThetaLifts/} & --- & the lifts and their estimates \\
+\quad \code{AutomorphicVarieties/TheoremsMuLinked/} & --- & automorphy of
+$\mu$ \\
+\code{Formalism/} & 18{,}254 & the general machinery \\
+\quad \code{SharpRestriction/Divisibility/} & --- & divisibility, the chain,
+the budget \\
+\quad \code{SharpRestriction/GrowthBounds/SegmentDegree/} & 67 & the segment
+degree bounds --- \emph{where the two thirds is} \\
+\quad \code{BehrendSets/} & --- & Behrend's construction \\
+\quad \code{ThetaLiftIndependence/} & --- & the chain operators \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{What the map does and does not license}
+
+\begin{quote}
+\textbf{It does not license a verdict.} The map tells a reader where the
+mathematics is. It does not tell them that the mathematics is right, and it
+cannot: the statements in these files are the author's re-derivations of
+published results, and whether each re-derivation is faithful is exactly the
+question that has not been answered.
+\end{quote}
+
+What the map does license is a much sharper form of the question. Before the
+map, the question was ``is this proof of RH?''. After it, the question is:
+\emph{are these forty-odd declarations faithful restatements of the published
+results they are named for, and are they applied in settings where those
+results hold?} That is a finite, well-defined, expert-sized question --- and
+Chapter~\ref{ch:protocol} gives the order to ask it in.
+
+\begin{keytakeaways}
+\item Every step of the method maps to a specific subtree, and every step maps
+to specific named declarations. A reader can check any one step in isolation.
+\item The two thirds is in \code{GrowthBounds/SegmentDegree/}, 67 files, in the
+threshold arithmetic of \code{ThresholdPowerBoundOfCounts.lean}.
+\item The full chain from the headline theorem to the proved Lefschetz formula
+is eleven declarations in eight files.
+\item The map sharpens the open question from ``is this a proof?'' to ``are
+these declarations faithful, and are they applied where the classical results
+hold?'' --- a finite question with a defined answer.
+\end{keytakeaways}

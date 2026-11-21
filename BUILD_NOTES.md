@@ -6,7 +6,7 @@
 **Publisher / imprint:** Tico Internet LLC
 **Edition:** 2026 First Edition
 **Licence:** Apache License 2.0
-**DOI:** 10.5281/zenodo.23874214 (single field, `source/preamble.tex`, `\bookDOI`)
+**DOI:** 10.5281/zenodo.24408811 (single field, `source/preamble.tex`, `\bookDOI`)
 **Facts current as of:** 21 November 2026
 
 ---
@@ -164,9 +164,10 @@ Carried in the text as uncertainty, not smoothed over. Full detail in
 
 ## Items needing owner review
 
-1. **DOI.** `10.5281/zenodo.23874214` is the standing placeholder. It lives in
-   exactly one field, `\bookDOI` in `source/preamble.tex`; swapping it is a
-   single edit and the build script re-injects it on the next run.
+1. **DOI.** `10.5281/zenodo.24408811` was assigned by the owner on
+   21 November 2026 and is now in place. It lives in exactly one field,
+   `\bookDOI` in `source/preamble.tex`; the copyright page, the colophon and
+   the cover all read it from there.
 2. **ISBN.** `978-1-0000-0000-0` on the copyright page is a placeholder.
 3. **Source-code link in the colophon.** The colophon field reads "None
    published for this edition". No repository has been supplied for this title,

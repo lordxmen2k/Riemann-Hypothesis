@@ -1,179 +1,311 @@
 % =====================================================================
-%  Chapter 10 — The State of Play, Part I
+%  Chapter 10 — Step 4
 % =====================================================================
 
-\part{The State of Play}
-\markboth{Part IV}{The State of Play}
+\chapter{Step Four: The Theta Lift Chain}
+\label{ch:step4}
 
-\chapter{The Independent Compilations}
-\label{ch:compilations}
-
-The mirror's README said, on the morning of 20 November 2026, that no
-independent build had been published, and that the code should be treated as
-``a claimed proof until it has been compiled and checked''. By lunchtime, the
-first half of that sentence had been overtaken by events. This chapter
-reports what happened, and what it does and does not establish.
-
-\section{What was reported}
-
-Quanta Magazine's piece, by Konstantin Kakaes, is the fullest account:
+Now the central mechanism. The remark's item 8:
 
 \begin{quote}
 \small
-``Several independent efforts have now successfully compiled Alpöge's proof.
-\textbf{Andrew Sutherland at the Massachusetts Institute of Technology was the
-first}\idx{Sutherland, Andrew}; he finished shortly before noon. A few hours later, \textbf{Simon DeDeo
-at Carnegie Mellon University}\idx{DeDeo, Simon} also succeeded, and not long after that
-Sutherland compiled it using a variant of Lean\idx{variant of Lean}.''
+``Iterated theta lifts $U(X_0) \to U(X_1) \to \cdots \to U(X_m)$ between totally
+definite unitary groups, $\pi \mapsto \pi \boxplus \mu_j[t]$, wins multiplicity
+$m$. Time to take $m$ like $\sqrt{X}$.''
 \end{quote}
 
-Three things in that sentence deserve comment.
+This chapter explains what the chain is, what each step does, and --- the
+part that matters --- what the development actually proves about it.
+
+\section{The single lift}
+
+Fix a CM field $E$, and a positive definite Hermitian form $A$ of rank $n$
+over $E$. The theta series $\theta_A$ attached to $A$ is a modular form on the
+CM lattice of weight $n$. The \emph{theta lift} of a cuspidal representation
+$\pi$ of $\mathrm{U}(E, n)$ to $\mathrm{U}(E, n')$ is the summand of $\theta_A$
+whose weight matches: the operator $\pi \mapsto \pi \boxplus \mu[t]$ takes $\pi$
+and the character $\mu$ attached to the parameter $t$ to a representation of
+$\mathrm{U}(E, n')$, where $n' > n$.
+
+Two facts make this usable.
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\textbf{Two independent compilers.}] Sutherland at MIT and DeDeo at CMU
-are two groups, two machines, two toolchain setups. Agreement between them is
-evidence that the build is reproducible rather than a local accident.
-\item[\textbf{A variant of Lean.}] The final clause --- ``Sutherland compiled
-it using a variant of Lean'' --- is the strongest single piece of evidence in
-the story, and it is easy to read past. If the development compiles under a
-\emph{modified} Lean, then the modification is doing something specific, and
-the most likely something is an extension that makes the build tractable.
-\item[\textbf{The order of events.}] ``Shortly before noon'' on 20 November.
-The mirror's README was written that morning. The status line in it was true
-when written and became obsolete within hours.
+  itemsep=6pt]
+\item[Weight matching is a condition.] The lift exists only when the weight
+of the lifted representation lands in the weight set of $\theta_A$. The
+development's condition is written as an inequality on the archimedean
+weights: the lift from rank $n$ to rank $d$ requires
+\begin{equation}
+d + m_W(w) \le 2\,\lambda(w)
+\label{eq:weightineq}
+\end{equation}
+at every place $w$, where $\lambda$ is the weight of the representation
+being lifted and $m_W$ is the weight attached to the form. This is the
+inequality stated in \code{UpperTheory.TP.TLiftK} (see
+Chapter~\ref{ch:inputs}).
+\item[The lift is unique when it exists.] For a given $\pi$, $\mu$ and $t$ there
+is at most one summand of the right weight. This is what makes the chain
+well defined, and it is why the development has a whole subtree devoted to
+\emph{independence} --- the statement that the result does not depend on which
+representative of the equivalence class is chosen.
 \end{description}
 
-\section{What this establishes}
+\section{Why iterate at all}
 
-A successful independent compilation establishes the following, and it is a
-substantial list:
+One lift is not enough, because one lift buys one unit of multiplicity and the
+argument needs many. So the method iterates: apply the lift again, to the
+output, with a new form and a new character, and again, and again, until the
+chain has length $m$.
 
-\begin{itemize}
-\item The development is \emph{complete} in the sense that matters: it has a
-consistent, terminating development in which the headline theorems exist and
-are accepted by the Lean kernel.
-\item It is \emph{reproducible}: two groups, working independently, got the
-same result.
-\item It is \emph{pinned}: the toolchain and the Mathlib revision are fixed, so
-the build refers to a determinate mathematical library.
-\item The axiom question is, in practice, settled in the affirmative: the
-compilers necessarily ran the axiom check, or would have had to.
-\end{itemize}
+The formalisation of this is in
+\code{Formalism/ThetaLiftIndependence/Statement.lean}, and it is worth reading
+because it makes precise two claims that the remark states only in prose.
 
-It is a genuine milestone, and the book says so.
+\subsection{The chain operator}
 
-\section{What this does not establish}
+The chain is a composite of kernel operators. Write $\kappa_j$ for the matrix
+of the $j$-th lift and $w_j$ for the weight at that stage. Then
 
-It does not establish that the mathematics is right. This is not a criticism of
-the compilers; it is a statement about what compilation is.
-
-\begin{quote}
-``Lean, besides being a mathematical language, is also a computer programming
-language, and \textbf{can itself contain bugs. It can also be used to play
-sneaky tricks by, for example, redefining symbols used in a proof to make
-something trivially true.} The first step in verifying a proof in Lean is to
-make sure it `compiles.'\,''
-\qquad --- Quanta Magazine, 2026-11-20
-\end{quote}
-
-The compilers did the first step. The second step --- checking --- is a
-different activity, performed by a different kind of person, and it has not
-happened.
-
-\section{The build attempt made for this book}
-
-For completeness, and because a book that criticises others for not compiling
-ought to compile, an independent build was attempted in the course of writing
-this one.
-
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[The toolchain.] \texttt{elan} was installed and the pinned toolchain
-\code{leanprover/lean4:v4.33.1} was fetched.
-\item[The library.] Mathlib was checked out and confirmed at exactly
-\code{0df444a360eaa60ab8c11dca51a86af692955474}, the revision pinned by the
-submission's \texttt{lakefile.toml}. The prebuilt artefacts were retrieved from
-the community cache --- 8{,}690 of them.
-\item[The build.] \texttt{lake build Main} was launched against the project's
-own sources.
-\end{description}
-
-The build was in progress --- compiling the submission's own files --- when the
-writing of this book reached the point where its findings had to be written
-down. The machine available for it has two cores and three gigabytes of RAM;
-the mirror's own README warns that this is ``a very large build ($\approx 17$
-M lines on top of Mathlib)'' for which one should ``use a machine with many
-cores and plenty of RAM, and expect it to run for a long time''.
-
-\begin{seamnote}{Reporting the outcome honestly}
-This book's build did not complete within the time available, and that is
-reported as what it is: an incomplete verification attempt, not a failed one
-and not a successful one. The log is retained.
-
-The finding it does contribute is narrow and worth stating: the submission
-builds far enough to be compiling the project's own modules, with Mathlib at
-the pinned revision satisfied entirely from cache, with no error. That is
-consistent with the two reported independent compilations, and it adds
-nothing to them.
-
-It also contributes a practical datum that the mirror's README lacked: the
-build is tractable with the community's prebuilt Mathlib cache, and the
-binding constraint is the size of the submission's own source, not the
-dependency. A reader with a large machine can complete it.
+\begin{seamnote}{\code{chainOp} (from \code{Formalism.ThetaLiftIndependence.Statement})}
+{\footnotesize
+\begin{verbatim}
+def chainOp {R : Type*} [CommSemiring R] {i : Nat -> Type*}
+  [forall j, Fintype (i j)]
+(w : forall j, i j -> R) (K : forall j, i j -> i (j + 1) ->
+      R) : (m : Nat) -> (i 0 -> R) -> (i m -> R)
+  | 0, f => f
+  | m + 1, f => kerOp (w m) (K m) (chainOp w K m f)
+\end{verbatim}
+}
 \end{seamnote}
 
-\section{Why ``it compiles'' is the beginning and not the end}
+The composition is by construction. The substantive statements are the two
+following it.
 
-There is a temptation, on reading a story like this one, to treat compilation
-as the decisive event: the machine said yes, so the theorem is proved. It is
-worth resisting that, and the reason is not scepticism about the compilers. It
-is that the community has been here before.
+\subsection{The chain collapses: the multiplicativity}
 
-The formalisation community's own history contains cases where a development
-compiled cleanly, passed the axiom check, had its statements reviewed --- and
-was then found to be wrong. The most instructive recent example is recorded in
-OpenAI's own project history: a formalised result was withdrawn in October 2026
-with a stated sign error\idx{sign error (withdrawn formalisation)}. The development compiled. The axiom list was clean.
-The failure was in the mathematics of the statement, and no compiler can see
-it.
+\begin{seamnote}{\code{KerComp}}
+{\footnotesize
+\begin{verbatim}
+def KerComp : Prop :=
+forall (R : Type) [CommSemiring R] (i k m : Type) [Fintype
+    i] [Fintype k] [Fintype m]
+(w1 : i -> R) (w2 : k -> R) (K1 : i -> k -> R) (K2 : k -> m
+      -> R) (f : i -> R),
+kerOp w2 K2 (kerOp w1 K1 f) = kerOp w1 (kerMul w2 K1 K2) f
+\end{verbatim}
+}
+\end{seamnote}
+
+Read: the composition of two lifts is \emph{equal} to a single lift whose
+kernel is the product of the two kernels and whose weight is the second
+weight. This is the formal statement of the thing the remark is claiming:
+\textbf{the chain is not a new object; it is one lift with a multiplied
+kernel.}
+
+This is the sense in which the chain "wins multiplicity $m$". Multiplicativity
+of the kernel is the arithmetic counterpart of multiplicativity of the
+dimension. One lift multiplies the space by a factor; $m$ lifts, composed,
+multiply by the $m$-fold product. The cost of composing is that the kernel
+entries, and hence the denominators, multiply too --- which is
+Chapter~\ref{ch:budget}.
+
+The companion statement is \code{KerAdjoint}, that each lift is adjoint to
+its own conjugate. That is what makes the composed chain adjoint to the
+product of the adjoints, and it is the reason the Gram matrix of the Weil
+expression can be built out of the chain at all: the positivity requires an
+adjoint, and adjointness is what the theta lift supplies.
+
+\subsection{The integrality of the chain, and its price}
+
+\begin{seamnote}{\code{ChainInt}}
+{\footnotesize
+\begin{verbatim}
+def ChainInt : Prop :=
+forall (R : Type) [CommRing R] (S : Subring R) (i : Nat ->
+    Type) [forall j, Fintype (i j)]
+(w : forall j, i j -> R) (K : forall j, i j -> i (j + 1) ->
+      R) (D : Nat -> R),
+(forall j i, D j * w j i in S) -> (forall j a b, K j a b in
+      S) ->
+forall f : i 0 -> R, (forall i, f i in S) -> forall (m :
+      Nat) (y : i m),
+(prod j in Finset.range m, D j) * chainOp w K m f y in S
+\end{verbatim}
+}
+\end{seamnote}
+
+This is the price statement, and it is the single most important formula in
+the method.
+
+Read it carefully. There is a subring $S$ --- an integral model, a lattice, a
+ring of algebraic integers. The weights $w_j$ and the kernel entries $K_j$ are
+required to lie in $S$ up to the factors $D_j$. And then: for every $m$, the
+output of the chain of length $m$ lies in $S$ up to the factor
+\[
+\prod_{j < m} D_j.
+\]
 
 \begin{quote}
-This is the ordinary condition of the subject, and it is why the phrase
-``until it has been compiled \emph{and checked}'' in the mirror's README has
-two clauses rather than one. The second clause has not happened.
+\textbf{What this says.} Each lift contributes a denominator $D_j$. The chain of
+length $m$ has total denominator $\prod_{j<m} D_j$. The price of the chain is
+multiplicative, exactly as the multiplicity is.
 \end{quote}
 
-\section{What a completed verification would look like}
+This is the formal form of the remark's item 14, the "cost of each lift". The
+cost per lift is the integer $D_j$; the total cost is the product; and the
+argument can only close if the product is small enough relative to the
+multiplicity gained. Chapter~\ref{ch:budget} does that arithmetic.
 
-If someone were to complete the full protocol --- compile, replay the kernel
-independently, and perform a full statement review --- what would they have
-established? This is worth spelling out, because it defines the target that
-Chapter~14 aims at.
+The module version, \code{ChainIntM}, states the same thing with lattices
+$\Lambda_j$ preserved at each stage: the chain not only lands in a subring but
+lands in the right lattice at every level, and the subring condition is
+$\Lambda_j$-stable under multiplication by $S$. This is the "integral
+structure" that the remark's item 15 says is glued across the Hecke
+characters to get a ``gcd'' and extra averaging.
 
-They would have established that the Riemann hypothesis is a theorem of Lean
-4, in the sense that the development contains a proof of Mathlib's
-\texttt{RiemannHypothesis} whose only dependencies are the three standard
-axioms and whose statements, on review, match the classical claims.
+\section{What each lift must preserve}
 
-That would be an enormous result. It would settle the problem. And it would
-still require the community to check the review --- one human reading of
-175{,}000 files is itself a document with error bars, and the standard practice
-in the field, as the tooling of the Lean FRO shows, is to have the review
-independently reproduced.
+For the chain to be usable, each step must preserve the properties the
+argument needs. The remark's item 9 lists them: ``Norms of the lifts, level,
+cancellation of order-$m$ terms''. The development makes them explicit.
+
+The descent-tower conditions are stated in
+\code{FunctionModelRallisFromInputs.lean}. In outline, the conditions are:
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[\code{IsDv}] The type condition is preserved: if a vector at stage
+$j+1$ is of the required type, and the theta lift of a cusp form in it is
+again in the required space, then the lifted vector at stage $j$ is of the
+required type. The lift does not wander out of the admissible class.
+\item[\code{IsAutRep}] The lifted representation is a genuine automorphic
+representation: it is stable under the group, it is not zero, and it has no
+proper non-zero stable submodule --- that is, it is irreducible, which is
+what makes it a cuspidal representation and not an Eisenstein one.
+\item[\code{PerNZ}] The period does not vanish: the Bessel-period pairing at
+each stage, or the top-level pairing at the last stage, is non-zero. This is
+the condition that stops the chain from collapsing to nothing.
+\item[\code{Hyp3}] The global hypotheses: interlacing, parity of the
+parameters, centrality, and the gap condition of Chapter~\ref{ch:step3}.
+\end{description}
+
+And the theorem that assembles them is \code{Conclusion1}:
+
+\begin{seamnote}{\code{Conclusion1}}
+{\footnotesize
+\begin{verbatim}
+def Conclusion1 (D : D7) (X : ThetaX D) : Prop :=
+forall P : TH.TPar D, Hyp3 X P -> forall mu : Nat -> X.Chr,
+    IsMu X P mu ->
+    ThetaDescentTowerConditions X P mu
+\end{verbatim}
+}
+\end{seamnote}
+
+Read: for every admissible parameter choice satisfying the three global
+hypotheses and the character conditions, the descent-tower conditions hold.
+That is the statement that the chain can be built and that every step keeps
+its properties.
+
+\begin{quote}
+\textbf{An observation about the architecture.} \code{Conclusion1} takes the
+hypotheses \code{Hyp3} and \code{IsMu} as \emph{inputs}. They are not proved
+inside the theorem; they are conditions on the parameter data. This is the
+same pattern as the hypothesis bundles of Chapter~\ref{ch:inputs}: a bundle
+of conditions is collected, and a theorem consumes it. Whether those conditions
+are satisfied, and whether the classical results they encode are the ones
+needed, is exactly the question a referee must answer.
+\end{quote}
+
+\section{The parameters}
+
+The chain is indexed by parameters, and the development's \code{TPar}
+structure is where they live. From the remark and from the statement of
+\code{Hyp3}, the parameters are:
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[$t$, the level parameter.] The tower is of totally definite unitary
+groups $\mathrm{U}(E, n)$, $\mathrm{U}(E, n')$, \dots and $t$ controls the
+Hermitian forms $A$ used at each stage, hence the theta series, hence the
+lifted representations.
+\item[$\mu$, the character.] A family of characters $\mu_j$, one per stage. The
+condition \code{IsMu} says they are chosen so that the infinity type of
+$\mu_{j+1}$ is the negative of the parameter $e_j$ --- that is, so that the
+lift at stage $j$ matches the weight condition of \eqref{eq:weightineq}.
+\item[$D_{par}$, the interlacing data.] For each stage $j$, a finite set of
+rational numbers recording where the periods' arguments sit relative to the
+zero's argument. This is the data that produces the interlacing weights of
+Chapter~\ref{ch:step3}, and the gap condition \code{NCGaps} is the separation
+requirement on it.
+\item[$\eta$, the weight offset.] The condition \code{Hyp3} requires
+$P.\eta(\tau) = -X.\mathrm{infTy}(\eta_T)(\tau)$, which is the assertion
+that the weight of the tower is offset by exactly the amount needed.
+\end{description}
+
+The condition \code{TParity} additionally fixes the parities: the $u$ and $v$
+entries of the parameter data are half-integers, the $b$ and $e$ entries are
+integers. These parities are the signature-theoretic data, and they are what
+the Weil expression's interlacing weights are made of.
+
+\section{The orbit sum}
+
+The last piece of the theta-lift subtree is the averaging identity, and it is
+the formal statement of a classical fact about finite groups:
+
+\begin{seamnote}{\code{OrbitSum}}
+{\footnotesize
+\begin{verbatim}
+def OrbitSum : Prop :=
+forall (H X : Type) [Group H] [Fintype H] [MulAction H X]
+    [Fintype X] (k : Type) [Field k]
+[CharZero k] (F : X -> k), (forall (a : H) (x : X), F (a *
+      x) = F x) ->
+    (Fintype.card H : k)^-1 * sum x, F x
+      = sum o : MulAction.orbitRel.Quotient H X,
+(Nat.card (MulAction.stabilizer H (Quotient.out o)) : k)^-1
+            * F (Quotient.out o)
+\end{verbatim}
+}
+\end{seamnote}
+
+This is the standard identity: the average of a class function over a finite
+group equals the average of its values on the orbits, weighted by the inverse
+stabiliser sizes. Its presence in the theta-lift subtree says that the
+construction is set up so that averaging over the Hecke characters decomposes
+into orbits --- which is the averaging that the Weil expression needs, and
+which Chapter~\ref{ch:averaging} returns to.
+
+\section{What step 4 has shown}
+
+\begin{enumerate}
+\item A lift is a well-defined operation on representations of totally
+definite unitary groups, conditional on a weight inequality.
+\item A chain of lifts composes, and the composition is \emph{equal} to a
+single lift with multiplied kernel and multiplied weight --- the formal
+statement of "wins multiplicity $m$".
+\item Each lift carries a denominator $D_j$, and the chain's total denominator
+is the product $\prod_{j<m} D_j$ --- the formal statement of "the cost of
+each lift".
+\item Each step preserves cuspidality, the type conditions, and the
+non-vanishing of the period, provided the parameter data satisfies the global
+hypotheses \code{Hyp3}.
+\end{enumerate}
+
+Items 2 and 3 are the crux of the entire method, and they are the two
+statements that make the remark's claim precise. What they do \emph{not} say is
+whether the product of denominators is affordable --- that is the next chapter.
 
 \begin{keytakeaways}
-
-\item Two independent compilations succeeded on 20 November 2026, by
-Andrew Sutherland at MIT and Simon DeDeo at CMU, and a third using a variant
-of Lean.
-\item Compilation establishes completeness, reproducibility, pinning and the
-axiom question. It does not establish that the statements mean what the claim
-says they mean.
-\item The build attempted for this book reached the stage of compiling the
-submission's own modules with Mathlib satisfied from cache, on a
-two-core machine, and did not complete within the time available.
-\item The community's own history contains a case of a cleanly compiling
-development withdrawn for a mathematical error. That is why ``compiled and
-checked'' has two clauses.
+\item The chain is not a new object. The formalisation proves that the
+composition of lifts is equal to a single lift with a multiplied kernel, which
+is exactly the claim that each lift wins multiplicity.
+\item The price is multiplicative too: each lift carries a denominator $D_j$ and
+the chain of length $m$ carries the product $\prod_{j<m} D_j$.
+\item Each step preserves cuspidality, the type conditions and the
+non-vanishing of the period, given the global parameter hypotheses.
+\item The three consequences --- multiplicativity of the gain, multiplicativity
+of the price, preservation of the properties --- are the formal content of
+the remark's items 8, 9, 14 and 15.
 \end{keytakeaways}

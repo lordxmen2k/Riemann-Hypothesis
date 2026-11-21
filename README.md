@@ -4,7 +4,7 @@
 Two-Thirds Ceiling**
 
 Gerald Enrique Nelson Mc Kenzie — Tico Internet LLC
-2026 First Edition · Apache License 2.0 · DOI 10.5281/zenodo.23874214
+2026 First Edition · Apache License 2.0 · DOI 10.5281/zenodo.24408811
 
 ---
 

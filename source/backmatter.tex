@@ -88,7 +88,7 @@ is one of the load-bearing steps of the method under examination.
 
 \item[CM field] A number field $E$ that is a quadratic extension $F(i)$ of a
 totally real field $F$, with complex conjugation. CM fields carry rigid
-analytic structures that make the divisibility statements of Chapter~5
+analytic structures that make the divisibility statements of Chapter~\ref{ch:method}
 possible.
 
 \item[Compiler] The program that turns Lean source into kernel terms and
@@ -127,7 +127,7 @@ Mathematical Society} in 1949 and 1950.
 \item[Harmonic analysis on $\mathrm{GL}_2$] The theory, originating with
 Hecke, of the automorphic forms and $L$-functions of $\mathrm{GL}_2$; the
 source of the local factors $\det(1 + XA_y)/\det(1 - A_y)$ in the Lefschetz
-formula of Chapter~7.
+formula of Chapter~\ref{ch:chain}.
 
 \item[Iwasawa algebra] A one-dimensional local algebra of the form
 $\ZZ_p[[T]]$, occurring as the characteristic ideal of an Iwasawa module. The
@@ -140,7 +140,7 @@ such towers for function fields is invoked in the remark's item 19.
 
 \item[Kato's Euler system] A class of Euler systems for modular forms
 developed by Masaki Kato, whose existence is one of the inputs to the
-admissibility and vanishing packages of Chapter~8.
+admissibility and vanishing packages of Chapter~\ref{ch:inputs}.
 
 \item[Kernel] The small, trusted part of a proof assistant that checks terms
 against inference rules. Lean's kernel is roughly a thousand lines.
@@ -196,7 +196,7 @@ $N(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + O(\log T)$.
 
 \item[Selmer group] A subgroup of a Galois module consisting of elements
 satisfying local conditions at every place. Its vanishing is the content of
-the statement \texttt{VanishOrd} in Chapter~8.
+the statement \texttt{VanishOrd} in Chapter~\ref{ch:inputs}.
 
 \item[Siegel--Weil formula] The formula relating the Fourier expansion of a
 theta series to an $L$-function. It is one of the classical inputs to the
@@ -266,45 +266,45 @@ their path relative to the archive root.
 \begin{enumerate}[leftmargin=1.4em,itemsep=4pt]
 \item \textbf{Alpöge, Levent.} \emph{Remark}. Four pages, unpublished;
 distributed at \texttt{alpo.ge/remark.pdf} and mirrored on 20 November 2026.
-[artifact] Quoted throughout Parts~I and~II.
+[artifact] Quoted throughout Parts~\ref{part:claim} and \ref{part:math}.
 \item \textbf{Submitted Lean development.} \code{alpo.ge/lean.tar.gz.part01}
 through \texttt{.part14}; 239\,275\,554 bytes; mirrored as
 \code{github.com/CocoSgt/riemann-hypothesis-lean}, release \texttt{v2026-11-20},
 SHA-256 \code{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc}.
-[artifact] All Lean quotations in Chapters~7--9.
+[artifact] All Lean quotations in Chapters~\ref{ch:chain}--9.
 \item \textbf{README of the mirror repository.} \emph{Status}: ``As of mirroring
 (2026-11-20), no independent build or review of this code has been published.
 Treat it as a claimed proof until it has been compiled and checked.'' [artifact]
-Quoted in Chapters~1 and~2 with its date, which matters.
+Quoted in Chapters~\ref{ch:claim} and \ref{ch:artifact} with its date, which matters.
 \item \textbf{\texttt{lean-toolchain}} [artifact]: \code{leanprover/lean4:v4.33.1}.
 \item \textbf{\texttt{lakefile.toml}} [artifact]: Mathlib pinned at
 \code{0df444a360eaa60ab8c11dca51a86af692955474}; confirmed locally.
 \item \textbf{\texttt{src/Main.lean}}, \texttt{src/Statements.lean} [artifact]:
-quoted in full in Chapter~2.
+quoted in full in Chapter~\ref{ch:artifact}.
 \item \textbf{\code{CharacterBoxes/MainConclusion.lean}},
 \code{CharacterBoxes/EveryCharacter.lean},
 \code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} [artifact]:
-quoted in Chapter~7.
+quoted in Chapter~\ref{ch:chain}.
 \item \textbf{\code{Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean}},
 \code{GaloisRepresentationsOfThetaLift.lean},
 \texttt{Development.lean},
 \code{GeometricFlagBases/WeightOneGeometricRealization.lean} [artifact]:
-quoted in Chapter~7.
+quoted in Chapter~\ref{ch:chain}.
 \item \textbf{\code{AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean}}
 and \code{AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}
-[artifact]: Chapter~7.
+[artifact]: Chapter~\ref{ch:chain}.
 \item \textbf{\code{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}},
 \code{.../ThetaKernels/TLiftK.lean}, \code{.../ThetaKernels/TPGHolds.lean},
-\code{.../ThetaKernels/ThkEstEpsOf.lean} [artifact]: Chapter~8.
+\code{.../ThetaKernels/ThkEstEpsOf.lean} [artifact]: Chapter~\ref{ch:inputs}.
 \item \textbf{\code{AutomorphicVarieties/AutomorphicForms/Hypotheses2.lean}},
 \code{.../TemperedLocalComponents/NewformAut.lean},
 \code{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean},
-\code{.../PublishedTheorems/GelfandKazhdanReal.lean} [artifact]: Chapter~8.
+\code{.../PublishedTheorems/GelfandKazhdanReal.lean} [artifact]: Chapter~\ref{ch:inputs}.
 \item \textbf{\code{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean}}
 [artifact]: the structure \code{GlobalTheory.Ord2.admitted} and the statement
-\texttt{VanishOrd}; Chapter~8.
+\texttt{VanishOrd}; Chapter~\ref{ch:inputs}.
 \item \textbf{\code{AbelianVarietyTheory/Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}}
-[artifact]: the construction of the \texttt{Hyps} package; Chapter~8.
+[artifact]: the construction of the \texttt{Hyps} package; Chapter~\ref{ch:inputs}.
 \end{enumerate}
 
 \vspace{8pt}
@@ -363,7 +363,7 @@ not used here.
 \item \textbf{Jacquet--Shalika rigidity}, \textbf{Borel injectivity}, the
 \textbf{Gelfand--Kazhdan correspondence} for $\mathrm{GL}_2$, and
 \textbf{Kato's Euler systems} are the published results underlying the
-\texttt{Hypotheses\_2} bundle of Chapter~8. Individual primary citations for
+\texttt{Hypotheses\_2} bundle of Chapter~\ref{ch:inputs}. Individual primary citations for
 each were not separately retrieved for this book, and the bundle's own
 derivation chains in the artifact are the reference given in the text.
 \end{enumerate}
@@ -462,7 +462,7 @@ Mathematical Analysis of the Theory of Numbers} (1952).
 the 1989 Princeton conference, for the general setting; and the work of
 Gan--Ichino, and of Liu and W. Zhang, for the unitary theta lifts and the
 Gross--Prasad theorem in the unitary case. The distinction between the
-proved unitary case and the open orthogonal case is the point of Chapter~4's
+proved unitary case and the open orthogonal case is the point of Chapter~\ref{ch:barriers}'s
 second barrier.
 
 \textbf{For Iwasawa theory.} Coates--Su, \emph{Iwasawa Theory for Number
@@ -494,7 +494,7 @@ This book exists because a remarkable document was made available in public,
 and because the question it raises is more interesting than the answer anyone
 currently has to it.
 
-The mathematics in Chapter~3 and Chapter~4 is standard, and the people who
+The mathematics in Chapter~\ref{ch:rh} and Chapter~\ref{ch:barriers} is standard, and the people who
 built it over two centuries --- Riemann, Hadamard, de la Vallée Poussin,
 Hardy, Littlewood, Weil, Stepanov, Bombieri, Guinand, Bost, Behrend --- are
 owed more than a footnote each. Their results are the terrain; the claim under
@@ -515,7 +515,7 @@ did the unglamorous work of finding out whether the artifact builds, and to
 the mirror's maintainer, whose README is a better piece of technical writing
 than most published formalisation papers.
 
-The verification work in Chapters~7 to~9 was done on the submitted source
+The verification work in Chapters~\ref{ch:chain} to \ref{ch:scan} was done on the submitted source
 tree, and the corrections log that accompanies this book records the places
 where the writer's initial assumptions had to be revised in the course of it.
 Several of those revisions made the book weaker in tone and stronger in fact,

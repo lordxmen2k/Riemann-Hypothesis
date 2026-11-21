@@ -1,282 +1,208 @@
 % =====================================================================
-%  Chapter 6 — The Verification, Part I
+%  Chapter 6 — The Method, Step by Step (new Part III)
 % =====================================================================
+\part{The Method, Step by Step}
+\label{part:method}
 
-\part{The Verification}
-\markboth{Part III}{The Verification}
+\chapter{The Shape of the Argument}
+\label{ch:shape}
 
-\chapter{What a Proof Assistant Can and Cannot Certify}
-\label{ch:lean}
+The previous part set out the problem and the walls. This part does the thing
+the owner of the claim would most want done and the coverage most conspicuously
+failed to do: it sets out \emph{the method itself}, step by step, in the terms a
+mathematician can follow, so that a reader can arrive at the result rather than
+be told about it.
 
-Before auditing a formalised proof, it is worth being precise about what
-formalisation is, because the gap between what people assume it does and what
-it does is where claims like the one under examination live or die.
-
-This chapter explains the mechanics from the ground up: what a proof assistant\idx{proof assistant}
-actually checks, what it takes on faith, why ``it compiles'' is a real
-milestone and a real insufficiency, and what the community's own standards are
-for treating a formalisation as verified.
-
-\section{The smallest possible proof assistant}
-
-A proof assistant is a program that checks mathematical arguments. The
-\emph{only} thing it can do without further assumptions is check a formal
-language. Here is the whole idea, in miniature.
-
-Suppose we want to prove that every natural number is either zero or has a
-successor. In a language with two constants and one constructor:
-
-\begin{Verbatim}
-inductive Nat where
-  | zero
-  | succ (n : Nat)
-\end{Verbatim}
-
-we can write the statement ``for all $n$, $n = 0$ or $n$ is a successor'' and
-prove it by cases on $n$. The proof is a finite term. A checker can verify it by
-recursing through the term: look at the top, see which constructor the proof
-term uses, check that the branch assumptions cover the cases, check that each
-leaf is justified.
-
-That is the whole idea. \emph{Verification is the mechanical checking of a
-finite term against a set of inference rules.} Everything else --- the
-elaborator that turns human syntax into terms, the library of tactics that
-automate search, the friendly error messages --- is convenience. The kernel is\idx{kernel (Lean)}
-small enough that a careful person can read it and be sure.
-
-\section{Lean's kernel and its axioms}
-
-Lean's kernel is written in a small subset of Lean and is about a thousand
-lines long. It has three jobs: to check that a term is well-typed, to check that
-a proof of a proposition is a term of that proposition's type, and to check
-that any \texttt{axiom} declarations it is asked to accept really are axioms
-and not proofs in disguise.
-
-That last point is the source of the standard check. When you ask Lean what a
-theorem depends on, you get a list:
-
-\begin{Verbatim}
-#print axioms riemannHypothesis
-\end{Verbatim}
-
-and the answer, for a theorem that has nothing fishy in it, is a short list of
-Lean's three standard axioms:
-
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\texttt{propext}\idx{propext}] Propositional extensionality: $(P \leftrightarrow Q)$
-implies $P = Q$. This is the principle that logical statements are equal when
-they have the same truth value.
-\item[\texttt{Classical.choice}\idx{Classical.choice}] The axiom of choice.
-\item[\texttt{Quot.sound}\idx{Quot.sound}] The quotient construction is sound: equal
-equivalence classes really do have equal representatives' properties.
-\end{description}
-
-The point of this check is not that the axioms are innocuous in a philosophical
-sense --- they are ordinary mathematics, and every serious formalisation uses
-them. The point is that the list is \emph{short and standard}. If the list
-contains anything else, the theorem is not doing what it appears to do.
-
-Two entries on that list deserve special mention because they are the usual
-failure modes:
+There is an important qualification, and it belongs at the front. The account
+below is assembled from two sources, and they are not of equal quality.
 
 \begin{quote}
-\textbf{\texttt{sorryAx}}\idx{sorryAx} is what the keyword \texttt{sorry} introduces: an
-axiom that says ``this proposition is true'' and records that it was admitted.
-It is a deliberate hole, and it is visible.
+\textbf{The remark} gives a twenty-item timeline that its own author calls ``a
+rough timeline Claude provided'' and, of the parts he did not personally
+develop, ``sort of paraphrasing a `slop' summary, which might make zero sense''.
+Several of those entries are one sentence long and are addressed to no reader in
+particular.
 
-\textbf{\texttt{Lean.ofReduceBool}}\idx{native\_decide} is what \texttt{native\_decide} introduces:
-it lets a proof claim that a boolean computation evaluates to \texttt{true} by
-running the compiled program. It is sound only under conditions about the
-compiler, and it is a genuine soundness risk in a proof. Its presence in an
-axiom list is a red flag.
+\textbf{The Lean development} is the authoritative version. It contains, in
+Lean, the actual statements of the step-by-step mathematics: the chain
+operators, the integrality conditions on the chain, the descent-tower
+conditions, the seesaw, the Behrend set, the rank budget. Those statements are
+precise, and they are what the arguments of this part are anchored to.
 \end{quote}
 
-The mirror's independent scan of the submission reports \texttt{sorry} 0,
-\texttt{admit} 0, \texttt{native\_decide} 0, and \texttt{axiom} 0. This book's
-own independent scan of the complete extraction confirms \texttt{sorry} 0 and
-\texttt{axiom} 0. That is a genuinely good result, and it is a real
-prerequisite.
+So the method is presented here in a specific way: the mathematical content is
+taken from the formal statements wherever they exist, because those are
+precise; the narrative connective tissue is reconstructed from the remark, and
+is flagged as reconstruction wherever the remark does not state it outright.
+Chapter~\ref{ch:map} gives the complete step-to-declaration map, so a reader
+who wants to check any sentence of this part can do so in one move.
 
-\section{Why compiling is a milestone}
-
-Here is the thing that makes formalisation different from every other kind of
-mathematics.
-
-In ordinary mathematics, a proof is a piece of writing that is \emph{checked by
-readers}. The checking is done by humans, who are fallible, who are rushed,
-who may be motivated, and who may not read the same paper as you. The
-mathematical literature is full of results that turned out to be wrong, and the
-error rate is not zero.
-
-A formalised proof, once it compiles, has been checked by a program whose
-source is a thousand lines long and whose behaviour is completely specified. For
-the \emph{logical} part, this is a categorical improvement over reading.
-
-So the two independent compilations of 20 November 2026 --- Andrew Sutherland
-at MIT first, Simon DeDeo at Carnegie Mellon a few hours later --- are real
-achievements, and they are reported as such in Chapter~10.
-
-But note precisely what they establish. They establish that:
+\section{The claim in one sentence}
 
 \begin{quote}
-There exists a Lean term of type \texttt{RiemannHypothesis} (as Mathlib
-defines it), such that the term is accepted by the Lean kernel, such that every
-axiom the term depends on is one of Lean's three standard ones, and such that
-every intermediate library it uses was also checked.
+The Riemann hypothesis is the statement that a certain real-valued function
+built from the ordinates of the zeros of $\zeta$ --- the Weil expression $W$ ---
+is non-negative for every real parameter. This argument manufactures, by
+iterating theta lifts, the arithmetic multiplicity that the classical
+function-field proof gets for free; it converts that multiplicity into a
+positivity statement for $W$ by a determinant; it converts the positivity
+statement into a bound on the zeros by the Siegel--Weil formula and a
+test-function argument; and it kills the leftover cohomology by twisting,
+which is where the open part of the problem sits.
 \end{quote}
 
-That is a large claim. It is also, on its own, \emph{not} a claim about the
-Riemann hypothesis.
+That is the whole shape. What follows is the nine steps that make it up, and
+what each one costs.
 
-\section{Why compiling is not enough}
+\section{Nine steps}
 
-This is the part that most commentary gets wrong, and the mistake is not
-stupidity --- it is that the intuition from ordinary mathematics does not
-transfer. In ordinary mathematics, a proof is a text, and the statement of the
-theorem is part of the text, and a reader checks both. In formalisation, the
-statement and the proof are separated, and only the proof is mechanically
-checked.
+\begin{center}
+\begin{tabular}{@{}rlp{0.56\textwidth}@{}}
+\toprule
+\textbf{Step} & \textbf{Remark item} & \textbf{What it does} \\
+\midrule
+1 & 1, 4 & Establish the ancestor: what Stepanov's method does with
+multiplicity, and what has to replace it over the integers. \\
+2 & 2, 9, 10 & Build the divisibility engine: a CM curve, an invariant
+derivation, and a prime-power divisibility that pays for level and
+cancellation. \\
+3 & 3, 5 & Produce the identity $qN = Mk + R$ and the sign-only Weil
+argument: a determinant that is a Gram matrix, and a remainder with
+square-root quality. \\
+4 & 8 & Chain the theta lifts: $U(X_0) \to \cdots \to U(X_m)$, each step
+winning one unit of multiplicity, at a price. \\
+5 & 14 & Compute the price: the budget that each lift spends against the
+multiplicity it buys. This is where the two-thirds ceiling appears. \\
+6 & 12 & Apply the Rallis seesaw, so that the period of the iterated lift
+becomes a Bessel period, independent of the Hecke characters. \\
+7 & 11, 19 & Average over the Hecke characters: Behrend's pigeonhole
+construction, the variance bounds, and the equidistribution of translates
+that produces the extra averaging. \\
+8 & 16, 18 & Secure the automorphy and the arithmetic growth: the relative
+trace formula, the sixfold cover of $\mathrm{GL}_5$, the Poincar\'e series,
+and the Iwasawa tower. \\
+9 & 17 & Kill the surviving cohomology: twist by characters, and confront
+what survives. \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\begin{seamnote}{The gap, stated by the community itself}
-An arXiv preprint in 2026 (arXiv:2606.29493\idx{arXiv:2606.29493}) makes the point explicitly:
-the Lean kernel verifies that a formal statement has a proof. It does
-\emph{not} verify that the formal statement means what the accompanying prose
-claims it means. The two are connected by human judgement, and human judgement
-is not mechanised.
+Chapters~\ref{ch:step1} to~\ref{ch:vanishing} take these in order.
 
-Quanta Magazine's coverage of the claim under examination puts the same point
-in a different register:
+\section{What ``multiplicity'' means here, and why it is the crux}
+
+Before the steps, one idea has to be stated precisely, because everything in
+the argument is about it.
+
+In the function-field proof of the Riemann hypothesis for curves over finite
+fields, the argument produces a divisor $D$ on the curve with a point of high
+multiplicity, and the dimension of the space of functions with poles bounded by
+$D$ is large enough to force a contradiction with the count of points. The
+count of points over $\mathbb{F}_q$ is $q + O(\sqrt q)$; the dimension of the
+function space is a geometric quantity; and the *product* of the two is what
+creates the bound. Formally the ambient object is a product of a geometric
+factor and an arithmetic factor, and multiplicity is what the two factors
+multiply.
+
+Over the integers the arithmetic factor is $\operatorname{Spec}\mathbb{Z}$ and
+the product is one-dimensional. The dimension count has nothing to multiply
+against.
+
+\begin{quote}
+\textbf{The idea of the whole method.} Find an operation that behaves, for the
+purposes of the dimension count, like the missing arithmetic factor: an
+operation that multiplies the size of the relevant space by a controllable
+factor. The theta lift is that operation. Each application of it is claimed to
+multiply the space by one further unit of multiplicity, and the chain
+$U(X_0) \to \cdots \to U(X_m)$ is the attempt to apply it enough times.
+\end{quote}
+
+That is the sentence the remark offers as its one-line summary, and it is
+genuinely the crux:
 
 \begin{quote}
 \small
-``Lean, besides being a mathematical language, is also a computer programming
-language, and can itself contain bugs. It can also be used to play sneaky tricks
-by, for example, redefining symbols used in a proof to make something
-trivially true. The first step in verifying a proof in Lean is to make sure it
-`compiles.'\,''
-\end{quote}
-\end{seamnote}
-
-The ``sneaky trick'' Quanta describes is worth spelling out, because it has a
-name in the literature and because it is exactly the failure mode that a
-careful reader must watch for.
-
-Suppose a development defines its own function
-\begin{Verbatim}
-def myZeta (s : Complex) : Complex := 1
-\end{Verbatim}
-and then proves that \texttt{myZeta} has no zeros in $\Re s > 1/2$. The proof
-compiles. The axiom list is clean. And the theorem is true but irrelevant,
-because \texttt{myZeta} is not the Riemann zeta function. If somewhere in the
-175{,}000 files the symbol used by the top-level theorem resolves to a
-definition that is not Mathlib's \texttt{riemannZeta}, the entire artifact
-proves nothing about the Riemann hypothesis while compiling perfectly.
-
-\begin{quote}
-This is not a hypothetical worry about an adversary. It is the ordinary state
-of affairs in a large development, where names are overloaded, where a local
-notation shadows a global one, and where a definition is introduced early and
-never revisited. The defence is not paranoia; it is reading.
+``for the von Mangoldt sum of length $X$, Claude's suggested $\sqrt{\ }$ length of
+chain of theta lifts, in view of each mimicking multiplicity, was $X$. (And yet,
+what else could it be?)''
 \end{quote}
 
-The defence against the specific worry of this artifact is Chapter~2's
-finding: the statement \texttt{RiemannHypothesis} is \emph{Mathlib's own},
-imported from \code{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}, and not
-defined in the submission. That closes the most catastrophic version of the
-attack. It does not close the version where an intermediate input is a
-restatement of the hard content under a classical name --- which is
-Chapter~8's subject.
+The parenthetical is the author recording that he cannot explain why the
+natural length should be $\sqrt{X}$. It is worth being careful: $\sqrt{X}$ is
+the right answer for a reason that can be stated. If each lift multiplies the
+space by a factor $\lambda$, then after $m$ lifts the space has grown by
+$\lambda^m$, and to dominate a sum of length $X$ one needs $\lambda^m \ge X$;
+with $\lambda$ a fixed constant, $m \ge \log X / \log \lambda$. A chain of
+length $\sqrt{X}$ is what one gets if $\lambda$ is itself allowed to grow with
+$X$ --- that is, if each lift buys a *multiplicative* rather than an
+*additive* amount of multiplicity. That is a much stronger claim than ``each
+lift wins multiplicity $m$'' and it is the claim that carries the whole
+argument.
 
-\section{The full stack: what a serious verification looks like}
-
-The community has developed machinery for this, and the mirror's README
-recommends most of it. The layers, from weakest to strongest:
+So the reader should hold two quantities apart:
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
   itemsep=6pt]
-\item[The elaboration.] Lean's elaborator turns the source into kernel terms. It
-is trusted for \emph{well-typedness}, not for correctness, and it is the largest
-and least audited part of the system.
-
-\item[The kernel.] The kernel checks the terms. This is the layer that does the
-real work, and it is small.
-
-\item[Independent kernel replay.] A separate implementation re-checks the
-compiled environment. The tooling here includes \texttt{lean4export}, which
-exports a compact representation of a compiled environment, \texttt{landrun}\idx{landrun},
-which runs Lean in a sandbox, and independent kernel implementations such as
-NanoDa. The Lean FRO (Formalisation and Reasoning Overview) documents this
-toolchain; its tools are cited in the arXiv literature as ``Lean FRO,
-2025/2026''.
-
-\item[Third-party checking.] \texttt{lean4checker}\idx{lean4checker} exists so that a party
-untrusted by the original authors can verify a compiled environment without
-trusting the elaborator or any of the repository's own metaprogramming.
-
-\item[The registry.] The Palomar\idx{Palomar registry} registry records formalisations along with
-their metadata and their verification status, so that claims about a
-formalisation can be checked against a third-party record rather than against
-the authors' own README.
+\item[\textbf{Multiplicity gained}] How much the function space grows per lift.
+This is what the lift chain is supposed to provide.
+\item[\textbf{Cost}] What the lift spends --- denominators, levels, the size of
+the parameters --- and therefore how much of the analytic budget is gone
+before the argument reaches the point where the bound is read off.
 \end{description}
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig_architecture.pdf}
-\caption{Three distinct questions sit behind the word ``verified''. The first
-two are mechanical and are answered by a compiler and an axiom check. The third
-is mathematical, is the one that matters, and is answered by a person reading
-statements.}
-\label{fig:architecture}
-\end{figure}
+Chapter~\ref{ch:budget} computes the second, and the result is the
+two-thirds figure.
 
-\section{Statement review: the part that is not mechanised}
+\section{How the argument is anchored in the source}
 
-What is the human process that closes the gap? In the Lean community it is
-called \emph{statement review}\idx{statement review}, and it has a recognisable shape.
+Every step above has a corresponding statement in the submitted development.
+The mapping is:
 
-\begin{enumerate}
-\item \textbf{Read the statement, not the proof.} The reviewer checks that the
-theorem as formalised says what the theorem as claimed says. Usually this
-means: does the formal statement have the right quantifiers, the right
-hypotheses, the right exceptions?
-\item \textbf{Check that the statement is not vacuous.} A statement proved by
-contradiction from an inconsistent hypothesis proves nothing. So the reviewer
-checks that the hypotheses of the top-level theorem are actually satisfiable,
-and that the theorem is not an artefact of a definition that was quietly
-narrowed.
-\item \textbf{Check that the named inputs are the classical inputs.} When a
-development names a lemma \texttt{siegelWeil\_k}, the reviewer asks: is this
-the Siegel--Weil formula, or a statement that happens to be named after it and
-is weaker?
-\item \textbf{Check that the method actually applies.} A lemma may be a faithful
-formalisation of a classical theorem and still be applied in a setting where the
-classical theorem does not hold --- a CM field with a prime that ramifies, a
-representation that is not cuspidal, a lift that is not in the orthogonal
-complement.
-\end{enumerate}
+\begin{center}
+\begin{tabular}{@{}p{0.22\textwidth}p{0.66\textwidth}@{}}
+\toprule
+\textbf{Step} & \textbf{Where the mathematics lives in the development} \\
+\midrule
+1 & \code{Development/WeilBound/RepresentationTheoryGL/SiegelWeilProof/} and
+\code{.../ThetaLifts/LeviDeterminants/} \\
+2 & \code{Formalism/SharpRestriction/Divisibility/} \\
+3 & \code{Development/WeilBound/RepresentationTheoryGL/RegularisedSiegelWeil/} \\
+4 & \code{Development/WeilBound/ThetaLifts/} and
+\code{Formalism/ThetaLiftIndependence/} \\
+5 & \code{Formalism/SharpRestriction/Divisibility/ChainOperators/} \\
+6 & \code{Formalism/SharpRestriction/Divisibility/FunctionModelRallisFromInputs.lean} \\
+7 & \code{Formalism/BehrendSets/} \\
+8 & \code{Development/WeilBound/CoreStatements/AutomorphicKernels/} \\
+9 & \code{Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean} \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-For a 175{,}187-file development, this is a serious undertaking. The relevant
-scale is not ``read the paper''; it is ``read the paper and then read the
-machine-checked version of every load-bearing lemma in it, against the
-classical statements''. That is why the audit in Chapter~8 is organised around
-identifying the load-bearing inputs rather than around reading the code.
+Chapter~\ref{ch:map} gives this in full, with the specific declarations.
+
+\section{What this part does and does not claim}
+
+It claims to explain the method as the author describes it and as the
+development formalises it, in enough detail that a reader with a mathematics
+background can follow the argument's structure and see exactly where each
+step's weight comes from.
+
+It does not claim that the argument is correct. Several of the steps are open
+problems in the literature as of this writing, one step is known to the author
+himself to have a ceiling, and the formalisation has never been audited by an
+outside party. What this part does is make the claim \emph{legible}, which is
+the precondition for anyone judging it --- including the reader.
 
 \begin{keytakeaways}
-
-\item A proof assistant mechanically checks a finite term against inference
-rules. It does not check that the proposition being proved is the interesting
-one.
-\item \texttt{\#print axioms} is the standard check, and a clean result lists
-only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The
-submission's axiom list is clean, which is a real and necessary result.
-\item Compilation establishes that a term of type \texttt{RiemannHypothesis}
-exists and depends on nothing unproved. It does not establish that the
-statement of that type means what the claim says it means. That step is
-human, and it is called statement review.
-\item The community's tooling for going further --- independent kernel replay
-via \texttt{lean4export} and NanoDa, sandboxed execution via
-\texttt{landrun}, third-party checking via \texttt{lean4checker}, and the
-Palomar registry --- is aimed squarely at the mechanical layers. None of it
-reaches the mathematical one.
+\item The method is one sentence: manufacture the missing arithmetic
+multiplicity by iterating theta lifts, convert it to a Weil positivity by a
+determinant, convert that to a bound on the zeros, and kill the leftover
+cohomology by twisting.
+\item It has nine steps, and each step has a precise statement in the
+submitted development.
+\item Multiplicity gained and cost paid are two different quantities; the
+argument's difficulty is concentrated in their ratio.
+\item The chain length $\sqrt{X}$ is what one gets if each lift buys a
+multiplicative rather than an additive amount of multiplicity --- a strong
+claim, and the one that carries the argument.
 \end{keytakeaways}

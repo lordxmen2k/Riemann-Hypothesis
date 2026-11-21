@@ -1,227 +1,226 @@
 % =====================================================================
-%  Chapter 15 — The Verdict, Part III
+%  Chapter 15 — Step 9
 % =====================================================================
 
-\chapter{What Would Change}
-\label{ch:consequences}
+\chapter{Step Nine: The Vanishing Step, and Where the Chain Stops}
+\label{ch:vanishing}
 
-This chapter closes the book by separating two things that the coverage of
-this story has tended to run together: what a proof of the Riemann hypothesis
-would change, and what is already true regardless.
-
-\section{If the claim is confirmed}
-
-Suppose the review of Chapter~14's Phase 3 succeeds. What follows?
-
-\subsection{For number theory}
-
-The consequences would be transformative and would take decades to absorb.
-
-\begin{itemize}
-\item \textbf{Error terms.} The prime number theorem would acquire the
-$\operatorname{Li}(x) + O(x^{1/2}\log x)$ error term, and the Riemann explicit
-formula would become an exact computational instrument rather than an
-asymptotic one.
-\item \textbf{Analytic number theory.} The whole apparatus built on
-zero-free regions --- de la Vallée Poussin's method, Vinogradov's bounds,
-the zero-density estimates --- would be re-based on a foundation that no
-longer needs the $\exp(-c\sqrt{\log x})$ refinements, and a large part of the
-subject's technical complexity would become unnecessary.
-\item \textbf{L-functions.} For every Dirichlet $L$-function and, under GRH,
-for the Dedekind zeta functions of number fields, the zero-free region would
-be the critical line exactly. Explicit formulas for primes in arithmetic
-progressions, in short intervals, and almost all of the analytic theory of
-$L$-functions would sharpen correspondingly.
-\item \textbf{Randomness.} The Katz--Sarnak\idx{Katz--Sarnak} programme, which proves
-distributional results for primes \emph{under} RH, would become unconditional.
-\item \textbf{Higher $L$-functions.} Under GRH, the same reflection argument
-that this book traced in Chapter~7 --- non-vanishing to the right of the line
-plus the functional equation gives zeros on the line --- would extend to
-automorphic $L$-functions via the analogue of the functional equation, and
-the Artin holomorphy\idx{Artin holomorphy conjecture} conjecture would become substantially more tractable.
-\end{itemize}
-
-\subsection{For mathematics as a subject}
-
-The more interesting consequences are not about the Riemann hypothesis.
+The last step is the one the remark flags as unsolved. Item 17:
 
 \begin{quote}
-\textbf{A proof of RH by machine, reviewed by humans, would be the first
-instance of a major mathematical theorem established in this manner.}
+\small
+``for the classes in $H^1_o(\mathbb{Q}_\ell/\mathbb{Z}_\ell(-e))$ that we
+couldn't kill by twisting, fight for a significant weakening of Vandiver.''
 \end{quote}
 
-The historical precedents are worth remembering. The four-colour theorem was
-proved with a computer check in 1976, and it took decades for the community
-to settle what that meant --- whether a computer-assisted proof is a proof,
-and what standards apply to the checking. The eventual consensus was yes, with
-conditions: the check must be independently reproducible, and the argument
-must be written up in a form a reader can evaluate.
+Its footnote says more:
 
-The same conditions apply here, and the machinery exists: the Lean FRO's
-tools, \texttt{lean4checker}, the Palomar registry, the \texttt{Comparator}
-protocol. What is missing is not a mechanism but a review.
+\begin{quote}
+\small
+``This is still pretty strong!! I believe vanishing of a number of $K$-groups
+of $\mathbb{Z}$ follows, and cyclicity up to 100ish maybe? I had Lichtenbaum,
+so I knew we would have a lot of slack in fighting these $K$'s.''
+\end{quote}
 
-\subsection{For AI and mathematical research}
+This chapter takes that step at face value, explains the mechanism it invokes,
+and states precisely why it is the place where the chain does not close.
 
-The episode is also a substantial data point about AI in mathematics, and
-the owner of this book's remit is as much about that as about the hypothesis.
+\section{What has to be killed, and why}
 
-The sequence of events is unusual and worth taking seriously in both
-directions.
+The method's arithmetic output is a Selmer group --- a group of elements of a
+Galois module satisfying local conditions at every place. To conclude a
+statement about $L$-functions from Selmer group computations, one needs the
+Selmer group to be zero, or to have a known structure.
+
+Selmer groups are killed by twisting. If $\chi$ is a character of the relevant
+Galois group, then twisting the module by $\chi$ gives a new Selmer group, and
+the two are related by a cup product with $\chi$. In the ideal case, the cup
+product with a non-trivial character annihilates everything, and the twisted
+Selmer group is zero --- so the original one is also zero.
+
+The obstruction is the part that survives. And the part that survives is
+characterised by the $H^1_o$ notation: in Iwasawa-theoretic usage, $H^1$ splits
+into $H^1_f$ (the part that dies at the primes above $p$) and $H^1_o$ (the
+part that does not), and it is the latter that is hard. The subscript $o$ is
+for "odd" in the sense of being the obstruction-theoretic part, not for parity.
+
+The remark's statement is therefore: everything that can be killed by twisting
+has been killed; what remains is $H^1_o(\mathbb{Q}_\ell/\mathbb{Z}_\ell(-e))$,
+and killing that would require a result about Vandiver's conjecture.
+
+\section{Vandiver's conjecture, and what a weakening would buy}
+
+\begin{quote}
+\textbf{Vandiver's conjecture.} The plus part of the class group of the maximal
+real subfield $\mathbb{Q}(\zeta_m)^+$ has odd order, for every $m$. It is
+known for a great many individual $m$; it has been verified computationally for
+all $m$ with $\varphi(m) < 2^{31}$ (Hart, Harvey and Ong,
+\emph{Mathematics of Computation} \textbf{86} (2017), 3031--3049, DOI
+\texttt{10.1090/mcom/3211}, arXiv:1605.02398). It remains open.
+\end{quote}
+
+Vandiver's conjecture is closely tied to the Iwasawa theory of cyclotomic
+$\mathbb{Z}_p$-extensions, which is exactly the setting of this method. So
+the obstruction is not somewhere else in the landscape: it is in the theory
+the method itself uses.
+
+A "significant weakening of Vandiver" would be a statement that is implied by
+Vandiver, holds in more cases, or is otherwise weaker --- something that would
+suffice to kill the surviving $H^1_o$ classes. The remark's phrase "fight for"
+is doing real work: it means the author did not have such a weakening and was
+looking for one.
+
+\begin{seamnote}{Where the vanishing is formalised}
+The development has the statement. In
+\code{Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean},
+in the namespace \code{GlobalTheory.Ord2}, the structure \code{admitted} carries
+the admissibility condition and the statement is
+
+{\footnotesize
+\begin{verbatim}
+def VanishOrd : Prop :=
+  forall (l : Nat) [Fact l.Prime], l != 2 ->
+forall (Omega : Type) [Field Omega] [Algebra Rat Omega]
+      [IsAlgClosure Rat Omega]
+      (iota : Qbar l ~+*~> Complex) (e : Nat), 1 <= e ->
+      forall W : R2 Omega l, admitted iota e W ->
+        BlochKatoSelmerVanishes l (Loc.colRep W)
+\end{verbatim}
+}
+\end{seamnote}
+
+Read it: for every odd prime $\ell$, every CM field $\Omega$, every
+admissible representation $W$ of rank two over the $\ell$-th cyclotomic
+extension, the Bloch--Kato Selmer group of $W$ vanishes.
+
+And the admissibility condition is the seven-field structure of
+\code{admitted}: continuity, determinant $\pm 1$, oddness under conjugation,
+irreducibility, level away from $\ell$, the modular condition (a newform $f$ and
+a character $\varphi$ satisfying \code{KillsMu} and \code{Newform.Att}), and
+the flag condition at a place above $\ell$.
+
+\begin{quote}
+\textbf{The honest observation.} \code{VanishOrd} is a genuine, precise,
+non-trivial statement, and it is exactly the shape of the classical Iwasawa
+theoretic vanishing results. It is consumed in the development. What the audit
+of Chapter~\ref{ch:inputs} could not establish is where the instances of
+\code{admitted} are constructed --- and that is precisely the question of
+whether the $H^1_o$ classes are killed.
+\end{quote}
+
+\section{The exact point at which the chain does not close}
+
+Let us put the whole method together and locate the break precisely.
+
+\begin{center}
+\begin{tabular}{@{}lp{0.66\textwidth}@{}}
+\toprule
+\textbf{Step} & \textbf{Status} \\
+\midrule
+1 Stepanov's ancestor & Done, and its replacement identified. \\
+2 Divisibility engine & Classical; formalised in \code{SharpRestriction/Divisibility}. \\
+3 Sign-only Weil argument & The novel part; the \emph{natively-automorphic}
+determinant. \\
+4 Theta lift chain & Formalised, with multiplicativity of gain and of cost
+established. \\
+5 Budget & The two-thirds ceiling, computed. \\
+6 Rallis seesaw & Formalised; the period becomes character-independent. \\
+7 Averaging & Behrend's construction and the equidistribution, formalised. \\
+8 Automorphy and tower & The sixfold cover of $\mathrm{GL}_5$; the most
+opaque step. \\
+9 Vanishing & \textbf{The obstruction.} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The break is at step 9, and it is not a small break. It is the point at which
+the method needs a result that does not exist: a statement about the
+$p$-part of the class groups of cyclotomic fields, strong enough to kill the
+$Iwasawa$-theoretic obstruction classes, weaker than Vandiver but still
+unproved.
+
+\begin{quote}
+Everything before step 9 is a matter of doing the mathematics well. Step 9 is
+a matter of proving something new. Those are different kinds of difficulty
+and it is worth not conflating them.
+\end{quote}
+
+\section{What the remark's footnote tells us}
+
+The footnote to item 17 is worth reading twice:
+
+\begin{quote}
+\small
+``This is still pretty strong!! I believe vanishing of a number of $K$-groups
+of $\mathbb{Z}$ follows, and cyclicity up to 100ish maybe? I had Lichtenbaum,
+so I knew we would have a lot of slack in fighting these $K$'s.''
+\end{quote}
+
+Three things:
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\textbf{What it shows.}] A formal proof of the most famous open problem
-in mathematics was, at least in outline, produced by a collaboration between a
-specialist and a large language model, in a form that a compiler accepts. The
-author's own account is that the human supplied the mathematical steering ---
-finding the toy setting where two ideas combined --- and the model supplied
-breadth and execution.
-
-\item[\textbf{What it does not show.}] That the model found the proof. The
-author's account is the opposite: the human recognised the key idea, and the
-model was faster at execution than at the part the author could not follow.
-And the claim has not been verified. A formal artifact that compiles is a
-\emph{candidate} for a proof, not a proof, and the author's own decision to
-publish only Lean has been correctly described by commentators as making the
-claim unfalsifiable by discourse --- the code either checks or it does not ---
-which is exactly why the statement review is the whole game.
-
-\item[\textbf{The general lesson.}] The valuable output here was not a
-finished theorem but a \emph{structured, checkable, 17-million-line candidate}
-that a human could not have produced at all, and that a human with the right
-expertise might still turn into a theorem. That is a different and more
-modest claim than ``AI solved the Riemann hypothesis'', and it may be the
-more important one. The August 2026 two-thirds theorem is the cleanest
-evidence: it is a genuine, verified, independently reproduced mathematical
-result of AI-assisted work, and it was not a proof of RH.
+  itemsep=6pt]
+\item[``This is still pretty strong!!''] The author is describing what the
+\emph{weakening} would be: a statement about the vanishing of some
+$K$-groups of $\mathbb{Z}$ and about cyclicity up to about $100$. Those are
+statements about algebraic $K$-theory, and they are the kind of statement that
+Lichtenbaum's conjecture predicts.
+\item[``I had Lichtenbaum''] The author is invoking Lichtenbaum, which is the
+general conjecture relating $K$-groups to $p$-adic $L$-functions. That is a
+\emph{conjecture}, not a theorem, and in the relevant generality it is open.
+\item[``a lot of slack in fighting these $K$'s''] The author's assessment is
+that a weaker statement suffices --- that the obstruction can be killed with
+less than the full conjecture.
 \end{description}
 
-\section{If the claim is refuted}
-
-Suppose instead that the review finds that the formalized statement is
-weaker than advertised, or that an instance of \texttt{admitted} is assumed
-rather than constructed.
-
-That would be a genuinely valuable outcome, and it is worth being clear that
-it would not be a vindication of scepticism. It would mean that a
-175-thousand-file, axiom-free, sorry-free formalisation of a substantial
-mathematical programme had a defect --- which is a normal, expected,
-``Tuesday'' outcome in the formalisation literature, and which the mirror's
-own status line anticipated.
-
-It would also not mean that the Riemann hypothesis is still as far from
-proved as it was in 2025. The August 2026 two-thirds theorem would remain a
-genuine result. The formalisation would remain a substantial piece of work
-that a community could build on. And the framework --- the
-theta-lift-and-multiplicity programme, the Weil--Weil positivity engine, the
-Rallis seesaw and Iwasawa apparatus, all of it formalised --- would remain
-available.
+So the author's position at the end of the timeline is: the obstruction is real,
+Vandiver is too strong to be proved here, but a weaker statement might
+suffice, and the author is ``fighting for'' it.
 
 \begin{quote}
-This is worth saying because the history of the subject is full of cases where
-a failed proof attempt left behind the tools for a later success. Bombieri's
-proof of the Weil bound for function fields was preceded by years of
-fruitless work on the error term. The theory of $L$-functions was built by
-people who were trying and failing to prove the Riemann hypothesis.
+And then item 20, dated the next day, reads simply ``GRH''.
 \end{quote}
 
-\section{What is true regardless}
+The gap between ``fighting for a significant weakening of Vandiver'' and
+``GRH'' is one day of calendar time. The remark does not say what happened in
+that day.
 
-The book's closing claim is this. Whatever happens to the claim, the following
-remain true as of 21 November 2026, and they are the durable content of this
-story.
+\section{The three readings of the gap, restated}
 
-\begin{enumerate}
-\item \textbf{The Riemann hypothesis is not settled.} No proof is established.
-It remains, by the most recent assessments, an open problem, and the
-compilation of an artifact does not change that.
+Chapter~\ref{ch:verdict} sets out the three possibilities in detail. The
+step-by-step account of this part sharpens the third of them.
 
-\item \textbf{More than two thirds of the zeros of $\zeta$ are simple and on
-the critical line.} This is a theorem --- arXiv:2608.13637 --- proved with
-the same machinery, formally verified in Lean, and independently reproduced by
-a third party.
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[\textbf{A. The artifact contains the weakening.}] The
+\code{admitted} instances are constructed in a way that kills the $H^1_o$
+classes without needing Vandiver, and the formalised vanishing theorem
+\code{VanishOrd} is the consequence. The remark's summary is simply silent
+about it.
+\item[\textbf{B. The remark is out of date.}] On 15 November the method
+stopped at step 9 as described; on 16 November something else had been found
+--- a different construction, a sharper estimate, a new idea --- and the
+remark records the older state because the summary was written earlier.
+\item[\textbf{C. The formal theorem is weaker than the headline.}] The
+development proves the two-thirds result, or something close to it, and the
+top-level theorem is obtained by a step that the reader has not checked.
+\end{description}
 
-\item \textbf{The method works.} A theta-lift-based approach to Weil positivity
-over the integers, producing rigorous results about the zeros of $\zeta$, is
-now a demonstrated technique rather than a proposal. That is a genuine change
-in the subject's toolkit.
-
-\item \textbf{Formal verification at this scale is feasible.} 17.4 million
-lines, an axiom-free axiom set, two independent compilations, and a
-development that a specialist could plausibly review. The scale of the
-artifact is not the obstacle to verification; the review is.
-
-\item \textbf{The evaluation criteria are clear, and they are met by nobody
-else yet.} Compile, check the axioms, replay the kernel, and then read the
-statements. The first three have been done. The fourth has not.
-\end{enumerate}
-
-\section{A closing word about how to read announcements}
-
-The most durable thing this book can offer a reader is not a verdict on one
-claim. It is a procedure.
-
-\begin{quote}
-When a proof of something important arrives, and it arrives as code, ask five
-questions in order.
-
-\textbf{Does it compile, and did more than one person do it?}\idx{evaluation procedure} If not, nothing
-else matters.
-
-\textbf{What are its axioms?} If the list is not Lean's three standard ones,
-stop.
-
-\textbf{Is the statement the right one?} Not ``is it a statement about
-$\zeta$'' --- is it \emph{Mathlib's} $\zeta$, and is it the full strength, or
-a weakened variant that happens to be provable?
-
-\textbf{What are the load-bearing inputs, and what are they, really?} Find the
-five or six theorems that everything else depends on, and read their
-\emph{statements} against the literature. Not their proofs --- their
-statements.
-
-\textbf{Does the author's account match the artifact?} Find the place where
-the claim's own narrative and the code diverge, and resolve it.
-\end{quote}
-
-Applied to this case, the first two questions are answered, the third is
-answered, the fourth is the open work, and the fifth is where the two
-documents come apart. That is the state of the claim, and it is a perfectly
-good thing for a reader to be able to say.
+The step-by-step account gives the third reading its sharpest form. It is not
+that some input is secretly weak --- it is that there is a specific, named
+step in the argument, step 9, at which the method requires an open result, and
+the question is whether the artifact discharges it.
 
 \begin{keytakeaways}
-
-\item If confirmed, RH would transform the error terms in analytic number
-theory and would be the first major theorem established in a machine-checked
-form.
-\item The AI dimension is best stated modestly: a structured, checkable
-candidate was produced that a human could not have produced at all. The
-August two-thirds theorem is the cleanest verified example.
-\item If refuted, the outcome would still be valuable: the formalised
-programme would remain as a toolkit, and the subject's history is full of
-cases where a failed attempt supplied the tools for a later success.
-\item What is true regardless: RH is not settled; more than two thirds of the
-zeros are simple and on the line; the method works; verification at this
-scale is feasible; and the evaluation procedure is known.
+\item The method kills cohomology by twisting; what survives the twisting is
+the $H^1_o$ part, and killing that is the obstruction.
+\item The stated remedy is a significant weakening of Vandiver's conjecture ---
+which is open, and whose relevant analogue (Lichtenbaum) is also open.
+\item The development states the vanishing precisely, as \code{VanishOrd}, with
+a seven-field admissibility condition \code{admitted}; the question the audit
+could not settle is whether the instances of that condition are constructed
+in a way that kills the obstruction.
+\item Everything before this step is hard mathematics; this step requires a new
+theorem. The remark's one-day gap between ``fighting for'' a weakening and
+``GRH'' is where the claim's fate sits.
 \end{keytakeaways}
-
-\vspace{12pt}
-\begin{quote}
-\small\itshape
-``It is natural to feel that this is an end, in my case a loss of a principal
-guiding light, but what I saw during the course of progress so amazed me that
-I believe it is one dawn across science of something far greater.''
-\par
-\vspace{6pt}
-\hfill --- Levent Alpöge, \emph{Remark}, 2026
-\end{quote}
-
-\vspace{8pt}
-\begin{quote}
-\small\itshape
-This book does not know whether the dawn has come. It has established what it
-would take to find out, and it has established that the question is being
-asked in a form that can be answered --- which is more than could be said for
-almost every previous attempt at this problem.
-\end{quote}

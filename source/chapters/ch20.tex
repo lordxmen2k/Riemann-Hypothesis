@@ -1,0 +1,199 @@
+% =====================================================================
+%  Chapter 9 — The Verification, Part IV
+% =====================================================================
+
+\chapter{The Static Scan}
+\label{ch:scan}
+
+The scan is the cheapest thing one can do to a formalisation, and it is the
+thing most often over-claimed. This chapter reports the scan results for the
+submission, states precisely what they establish, and explains --- with a
+worked example --- why they cannot settle the question.
+
+\section{Method}
+
+The artifact was extracted locally and scanned in full. The scans were run
+with \texttt{rg} (ripgrep\idx{static scan}) over the complete tree of 175{,}187 \texttt{.lean}
+files, with \texttt{--no-ignore} so that nothing was skipped by any ignore
+rule. No sampling was used. The patterns and results are in
+\tabref{tab:scan}.
+
+\begin{table}[H]
+\centering
+\caption{Static scan of the complete extraction.}
+\label{tab:scan}
+\begin{tabular}{@{}p{0.40\textwidth}r r@{}}
+\toprule
+\textbf{Pattern} & \textbf{This book's scan} & \textbf{Mirror's scan} \\
+\midrule
+\texttt{axiom} declarations        & 0 & 0 \\
+\texttt{sorry}                     & 0 & 0 \\
+\texttt{admit}\idx{admit}                     & --- & 0 \\
+\texttt{native\_decide}            & --- & 0 \\
+\texttt{unsafe} / \texttt{implemented\_by} / \texttt{@[extern]} & --- & 0 \\
+\texttt{opaque} declarations       & 0 & 0 \\
+\code{set\_option maxHeartbeats 0}\idx{maxHeartbeats} & --- & 4 files \\
+custom \texttt{macro} / \texttt{elab} / \texttt{syntax} & --- & 22 files \\
+\texttt{addDecl}\idx{addDecl}                   & --- & 1 file \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The two scans agree on everything they both cover. This is a good sign: two
+independent scans, by different parties with different tooling, produce the
+same numbers on the two checks that matter most.
+
+\section{What the scan establishes}
+
+Three things, and they are real.
+
+\begin{quote}
+\textbf{There is no unproved axiom.} The development does not begin by
+declaring the Riemann hypothesis to be true. Whatever else is going on, it is
+not the trivial kind of fraud.
+
+\textbf{There is no admitted hole.} No \texttt{sorry}, no \texttt{admit}, no
+\texttt{native\_decide} whose soundness depends on the compiler. Every theorem
+in the development is, in Lean's sense, closed.
+
+\textbf{There is no custom kernel.} No \texttt{unsafe} declarations, no
+\texttt{implemented\_by}, no \texttt{opaque} declarations, no
+\texttt{addDecl} outside the single file the mirror flags. The kernel is
+checking what it thinks it is checking.
+\end{quote}
+
+\section{What the scan does not establish}
+
+And here is the part that matters. A scan is a search for a \emph{marker}. The
+markers above are markers of a specific, common failure mode. The failure mode
+they detect is not the one most likely to be present here.
+
+\begin{deeper}{A worked example of the failure mode the scan cannot see}
+Suppose a formalisation wants to prove that the Riemann zeta function has no
+zeros in $\Re s > 1/2$. There is a legitimate-looking way to organise this:
+
+\begin{Verbatim}
+-- A hypothesis bundle, named for a classical theorem
+structure WeilBoundHolds (f : Complex → Complex) : Prop where
+  positivity : ∀ (g : Complex → Complex), admissible g →
+    sumZeros f g >= 0
+
+-- The "theorem" that does the work
+theorem zetaHasNoZerosRightOfHalf (h : WeilBoundHolds riemannZeta) :
+    ∀ s : Complex, 1/2 < s.re → riemannZeta s ≠ 0 := by
+  intro s hs
+  exact h.positivity _ admissible s hs
+\end{Verbatim}
+
+This compiles. The axiom list is clean. There is no \texttt{sorry}. The
+structure is named after a classical theorem. And the development now has a
+theorem called \code{zetaHasNoZerosRightOfHalf} whose proof is one line long.
+
+But what has been shown is: \emph{if the Weil positivity statement holds for
+$\zeta$, then $\zeta$ has no zeros to the right of the critical line}. The
+content is entirely in the hypothesis, and the hypothesis has been given a
+friendly name.
+
+To detect this, the reader must do the thing the scan cannot do: \emph{read
+the statement of the hypothesis and ask whether it is the classical theorem.}
+In the case above, the statement of the hypothesis is \emph{not} the classical
+Weil criterion --- the classical criterion is a positivity condition on a
+quadratic form $\sum_\rho \hat g(\rho)\hat g(1-\rho) \ge 0$, and the hypothesis
+above says something involving a sum over zeros of an arbitrary function, which
+is a different statement, stronger in some directions and meaningless in
+others.
+\end{deeper}
+
+This is the failure mode that matters for the artifact under examination, and
+it is why Chapter~8 spends its effort on \emph{statements} rather than on
+proof terms.
+
+\begin{keytakeaways}
+
+\item Two independent scans agree: zero axioms, zero \texttt{sorry}, zero
+\texttt{native\_decide}, zero custom kernel escapes.
+\item A scan searches for markers of a specific failure mode. The failure mode
+most likely to be present in a large, sophisticated development is a
+\emph{weakened hypothesis statement wearing a classical name}, and that
+failure mode leaves no marker at all.
+\item A theorem whose proof is one line long, whose hypothesis is a structure
+with a classical name, and whose axiom list is clean, has told you nothing
+until you have read the structure's fields against the published theorem.
+\end{keytakeaways}
+
+\section{The scan is nevertheless worth doing, and here is why}
+
+It would be wrong to conclude that the scan was wasted. Three reasons.
+
+\begin{enumerate}
+\item \textbf{It is a precondition, and it was not a foregone conclusion.} It
+is entirely possible --- and it has happened in published work --- for a
+formalisation to smuggle in an axiom, or to use \texttt{native\_decide}, or
+to depend on a custom kernel extension. The scan rules all of these out at
+zero cost.
+
+\item \textbf{It bounds the search space for the human work.} A reader who
+knows the axiom list is clean and there is no \texttt{sorry} knows that the
+remaining work is entirely in the statements, and can direct their attention
+there. This is not a small saving on a 175-thousand-file development.
+
+\item \textbf{It is reproducible, and reproducibility is the point.} Any
+reader with the archive and twenty minutes can run these three commands and
+get the same answers. A book that reports its scan results, with the commands
+and the tree size, is offering the reader a check rather than a conclusion.
+\end{enumerate}
+
+\section{One specific thing to look at first}
+
+The mirror's scan flags three items that this book does not treat as evidence
+of anything, but which are the right place to start a human audit, for one
+reason: they are the places where the \emph{elaborator} rather than the
+kernel does something unusual.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=5pt]
+\item[\texttt{addDecl}, one file.] \texttt{addDecl} injects a declaration into
+the environment directly, bypassing the elaborator's usual checks. It is used
+legitimately --- for instance to register a \texttt{notation} or an
+\texttt{instance} --- but a reader who finds it should read the surrounding
+code and satisfy themselves that it is not defining something that should have
+been a theorem.
+\item[Custom \texttt{macro}/\texttt{elab}/\texttt{syntax}, 22 files.] A
+custom elaborator macro can expand a proof obligation into something trivial.
+The defence against this is the same as the defence against any other form of
+the attack: read it. But it must be read.
+\item[\code{set\_option maxHeartbeats 0}, four files.] This disables the
+elaborator's heartbeat limit for a declaration, which usually means the
+declaration is expensive to elaborate --- a large \texttt{simp} set, a big
+\texttt{decide}, or an exhaustive search. It is not a soundness problem. It is
+a place where the proof term might be large and might not have been inspected
+closely.
+\end{description}
+
+None of these is a smoking gun. All three are reasonable things for a
+175-thousand-file development to contain. They are listed here because the
+point of listing them is that they are checkable, and because a book that
+reported only the reassuring results would not be doing its job.
+
+\section{The scan this book could not run}
+
+There is one check that would strengthen everything above, and this book
+could not perform it: the axiom check itself.
+
+Running \code{\#print axioms riemannHypothesis} requires a working Lean
+installation with the project compiled, because the command has to elaborate
+the theorem's transitive dependencies. The static scan establishes that
+there is no \texttt{axiom} keyword anywhere in the source, which is
+\emph{almost} the same thing --- but not quite. A dependency could in principle
+introduce an axiom outside the source tree, in Mathlib itself, and the
+development pins Mathlib at a specific revision precisely so that this can be
+checked.
+
+In practice the risk is negligible: Mathlib's axiom set is the three standard
+ones, and this is verified as a matter of course in Mathlib's own CI. But
+``verified as a matter of course'' is not the same as ``verified for this
+theorem in this development'', and the difference is exactly the kind of
+difference this book has been insisting on since Chapter~6.
+
+Chapter~10 reports the outcome of the build attempt made for this book, and
+Chapter~14 gives the command.

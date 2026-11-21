@@ -1,7 +1,7 @@
 # Source Ledger
 
 Book: *Is the Riemann Hypothesis Solved?* — Gerald Enrique Nelson Mc Kenzie, Tico Internet LLC,
-2026 First Edition, Apache-2.0, DOI 10.5281/zenodo.23874214.
+2026 First Edition, Apache-2.0, DOI 10.5281/zenodo.24408811.
 
 Every entry below was checked against a primary record (publisher DOI landing page, arXiv API,
 arXiv abstract page, the Lean source tree itself, or the live web page) rather than recalled.

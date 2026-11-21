@@ -1,199 +1,341 @@
 % =====================================================================
-%  Chapter 9 — The Verification, Part IV
+%  Chapter 9 — Step 3
 % =====================================================================
 
-\chapter{The Static Scan}
-\label{ch:scan}
+\chapter{Step Three: The Sign-Only Weil Argument}
+\label{ch:step3}
 
-The scan is the cheapest thing one can do to a formalisation, and it is the
-thing most often over-claimed. This chapter reports the scan results for the
-submission, states precisely what they establish, and explains --- with a
-worked example --- why they cannot settle the question.
+This is the step where the argument stops resembling its ancestor and starts
+doing something new. Everything so far has been preparation; this is where the
+Weil positivity is supposed to come out.
 
-\section{Method}
-
-The artifact was extracted locally and scanned in full. The scans were run
-with \texttt{rg} (ripgrep\idx{static scan}) over the complete tree of 175{,}187 \texttt{.lean}
-files, with \texttt{--no-ignore} so that nothing was skipped by any ignore
-rule. No sampling was used. The patterns and results are in
-\tabref{tab:scan}.
-
-\begin{table}[H]
-\centering
-\caption{Static scan of the complete extraction.}
-\label{tab:scan}
-\begin{tabular}{@{}p{0.40\textwidth}r r@{}}
-\toprule
-\textbf{Pattern} & \textbf{This book's scan} & \textbf{Mirror's scan} \\
-\midrule
-\texttt{axiom} declarations        & 0 & 0 \\
-\texttt{sorry}                     & 0 & 0 \\
-\texttt{admit}\idx{admit}                     & --- & 0 \\
-\texttt{native\_decide}            & --- & 0 \\
-\texttt{unsafe} / \texttt{implemented\_by} / \texttt{@[extern]} & --- & 0 \\
-\texttt{opaque} declarations       & 0 & 0 \\
-\code{set\_option maxHeartbeats 0}\idx{maxHeartbeats} & --- & 4 files \\
-custom \texttt{macro} / \texttt{elab} / \texttt{syntax} & --- & 22 files \\
-\texttt{addDecl}\idx{addDecl}                   & --- & 1 file \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The two scans agree on everything they both cover. This is a good sign: two
-independent scans, by different parties with different tooling, produce the
-same numbers on the two checks that matter most.
-
-\section{What the scan establishes}
-
-Three things, and they are real.
+The remark's item 5 is the longest sentence in the document, and it is worth
+reproducing in full before unpacking it, because the reader needs to see how
+compressed it is:
 
 \begin{quote}
-\textbf{There is no unproved axiom.} The development does not begin by
-declaring the Riemann hypothesis to be true. Whatever else is going on, it is
-not the trivial kind of fraud.
-
-\textbf{There is no admitted hole.} No \texttt{sorry}, no \texttt{admit}, no
-\texttt{native\_decide} whose soundness depends on the compiler. Every theorem
-in the development is, in Lean's sense, closed.
-
-\textbf{There is no custom kernel.} No \texttt{unsafe} declarations, no
-\texttt{implemented\_by}, no \texttt{opaque} declarations, no
-\texttt{addDecl} outside the single file the mirror flags. The kernel is
-checking what it thinks it is checking.
+\small
+``definitively switch to $\Lambda$ aka $\sum_{n \le X}\Lambda(n)\cdot(X/n-1)_+ -
+X\log X + (1+\gamma)\cdot X$; Guinand--Weil had the sign, variance test function
+trick to $\sum_{h,x_1,\dots,x_k} t(x_1)\cdots t(x_k)\,e_q(h(x_1x_2 + \cdots +
+x_{k-1}x_k))$, sum over $h$ first for the left-hand side, with e.g.\ quadric
+coefficients too Bertini gives a definite sign from middle cohomology, one off
+the one on $M_k$, which is the zero-mode on the right-hand side with $R$
+square-root-quality up to an inch or so as Katz would say by iterating Parseval
+$k$ times, opposite signs meaning no cancellation of inverse roots, QED;
+vectorize to go up dimensions.''
 \end{quote}
 
-\section{What the scan does not establish}
+Four distinct pieces of mathematics are compressed in there. This chapter
+takes them one at a time.
 
-And here is the part that matters. A scan is a search for a \emph{marker}. The
-markers above are markers of a specific, common failure mode. The failure mode
-they detect is not the one most likely to be present here.
+\section{Step 3a: switch to the von Mangoldt sum}
 
-\begin{deeper}{A worked example of the failure mode the scan cannot see}
-Suppose a formalisation wants to prove that the Riemann zeta function has no
-zeros in $\Re s > 1/2$. There is a legitimate-looking way to organise this:
+The first move is to change the object being bounded. Instead of working with
+$\zeta$ directly, the argument works with
+\begin{equation}
+\Psi(X) = \sum_{n \le X}\Lambda(n)\left(\frac{X}{n} - 1\right)_{+} - X\log X + (1+\gamma)X,
+\label{eq:psi}
+\end{equation}
+which is the remark's $\Lambda$-switch and, up to the standard terms, the
+explicit formula for $\psi(X)$ with the zeros replaced by their contribution to
+the error term.
 
-\begin{Verbatim}
--- A hypothesis bundle, named for a classical theorem
-structure WeilBoundHolds (f : Complex → Complex) : Prop where
-  positivity : ∀ (g : Complex → Complex), admissible g →
-    sumZeros f g >= 0
+Here is why this is the right object. Landau's oscillation theorem says
+$\psi(x) - x = \Omega_\pm(x^{\Theta - \varepsilon})$, with $\Theta$ the
+supremum of the real parts of the zeros. The Riemann hypothesis is the
+statement $\Theta = \tfrac12$. So one wants to bound the *oscillation* of
+$\psi$ around its main term $x$, and the explicit formula says that oscillation
+is exactly the sum over the zeros of $\zeta$ of terms of size $x^{\rho}$, with
+$x^{1/2}$ the size of a critical-line zero.
 
--- The "theorem" that does the work
-theorem zetaHasNoZerosRightOfHalf (h : WeilBoundHolds riemannZeta) :
-    ∀ s : Complex, 1/2 < s.re → riemannZeta s ≠ 0 := by
-  intro s hs
-  exact h.positivity _ admissible s hs
-\end{Verbatim}
-
-This compiles. The axiom list is clean. There is no \texttt{sorry}. The
-structure is named after a classical theorem. And the development now has a
-theorem called \code{zetaHasNoZerosRightOfHalf} whose proof is one line long.
-
-But what has been shown is: \emph{if the Weil positivity statement holds for
-$\zeta$, then $\zeta$ has no zeros to the right of the critical line}. The
-content is entirely in the hypothesis, and the hypothesis has been given a
-friendly name.
-
-To detect this, the reader must do the thing the scan cannot do: \emph{read
-the statement of the hypothesis and ask whether it is the classical theorem.}
-In the case above, the statement of the hypothesis is \emph{not} the classical
-Weil criterion --- the classical criterion is a positivity condition on a
-quadratic form $\sum_\rho \hat g(\rho)\hat g(1-\rho) \ge 0$, and the hypothesis
-above says something involving a sum over zeros of an arbitrary function, which
-is a different statement, stronger in some directions and meaningless in
-others.
-\end{deeper}
-
-This is the failure mode that matters for the artifact under examination, and
-it is why Chapter~8 spends its effort on \emph{statements} rather than on
-proof terms.
-
-\begin{keytakeaways}
-
-\item Two independent scans agree: zero axioms, zero \texttt{sorry}, zero
-\texttt{native\_decide}, zero custom kernel escapes.
-\item A scan searches for markers of a specific failure mode. The failure mode
-most likely to be present in a large, sophisticated development is a
-\emph{weakened hypothesis statement wearing a classical name}, and that
-failure mode leaves no marker at all.
-\item A theorem whose proof is one line long, whose hypothesis is a structure
-with a classical name, and whose axiom list is clean, has told you nothing
-until you have read the structure's fields against the published theorem.
-\end{keytakeaways}
-
-\section{The scan is nevertheless worth doing, and here is why}
-
-It would be wrong to conclude that the scan was wasted. Three reasons.
-
-\begin{enumerate}
-\item \textbf{It is a precondition, and it was not a foregone conclusion.} It
-is entirely possible --- and it has happened in published work --- for a
-formalisation to smuggle in an axiom, or to use \texttt{native\_decide}, or
-to depend on a custom kernel extension. The scan rules all of these out at
-zero cost.
-
-\item \textbf{It bounds the search space for the human work.} A reader who
-knows the axiom list is clean and there is no \texttt{sorry} knows that the
-remaining work is entirely in the statements, and can direct their attention
-there. This is not a small saving on a 175-thousand-file development.
-
-\item \textbf{It is reproducible, and reproducibility is the point.} Any
-reader with the archive and twenty minutes can run these three commands and
-get the same answers. A book that reports its scan results, with the commands
-and the tree size, is offering the reader a check rather than a conclusion.
-\end{enumerate}
-
-\section{One specific thing to look at first}
-
-The mirror's scan flags three items that this book does not treat as evidence
-of anything, but which are the right place to start a human audit, for one
-reason: they are the places where the \emph{elaborator} rather than the
-kernel does something unusual.
+Two features of \eqref{eq:psi} are worth noting.
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\texttt{addDecl}, one file.] \texttt{addDecl} injects a declaration into
-the environment directly, bypassing the elaborator's usual checks. It is used
-legitimately --- for instance to register a \texttt{notation} or an
-\texttt{instance} --- but a reader who finds it should read the surrounding
-code and satisfy themselves that it is not defining something that should have
-been a theorem.
-\item[Custom \texttt{macro}/\texttt{elab}/\texttt{syntax}, 22 files.] A
-custom elaborator macro can expand a proof obligation into something trivial.
-The defence against this is the same as the defence against any other form of
-the attack: read it. But it must be read.
-\item[\code{set\_option maxHeartbeats 0}, four files.] This disables the
-elaborator's heartbeat limit for a declaration, which usually means the
-declaration is expensive to elaborate --- a large \texttt{simp} set, a big
-\texttt{decide}, or an exhaustive search. It is not a soundness problem. It is
-a place where the proof term might be large and might not have been inspected
-closely.
+  itemsep=6pt]
+\item[The truncation $(X/n-1)_+$ is the smoothing.] The explicit formula for
+$\psi$ is a distribution statement; the smoothed version replaces the
+$\delta$-functions at the zeros by a smooth kernel, and the answer is then a
+sum over the zeros of a smooth function of the ordinates.
+\item[The $(1+\gamma)X$ term is the residue at $s=1$.] It is there because
+$\zeta$ has a pole; without it the formula would be off by a linear term.
 \end{description}
 
-None of these is a smoking gun. All three are reasonable things for a
-175-thousand-file development to contain. They are listed here because the
-point of listing them is that they are checkable, and because a book that
-reported only the reassuring results would not be doing its job.
+The switch is not a shortcut. It is the standard analytic form of the problem:
+RH is a bound on $\Psi(X)$, and the Weil expression $W$ is the quadratic form
+that encodes exactly such a bound.
 
-\section{The scan this book could not run}
+\section{Step 3b: the test-function trick, and the sum over h first}
 
-There is one check that would strengthen everything above, and this book
-could not perform it: the axiom check itself.
+The remark's phrase ``Guinand--Weil had the sign'' refers to the classical
+asymmetry in the moments of $\zeta$ on the critical line, refined by Guinand:
+for the right test function, the moments of $\zeta$ on the line are smaller
+than those off it, and the difference has a sign. That sign is what a
+positivity argument can use.
 
-Running \code{\#print axioms riemannHypothesis} requires a working Lean
-installation with the project compiled, because the command has to elaborate
-the theorem's transitive dependencies. The static scan establishes that
-there is no \texttt{axiom} keyword anywhere in the source, which is
-\emph{almost} the same thing --- but not quite. A dependency could in principle
-introduce an axiom outside the source tree, in Mathlib itself, and the
-development pins Mathlib at a specific revision precisely so that this can be
-checked.
+The "variance test function trick" is the analytic engine. One chooses a test
+function $t$ and forms
+\begin{equation}
+\sum_{h,\,x_1,\dots,x_k} t(x_1)\cdots t(x_k)\,e_q\!\left(h(x_1x_2 + \cdots + x_{k-1}x_k)\right),
+\label{eq:trick}
+\end{equation}
+where $e_q$ is the additive character of $\mathbb{F}_q$, and the sum runs over
+the coefficients $h$ of a quadratic form and over the coordinates $x_i$.
 
-In practice the risk is negligible: Mathlib's axiom set is the three standard
-ones, and this is verified as a matter of course in Mathlib's own CI. But
-``verified as a matter of course'' is not the same as ``verified for this
-theorem in this development'', and the difference is exactly the kind of
-difference this book has been insisting on since Chapter~6.
+The instruction that makes it work is ``sum over $h$ first''. A quadratic form
+in $k$ variables over $\mathbb{F}_q$ has an associated character sum, and
+summing over the coefficients $h$ first replaces the sum by a count of solutions
+of a quadratic equation --- a *point count*. And a point count is arithmetic.
+That is the moment the method reconnects to the function-field ancestor: the
+quadratic form supplies the geometry, and the count of its solutions supplies
+the arithmetic factor.
 
-Chapter~10 reports the outcome of the build attempt made for this book, and
-Chapter~14 gives the command.
+The remark's parenthetical is decisive here: ``with e.g.\ quadric
+coefficients too Bertini gives a definite sign from middle cohomology''. A
+quadric in $k$ variables has a very well-understood middle cohomology, and
+that cohomology determines the sign of the character sum. So the sign of the
+sum over $h$ is a cohomological fact, computable, and --- crucially --- the
+\emph{same} over $\mathbb{Z}$ if the construction is automorphic rather than
+geometric over $\mathbb{F}_q$.
+
+That is the "natively-automorphic" claim of the remark, stated in the place
+where it does the work.
+
+\section{Step 3c: the identity qN = Mk + R}
+
+The remark's item 3 gives the algebraic form:
+
+\begin{quote}
+\small
+``$qN = Mk + R$, using $x_1\cdot x_2 + \cdots + x_{k-1}\cdot x_k$, wanting
+`automorphy' of $N$ since $\mu$ is automorphic from $\theta$ on sixfold cover
+of $\mathrm{GL}_5$ as a period integral of thetas, quadric has natural
+interpretation on corresponding CM e.g.\ $\mathbb{C}/\mathbb{Z}[\omega]$ as
+Weil, put Poincar\'e bundle on the edges to get $\theta$s.''
+\end{quote}
+
+So the identity is a three-term decomposition
+\begin{equation}
+qN = Mk + R,
+\label{eq:qNMR}
+\end{equation}
+in which:
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[$q$] is the prime power, the arithmetic factor: the size of the field over
+which the character sum is taken.
+\item[$N$] is the number being counted.
+\item[$M$] is the main term: the expected count, of size $q^{\deg}$, coming
+from the trivial solutions.
+\item[$R$] is the remainder: the excess over the main term, which is what
+carries the information about the zeros.
+\end{description}
+
+The coefficient $M_k$ is the count of the trivial solutions of the quadratic
+equation in $k$ variables, and it depends only on $k$. The identity is the
+statement that the total count splits into a main term that is completely
+understood and a remainder that is not.
+
+The method's target is the remainder. And the requirement on $R$ is exactly the
+requirement for the Weil bound to be sharp enough: $R$ must have
+\emph{square-root quality}. The remark's phrase is ``$R$ square-root-quality up
+to an inch or so as Katz would say by iterating Parseval $k$ times'', and
+``up to an inch or so'' is the author being careful: the bound is
+$R = O(q^{k/2 + \varepsilon})$ up to a bounded loss, not exactly
+$O(q^{k/2})$.
+
+\subsection{Where the square root comes from}
+
+The reason a remainder of square-root quality is the right target is the
+Weil bound on a curve: the excess in the count of points over a curve of genus
+$g$ is $O(q^{1/2})$, with $q$ the base field and the number of points
+$q + 1 + O(g\sqrt q)$. If the geometry in the sum over $h$ is that of a curve,
+then the remainder of a character sum over that curve is of square-root size
+by the Weil bound for the relevant $L$-function.
+
+So the passage from the function-field method to the integer method has the
+following form, and this is the conceptual heart of the whole claim:
+
+\begin{quote}
+The Weil bound gives $O(\sqrt{\cdot})$ for the excess over the main term in a
+point count, because the point count is the trace of Frobenius and the Weil
+bound is the bound on the eigenvalues of Frobenius. Over the integers there is
+no Frobenius and no point count --- but there \emph{is} a Weil expression,
+which is the same quadratic form, and its non-negativity is the same
+statement. If the remainder $R$ can be shown to have square-root quality by an
+automorphic rather than a geometric argument, then the Weil bound has been
+reproduced, and with it the hypothesis.
+\end{quote}
+
+That is why the argument needs the sign and the size together: the sign gives
+the Weil positivity (RH), and the size gives the sharp bound. And it is why
+the determinant matters: a determinant is how one writes a quadratic form as a
+Gram matrix, and a Gram matrix is how one certifies non-negativity without
+computing the sum.
+
+\section{Step 3d: "opposite signs meaning no cancellation of inverse roots"}
+
+The remark's phrase ``opposite signs meaning no cancellation of inverse
+roots'' is the technical heart of the sign argument, and it is the part that
+most rewards a slow reading.
+
+The idea is this. The character sum $\eqref{eq:trick}$ is a sum of terms
+$\pm q^{1/2}\cdot(\text{root})$, where the roots are the reciprocals of the
+eigenvalues of Frobenius on the cohomology of the quadric. If two terms with
+opposite signs had the same root, they would cancel, and the bound would
+degrade: the sum would be as large as the number of terms rather than as large
+as the square root of the number of terms. The bound holds only if the
+cancellation cannot happen --- that is, if the terms with opposite signs have
+\emph{different} roots.
+
+To force this, one iterates. The remark says ``by iterating Parseval $k$
+times'': one applies the Parseval identity to separate the sum by the sign,
+then applies it again to separate each sign class by the root, and continues
+for $k$ iterations. After $k$ iterations, the sign and the root are separated,
+and one reads off that the roots attached to opposite signs are disjoint.
+
+This is the classical ``orthogonality of the columns of the integral
+structure'' that the remark's item 16 names, and it is where the requirement
+of an integral structure across Hecke characters earns its keep.
+
+It is also, not coincidentally, where the reference to $\mathrm{GL}_5$ comes
+in. The remark's item 16 says the automorphy of $\mu$ comes from a sixfold
+cover of $\mathrm{GL}_5$ and that the argument then reduces, via
+Cauchy--Schwarz, to a bound on the norm of a suitably projected Poincar\'e
+series, using the approximate orthogonality of the columns of the integral
+structure.
+
+\begin{quote}
+The formalisation carries a statement that is exactly the separation the remark
+describes. In
+\code{Formalism.SharpRestriction.Divisibility.FunctionModelRallisFromInputs}
+the condition \code{NCGaps} reads
+{\footnotesize
+\begin{verbatim}
+forall j, j <= D.R.m -> forall tau, forall x in P.Dpar j
+  tau,
+  forall y in P.Dpar j tau, x.2 != y.2 ->
+    ((D.R.r + D.R.m * P.t : Nat) : Q)^3 < |x.1 - y.1|
+\end{verbatim}
+}
+i.e.\ the separation between distinct roots is required to exceed a
+\emph{cube} of the weight-and-level combination. A cube, not a square: the
+extra power is the cost of the $k$-fold Parseval iteration that separates
+sign from root.
+\end{quote}
+
+This is worth flagging as a methodological point. The remark's own summary
+says ``opposite signs meaning no cancellation of inverse roots''; the
+formalised condition is a quantitative separation with a cube. The two are
+consistent, and the formalised one is much more informative. A reader who
+wants to evaluate the argument should work from the formalised condition, not
+from the sentence.
+
+\section{Step 3e: the GGP periods and the interlacing weights}
+
+The remark's item 7 supplies the machinery for the determinant:
+
+\begin{quote}
+\small
+``Determinants for $W(\cdot)$'s containing the desired periods, indeed GGP
+periods, with values 0, 1 meaning interlacing weights, or up to $m$
+non-interlacing ones.''
+\end{quote}
+
+The \emph{Gross--Prasad periods} are the periods of the rank-difference
+Shimura variety attached to a pair of groups; they are the natural
+automorphic periods for the unitary groups in play. The remark needs them as
+the entries of the matrix whose determinant is the Weil expression.
+
+The interlacing condition is the technical heart. Suppose the Weil expression
+is written as a determinant of a matrix whose rows are indexed by the
+ordinates of the zeros and whose columns by the periods. A row whose entries
+come from periods whose arguments interlace the zero's argument contributes a
+sign; a determinant built out of interlacing data is a sum of terms of
+alternating sign, and the vanishing of the alternating sum is the positivity.
+
+This is the classical mechanism behind the Weil bound for a curve --- the
+number of points of a curve over $\mathbb{F}_q$ is $q + 1 - \sum_\alpha
+\alpha$, and the $\alpha$ are the Frobenius eigenvalues, whose arguments
+interlace. The claim of the remark is that the same interlacing, with
+automorphic periods in place of Frobenius eigenvalues, can be manufactured over
+$\mathbb{Z}$.
+
+\begin{seamnote}{What the development says about this}
+\code{Development/WeilBound/ThetaLifts/FrameEstimates/} is where the frames
+and their estimates live --- \code{FrameBasis.lean},
+\code{ExistsColsDetNeZero.lean} (the non-vanishing of the relevant
+determinant), \code{BlockForm.lean}, \code{DomWeil.lean} (domination of the
+Weil expression), \code{SigRapid.lean} and \code{CuspRapid.lean} (the rapid
+decay of the signature and of the cusp form). The final assembly is
+\code{sigRapid\_of}, which takes the inputs
+\code{ThetaBasic}, \code{UMGLin}, \code{EpsOf}, \code{IUMG}, \code{IInv},
+\code{TriplePair} and \code{DomWeil} and returns the rapid signature estimate.
+
+Note the shape: the estimate is a consequence of a \emph{bundle} of
+ingredients, each separately proved, and the Weil domination \code{DomWeil} is
+itself an input to the final theorem rather than something derived inside it.
+That is the same bundling pattern that appears in
+Chapter~\ref{ch:inputs}, and it is the pattern that makes the statement review
+of that chapter necessary.
+\end{seamnote}
+
+\section{Step 3f: vectorising to go up dimensions}
+
+The last phrase of the remark's item 5 is ``vectorize to go up dimensions''.
+
+The Weil expression $W$ is a quadratic form in a scalar function of the
+ordinates. To handle it in $n$ dimensions, or to handle the higher-rank
+groups that the theta lift moves between, one needs the vector-valued
+analogue: a quadratic form with values in a vector space of representations,
+and a determinant of a matrix of such forms. The remark's author, in the
+footnote to item 5, describes the cost of this in his own terms:
+
+\begin{quote}
+\small
+``A lot is obviously being lossily compressed here, but especially after
+gritting with Sussman through Ba\'laban's fantastic induction I had to think
+to myself about how hard fighting for some sort of $\mathbb{F}_1$ \'a la e.g.\
+Borger would be.''
+\end{quote}
+
+The reference is to work on $\mathbb{F}_1$-type foundations for the trace
+formula and for ``$\mathbb{F}_1$-like'' induction, and to the difficulty of
+making that rigorous. That is a real and known difficulty: the $\mathbb{F}_1$
+paradigm is a heuristic, not a theory, and the remark's author is aware that
+he is using it heuristically.
+
+\section{What step 3 has and has not shown}
+
+Step 3, if it works, establishes the Weil positivity and hence RH. It rests
+on:
+
+\begin{enumerate}
+\item the Weil criterion's equivalence of RH with a positivity;
+\item an automorphic replacement for the character sum over $\mathbb{F}_q$;
+\item a determinant whose Gram structure certifies the positivity;
+\item a separation of sign from root, obtained by $k$-fold Parseval iteration,
+formalised as a cubic gap condition.
+\end{enumerate}
+
+Item 2 is the one that the remark calls the ``natively-automorphic
+determinant'', and it is the one with no classical precedent.
+
+\begin{keytakeaways}
+\item The method switches to the von Mangoldt sum, where RH becomes a bound
+on the oscillation of $\psi$ around $x$, and the Weil expression $W$ encodes
+exactly that bound.
+\item The test-function trick sums over the coefficients of a quadratic form
+first, which converts the sum into a point count --- the arithmetic factor that
+the integers lack --- and the sign of that count comes from the middle
+cohomology of the quadric.
+\item The identity $qN = Mk + R$ separates the understood main term from the
+informative remainder, and the requirement on $R$ is square-root quality.
+\item The positivity is certified by a determinant, because a quadratic form is
+non-negative exactly when it has a Gram factorisation, and the Gram matrix is
+built out of GGP periods with interlacing weights.
+\item The separation of sign from root is what keeps the bound sharp; it is
+formalised as a cubic separation condition, and it is the price of the
+$k$-fold Parseval iteration.
+\end{keytakeaways}

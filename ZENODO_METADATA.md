@@ -4,7 +4,7 @@ Creator: Gerald Enrique Nelson Mc Kenzie
 Publisher: Tico Internet LLC
 Edition: 2026 First Edition
 License: Apache License 2.0
-DOI: 10.5281/zenodo.23874214
+DOI: 10.5281/zenodo.24408811
 
 On 20 November 2026 a mathematician published a four-page note claiming to have proved the Riemann Hypothesis, together with a Lean development of 175,187 files and roughly 17.4 million lines. Two university teams compiled it the same day. The world's newspapers called it the greatest mathematical result of the century. Nobody has reviewed the mathematics.
 
