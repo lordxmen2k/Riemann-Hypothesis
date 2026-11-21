@@ -1,0 +1,31 @@
+% Glyph harness.
+%
+% Builds the book's preamble against a short expression and reports any
+% character the math font cannot render. The build log line
+%
+%   grep -c 'Missing character' source/main.log
+%
+% is the authoritative check for the book itself; this file is for finding
+% where a missing glyph comes from, which the book log alone cannot say.
+%
+% Usage:  cd source && xelatex -interaction=nonstopmode ../build/glyph_check.tex
+%         grep 'Missing character' glyph_check.log
+\documentclass[11pt,twoside,openany]{book}
+\input{preamble}
+\begin{document}
+% A and C are expected to FAIL: they are the two commands the book does not
+% use. The math font carries neither U+211C nor U+229E, and the font
+% machinery reinstates both commands as literal characters, so they typeset
+% as missing-glyph boxes even though the preamble redefines them correctly.
+% B, D, E, F and G are expected to PASS, and they are what the book uses.
+\noindent
+A: $\Re s$ \quad
+B: $\mathrm{Re}s$ \quad
+C: $\pi \boxplus \mu_j[t]$ \quad
+D: $\mathbb{R}$ \quad
+E: $\operatorname{Re}s$
+\par\bigskip
+\noindent
+F: $\mathrm{Re}\,s$ \quad
+G: $\pi \tboxplus \mu_j[t]$
+\end{document}

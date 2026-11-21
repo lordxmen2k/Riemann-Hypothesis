@@ -32,6 +32,11 @@ print("body word count:", words)
 pathlib.Path("source/.wordcount").write_text(str(words), encoding="utf-8")
 PY
 
+# 1b. figures: four computed charts, then five schematic diagrams.
+# One generator per figure, so that no stale copy can overwrite a good one.
+python3 build/make_figures.py >/dev/null || echo "WARNING: make_figures.py failed"
+python3 build/make_diagrams.py >/dev/null || echo "WARNING: make_diagrams.py failed"
+
 # 2. typeset
 cd "$SRC"
 xelatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null || true

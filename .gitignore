@@ -10,3 +10,11 @@ source/.wordcount
 source/main.idx
 source/main.ind
 source/main.ilg
+# scratch from the glyph harness
+source/glyph_check.aux
+source/glyph_check.log
+source/glyph_check.pdf
+source/glyph_check.out
+# one-off scratch harnesses
+source/t.tex
+source/t.pdf
