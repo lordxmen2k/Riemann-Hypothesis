@@ -214,3 +214,47 @@ scrim is baked into a 300 DPI JPEG by `build/make_cover_art.py`, and the typogra
 LaTeX over it in the book's own fonts (`source/cover_front.tex`, `source/cover_back.tex`), so
 the cover type is vector. The same artwork drawn with a raster scrim layer cost 17 MB in the
 finished PDF; baked into the plate and set in LaTeX it costs 1.5 MB.
+
+---
+
+## M5 — Typographic and factual correction pass (2026-11-21)
+
+Driven by the owner's screenshots of two rendered pages, then continued to a full pass over
+every figure and every page.
+
+**Missing glyphs.** The math font (FiraMath) carries neither U+211C nor U+229E. Because the
+font machinery reinstated both commands as literal characters, every occurrence typeset as a
+missing-glyph box — 32 real-part signs and 10 circled pluses. A one-page harness
+(`source/tb.tex`) established that the commands *were* correctly redefined and still boxed, which
+placed the cause in the font fallback and not in the preamble. Fix: `\\Re` → `\\mathrm{Re}` and
+`\\boxplus` → a TikZ `\\tboxplus`, with a thin space after `\\mathrm{Re}`.
+
+**Mono face.** JetBrains Mono lacked four glyphs used in the Lean quotations. Switched to DejaVu
+Sans Mono, and the 42 code blocks were converted from `Verbatim` to a `leanquote` environment so
+that long quotations wrap inside the measure.
+
+**Tables.** All prose columns set ragged-right (`ragged2e`) with hyphenation disabled inside
+cells. The Chapter 6 "Nine steps" table had been fully justified, which stretched the spacing and
+broke "multiplicity", "determinant" and "remainder" at arbitrary points.
+
+**Figures.** All nine were rendered in place and inspected. Four had overlapping elements (the
+critical-line legend, the psi sum's lower limit, the records chart, and the zero-length bar on the
+logarithmic census); one, the three-questions diagram, was badly broken.
+
+**Root cause found.** `build/make_figures.py` contained a second, older copy of the five schematic
+diagram generators, drawn on a canvas whose axes limits did not match the coordinates used to draw
+them, so the boxes were clipped and the titles fell outside the canvas. The copies were deleted,
+and `build.sh` now runs `make_figures.py` then `make_diagrams.py`.
+
+**Census corrected.** The library census table omitted `Statements.lean`, so its rows summed to
+175,186 against a stated total of 175,187, and one library was described as "ten" when the
+Lakefile declares eleven (one of them virtual). Recounted from the extracted tree: nine
+directories holding 175,185 files and two top-level modules holding two; 175,187 in all.
+
+**Stale text.** The back cover listed five parts for a seven-part book. The copyright page and
+the colophon said no source repository was published; the owner has supplied one for this title
+and both now name it.
+
+**Verification after the pass.** 0 LaTeX errors, 0 missing characters, 0 overfull hboxes above
+25 pt, 0 words outside the safe area, 0 blank pages, all fonts embedded, 241 bookmarks, 526 link
+annotations, 276 numbered pages plus two cover leaves, 57,326 words.

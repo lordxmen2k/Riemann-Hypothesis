@@ -51,10 +51,10 @@ output/          the finished PDF
 ```
 
 Requires XeLaTeX, `makeindex`, Python 3 with matplotlib and Pillow, and the
-fonts in `fonts/` (Outfit, JetBrains Mono, Fira Math, XCharter Math). The
-script copies the fonts into `~/.fonts`, counts the words, runs XeLaTeX four
-times, runs `makeindex`, then re-runs XeLaTeX twice to inject the final page
-and word counts into the colophon.
+fonts in `fonts/` (Outfit, DejaVu Sans Mono, Fira Math, XCharter Math). The
+script copies the fonts into `~/.fonts`, regenerates the figures, counts the
+words, runs XeLaTeX four times, runs `makeindex`, then re-runs XeLaTeX twice to
+inject the final page and word counts into the colophon.
 
 Regenerating the artwork:
 
@@ -63,6 +63,10 @@ python3 build/make_figures.py     # four computed charts
 python3 build/make_diagrams.py    # five diagrams, laid out in inches at 4.6 in
 ./build/make_covers.sh            # front and back covers
 ```
+
+One generator owns each figure: the four computed charts come from
+`make_figures.py` and the five schematic diagrams from `make_diagrams.py`.
+`build.sh` runs both, so neither can overwrite the other's work.
 
 The cover artwork itself was generated as an original watercolour plate and is
 not reproducible from the scripts. `build/make_cover_art.py` crops it, bakes in

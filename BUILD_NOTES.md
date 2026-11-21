@@ -18,7 +18,7 @@
 | Trim size | 6 × 9 in (432 × 648 pt) |
 | Pages | 278 (276 numbered + full-bleed front and back covers) |
 | File size | 1.6 MB |
-| Word count | 57,226 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
+| Word count | 57,326 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
 | Chapters | 34, in 7 parts |
 | Figures | 9 (4 computed charts, 5 diagrams) |
 | Tables | 5 |
@@ -28,7 +28,7 @@
 | Glossary terms | 43 |
 | Fonts embedded | Outfit, JetBrains Mono, Fira Math, DejaVu Sans — all subsets, all embedded |
 | PDF bookmarks | 241 outline entries matching the table of contents |
-| Link annotations | 4 external URIs (Apache licence, DOI on the copyright page, DOI in the colophon) plus internal cross-references from the table of contents, figures, lists and index |
+| Link annotations | 526 in total: the external URIs (Apache licence, the DOI on the copyright page, the DOI in the colophon, the source repository) plus internal cross-references from the table of contents, figures, lists and index |
 
 ### Structure
 
@@ -107,12 +107,16 @@ Quantitative checks on the finished file:
 |---|---|
 | LaTeX errors | **0** |
 | Undefined references | **0** |
-| Overfull hboxes above 25 pt | **0** (largest remaining is 16 pt, in a table cell) |
+| Overfull hboxes above 25 pt | **0** (largest remaining is 19 pt, in a table cell) |
+| Missing characters | **0** (was 42: 32 × U+211C and 10 × U+229E) |
 | Blank pages | none |
+| Words outside the safe area | **0**, checked page by page against the extracted word boxes (one hit was the running foot and was cleared by the table fix) |
 | Stray control sequences in the extracted text | none (checked for `\idx{`, `\begin{`, `\end{`, `\item`, `\code{`, `\path{`, `PLACEHOLDER`, `TODO`, `XXX`, code fences, `##`, `**`) |
 | Fonts embedded | yes, all |
 | Trim size | 432 × 648 pt = 6 × 9 in |
-| Outline matches the contents | yes, 114 entries |
+| Outline matches the contents | yes, 241 entries |
+| Link annotations | 526 |
+| Figures | 9, each rendered and inspected in place: no overlap between a legend, an annotation and the plotted data |
 | Sparse pages | 23, every one of them a front-matter, part-opener, chapter-tail, figure-only or back-matter page; no accidental gaps |
 
 The diagram figures were rebuilt during the final pass. They are laid out in
@@ -121,6 +125,69 @@ at `\textwidth` with no scaling, so every label is at its stated point size in
 the finished book. The long Lean quotations are set in `Verbatim` with
 `breaklines` so that they wrap inside the measure, and the long identifiers and
 file paths are set with `\seqsplit` so that they break between characters.
+
+## Typographic defects found and fixed in the final pass
+
+Each of these was a real defect in a rendered page, not a hypothetical.
+
+**Missing glyphs.** The math font carries neither U+211C (the double-struck
+real part) nor U+229E (the circled plus), and the font machinery reinstated
+both commands as literal characters, so every occurrence typeset as a
+missing-glyph box: 32 and 10 respectively, 42 in all. The fix is not a
+font substitution but a change of command: `\Re` became `\mathrm{Re}` and
+`\boxplus` became `\tboxplus`, a TikZ construction of the operator that
+draws the box and the cross directly. `\mathrm{Re}` is now followed by a
+thin space, so `Re s` does not read as one symbol. A companion harness
+(`build/glyph_check.tex`) was used to establish that the command was
+correctly redefined and still boxed, which located the cause in the font
+fallback rather than in the preamble. The harness is kept: two of its seven
+expressions are expected to fail, and they are the two commands the book
+avoids.
+
+**Code blocks.** The mono face was switched from JetBrains Mono to DejaVu
+Sans Mono, which carries every glyph the quotations need. The 42 code
+blocks were converted from `Verbatim` to a `leanquote` environment defined
+with `\DefineVerbatimEnvironment`, so that long Lean quotations break
+inside the measure without disturbing the float placement around them.
+
+**Tables.** Every prose column was set ragged-right with `ragged2e`, and
+hyphenation was switched off inside cells (`\hyphenpenalty=10000`). The
+narrow columns had been fully justified, which stretched the word spacing
+and then broke words at arbitrary points — "mul-tiplicity", "deter-minant",
+"re-mainder" — so the argument in Chapter 6 was harder to read than it
+needed to be.
+
+**Figures.** Four of the nine figures had overlapping elements, and one
+was badly broken:
+
+* *Critical line.* The legend box sat on top of the curve. The plot now
+  reserves an empty band at the top for the legend.
+* *psi(x) - x.* The lower limit of the summation fell below the baseline
+  and collided with the caption. The annotation is now set on two lines
+  with a background.
+* *The record on zeros.* The percentage and the qualification of each
+  record were drawn on top of one another, and the annotation at the
+  hundred per cent mark collided with the title. The qualifications now
+  sit in the tick labels, the percentages at the end of each bar, and the
+  title has been shortened.
+* *The submitted development.* The one library with a single file had a
+  bar of zero length on a logarithmic axis, so it was invisible. The
+  entry now reads "Main + Statements" with two files, which is also the
+  correct count: the census table previously omitted `Statements.lean`,
+  so its rows summed to 175,186 against a stated total of 175,187.
+
+**A stale generator.** `build/make_figures.py` held a second, older copy of
+the five schematic diagrams, drawn on a canvas whose axes limits did not
+match the coordinates used to draw them. Running it overwrote the good
+diagrams with broken ones: boxes clipped away, labels outside the canvas,
+a title floating in white space. The five copies were deleted from that
+script, and `build.sh` now runs `make_figures.py` and `make_diagrams.py`
+in sequence, so that one generator owns each figure and neither can
+overwrite the other's work.
+
+**Stale text.** The back cover listed five parts; the book has seven. The
+copyright page and the colophon said that no source repository was
+published; the owner has supplied one for this title, and both now name it.
 
 **Not tested.** The book was not proof-read by a second reader, and the
 mathematics has not been checked by a number theorist. The author is not a

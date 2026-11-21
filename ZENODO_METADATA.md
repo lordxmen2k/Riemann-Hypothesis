@@ -20,7 +20,7 @@ Attribution: the mathematics examined in this book is the work of Levent Alpoge,
 
 This book is for readers who want the mathematics and are willing to be walked through it, for readers who work on formal verification and want to know what the trust boundary actually is, and for readers who want to know how to evaluate the next claim of this kind.
 
-156 pages. 15 chapters, 9 original figures, 4 tables, 63 glossary terms, 95 index entries.
+276 numbered pages, plus full-bleed front and back covers. 34 chapters in 7 parts, 9 original figures, 5 tables, 43 glossary terms, 84 index headwords, 241 PDF bookmarks.
 
 The Lean development examined in the book is the work of Levent Alpöge and is not redistributed here. This book quotes from the author's own remark and from the submitted source for the purposes of criticism and review, with attribution, and links to the original.
 
