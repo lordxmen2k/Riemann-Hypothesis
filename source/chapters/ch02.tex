@@ -9,9 +9,7 @@ Chapter~1 reported what the claim says. This chapter reports what was
 submitted, because the two are not the same thing and the difference is where
 the whole question lives.
 
-\section{Acquisition}
-
-The remark's first footnote gives the distribution point: a fourteen-part
+\section{Acquisition}The remark's first footnote gives the distribution point: a fourteen-part
 tarball at \code{alpo.ge/lean.tar.gz.part01} through \texttt{.part14}. All
 fourteen parts were downloaded for this book, concatenated, and extracted. The
 result is 239{,}275{,}554 bytes of compressed archive expanding to 175{,}187
@@ -33,9 +31,7 @@ reproducible in principle. It also means that a future audit is a statement
 about \emph{that} revision of Mathlib and not about whatever Mathlib has
 become by the time the audit is done.
 
-\section{The shape of the development}
-
-The tree is not one program but ten libraries, each a separate Lean package
+\section{The shape of the development}The tree is not one program but ten libraries, each a separate Lean package
 within the Lake workspace. The census below was computed for this book by
 counting files on disk.
 
@@ -86,9 +82,7 @@ This is not the shape of a generated proof attempt. It is the shape of a
 programme of work: a general library built alongside a specific one, with
 shared abstractions factored out as they were discovered.
 
-\section{What the artifact claims}
-
-The entire public surface of the submission is \path{src/Main.lean}\idx{Lean development:structure of}, which
+\section{What the artifact claims}The entire public surface of the submission is \path{src/Main.lean}\idx{Lean development:structure of}, which
 is 433 bytes long and reads in full:
 
 \begin{seamnote}{\path{src/Main.lean}}
@@ -154,9 +148,7 @@ Mathlib's own definition is the one written above.
 \texttt{Main.lean} and no hypotheses in \texttt{Statements.lean}.
 \end{keytakeaways}
 
-\section{The mirror, and one line that matters}
-
-A third party mirrored the archive on GitHub the same day, as
+\section{The mirror, and one line that matters}A third party mirrored the archive on GitHub the same day, as
 \code{CocoSgt/riemann-hypothesis-lean}\idx{CocoSgt mirror}, with a description that reads:
 ``Mirror of Levent Alpöge's Lean proof of the Riemann Hypothesis (with Claude).
 All credit to Levent Alpöge. Source: alpo.ge''. The mirror also records a
@@ -181,9 +173,7 @@ The sentence's second clause --- \emph{``until it has been compiled and
 checked''} --- is the more durable part, and it distinguishes two activities
 that are constantly conflated. Compilation has happened. Checking has not.
 
-\section{What is in the archive: the audit's first results}
-
-The three mechanical facts that can be established about the artifact without
+\section{What is in the archive: the audit's first results}The three mechanical facts that can be established about the artifact without
 compiling it are these.
 
 \begin{enumerate}
@@ -214,9 +204,7 @@ inside the proof, and the failure mode lives in the statement.
 Chapter~7 and Chapter~8 are about that failure mode, and about how far a
 reading of the source gets without running the compiler.
 
-\section{One more structural observation}
-
-The artifact's own scan reports, and this book's scan confirms, that
+\section{One more structural observation}The artifact's own scan reports, and this book's scan confirms, that
 \code{set\_option maxHeartbeats 0} appears in four files, that custom
 \texttt{macro}/\texttt{elab}/\texttt{syntax} declarations appear in 22 files,
 and that \texttt{addDecl} appears in one file.

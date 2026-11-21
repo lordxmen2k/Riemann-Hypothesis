@@ -17,6 +17,7 @@ import sys
 
 CH = pathlib.Path(__file__).resolve().parent.parent / "source" / "chapters"
 LIMIT = 60          # characters that fit the column at footnotesize
+LO, HI = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) > 2 else (6, 16)
 INDENT_CONT = 2     # extra spaces on a continuation line
 
 BLOCK = re.compile(r"(\\begin\{verbatim\})(.*?)(\\end\{verbatim\})", re.S)
@@ -55,7 +56,7 @@ def process(text):
 
 def main():
     total = 0
-    for i in range(6, 17):
+    for i in range(LO, HI + 1):
         p = CH / f"ch{i:02d}.tex"
         t = p.read_text(encoding="utf-8")
         nt = process(t)
@@ -66,7 +67,7 @@ def main():
             total += n
     print("blocks processed:", total)
     # report any line that is still too long because it is one long token
-    for i in range(6, 17):
+    for i in range(LO, HI + 1):
         p = CH / f"ch{i:02d}.tex"
         for m in BLOCK.finditer(p.read_text(encoding="utf-8")):
             for l in m.group(2).split("\n"):

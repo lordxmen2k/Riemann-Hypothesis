@@ -1,180 +1,170 @@
 % =====================================================================
-%  Chapter 10 — The State of Play, Part I
+%  Chapter 21 — The Proof in Natural Language, 5
 % =====================================================================
 
-\part{The State of Play}
-\label{part:play}
-\markboth{Part IV}{The State of Play}
+\chapter{The Lift Chain and the Multiplicity}
+\label{ch:chain2}
 
-\chapter{The Independent Compilations}
-\label{ch:compilations}
+We now reach the device that makes the method possible: the iterated theta
+lift.
 
-The mirror's README said, on the morning of 20 November 2026, that no
-independent build had been published, and that the code should be treated as
-``a claimed proof until it has been compiled and checked''. By lunchtime, the
-first half of that sentence had been overtaken by events. This chapter
-reports what happened, and what it does and does not establish.
+\section{The statement of the lift}Fix a CM field $E$, a positive definite Hermitian form $A$ of rank $n$ over
+$E$, and a cuspidal representation $\pi$ of the unitary group
+$\mathrm{U}(E,n)$. The theta series $\theta_A$ is a modular form of weight $n$
+on the CM lattice.
 
-\section{What was reported}
+\begin{quote}
+\textbf{Proposition L (theta lift).} Let $\mu$ be a Hecke character of
+$\mathrm{U}(E,n)$ and let $t$ be a parameter determining $A$. If the weight of
+$\pi$ matches the weight of $\theta_A$, there is at most one representation
+$\pi'$ of $\mathrm{U}(E,n')$ with $n' > n$ whose theta lift is $\pi \boxplus
+\mu[t]$.
+\end{quote}
 
-Quanta Magazine's piece, by Konstantin Kakaes, is the fullest account:
+The weight-matching condition is an inequality: for the lift from rank $n$ to
+rank $d$ to exist, one needs
+\begin{equation}
+d + m_W(w) \;\le\; 2\,\lambda(w)
+\label{eq:weightineq2}
+\end{equation}
+at every archimedean place $w$, where $\lambda$ is the weight of $\pi$ and
+$m_W$ the weight attached to the form. This is the condition stated in
+\code{UpperTheory.TP.TLiftK}, and it is the reason the lift exists only in
+certain directions.
+
+The formal counterpart is \code{UpperTheory.TP.tLift\_of\_tools\_k}, assembled
+in \code{.../ThetaKernels/TPGHolds.lean} from roughly twenty separately proved
+theorems.
+
+\section{Iterating}One lift is not enough. Apply it again to the output, with a new form and a
+new character:
+
+\begin{quote}
+\textbf{Proposition M (the chain).} There is a chain
+\[
+U(X_0) \longrightarrow U(X_1) \longrightarrow \cdots \longrightarrow U(X_m),
+\]
+at each step a theta lift $\pi \mapsto \pi \boxplus \mu_j[t]$, such that each
+step preserves cuspidality, the type conditions and the non-vanishing of the
+period, and such that the composition of the chain is a single lift with
+multiplied kernel and multiplied weight.
+\end{quote}
+
+The last clause is the load-bearing one, and it is the formal statement of
+the remark's claim that the chain ``wins multiplicity $m$''.
+
+\begin{seamnote}{The composition law}
+{\footnotesize
+\begin{verbatim}
+def KerComp : Prop :=
+forall (R : Type) [CommSemiring R] (i k m : Type) [Fintype
+    i] [Fintype k] [Fintype m]
+(w1 : i -> R) (w2 : k -> R) (K1 : i -> k -> R) (K2 : k -> m
+      -> R) (f : i -> R),
+kerOp w2 K2 (kerOp w1 K1 f) = kerOp w1 (kerMul w2 K1 K2) f
+\end{verbatim}
+}
+\end{seamnote}
+
+Read it: the composition of two lifts equals a single lift whose kernel is
+the product of the two kernels. The chain is therefore not a new object. It is
+one lift, with a multiplied kernel, and the kernel's size is what has grown.
+
+\section{Why that is the substitute for multiplicity}Return to the function-field method of Chapter~\ref{ch:step1}. There, the
+multiplicity came from the independence of a geometric direction and an
+arithmetic direction, and the dimension count multiplied the two. Here there
+is no second direction, and the theta lift takes its place: the kernel of the
+composed lift is the product of the kernels, so the space has grown by the
+product of the growth factors.
+
+\begin{quote}
+\textbf{Proposition N.} If a single lift multiplies the relevant space by a
+factor $\lambda$, then a chain of length $m$ multiplies it by $\lambda^m$.
+\end{quote}
+
+This is the statement that makes the method work, and it is the statement that
+must be paid for. The remark's own phrasing of the length is the one-line
+summary of the whole argument:
 
 \begin{quote}
 \small
-``Several independent efforts have now successfully compiled Alpöge's proof.
-\textbf{Andrew Sutherland at the Massachusetts Institute of Technology was the
-first}\idx{Sutherland, Andrew}; he finished shortly before noon. A few hours later, \textbf{Simon DeDeo
-at Carnegie Mellon University}\idx{DeDeo, Simon} also succeeded, and not long after that
-Sutherland compiled it using a variant of Lean\idx{variant of Lean}.''
+``for the von Mangoldt sum of length $X$, Claude's suggested $\sqrt{\ }$
+length of chain of theta lifts, in view of each mimicking multiplicity, was
+$X$. (And yet, what else could it be?)''
 \end{quote}
 
-Three things in that sentence deserve comment.
+\section{The length $\sqrt{X}$, and why it is not obvious}A chain of length $m$ multiplies the space by $\lambda^m$, and to dominate a
+sum of length $X$ one needs $\lambda^m \ge X$. For a fixed $\lambda$, that
+gives $m \ge \log X / \log \lambda$ --- a logarithm, not a square root.
 
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[\textbf{Two independent compilers.}] Sutherland at MIT and DeDeo at CMU
-are two groups, two machines, two toolchain setups. Agreement between them is
-evidence that the build is reproducible rather than a local accident.
-\item[\textbf{A variant of Lean.}] The final clause --- ``Sutherland compiled
-it using a variant of Lean'' --- is the strongest single piece of evidence in
-the story, and it is easy to read past. If the development compiles under a
-\emph{modified} Lean, then the modification is doing something specific, and
-the most likely something is an extension that makes the build tractable.
-\item[\textbf{The order of events.}] ``Shortly before noon'' on 20 November.
-The mirror's README was written that morning. The status line in it was true
-when written and became obsolete within hours.
-\end{description}
+A square root arises if $\lambda$ itself is allowed to grow with $X$. If the
+per-lift growth is $X^{\alpha}$ with $\alpha$ fixed, then a chain of length
+$m$ gives $X^{\alpha m}$, and $m \ge 1/\alpha$ suffices --- a constant. If
+the per-lift growth is a fixed multiple of $X$, then a chain of length $m$
+gives $X^m$, and one lift would do.
 
-\section{What this establishes}
-
-A successful independent compilation establishes the following, and it is a
-substantial list:
-
-\begin{itemize}
-\item The development is \emph{complete} in the sense that matters: it has a
-consistent, terminating development in which the headline theorems exist and
-are accepted by the Lean kernel.
-\item It is \emph{reproducible}: two groups, working independently, got the
-same result.
-\item It is \emph{pinned}: the toolchain and the Mathlib revision are fixed, so
-the build refers to a determinate mathematical library.
-\item The axiom question is, in practice, settled in the affirmative: the
-compilers necessarily ran the axiom check, or would have had to.
-\end{itemize}
-
-It is a genuine milestone, and the book says so.
-
-\section{What this does not establish}
-
-It does not establish that the mathematics is right. This is not a criticism of
-the compilers; it is a statement about what compilation is.
+So the square root is not what the multiplicativity alone predicts. It is what
+one gets in an intermediate regime, and the author's parenthesis --- ``(And
+yet, what else could it be?)'' --- records that he cannot account for it.
 
 \begin{quote}
-``Lean, besides being a mathematical language, is also a computer programming
-language, and \textbf{can itself contain bugs. It can also be used to play
-sneaky tricks by, for example, redefining symbols used in a proof to make
-something trivially true.} The first step in verifying a proof in Lean is to
-make sure it `compiles.'\,''
-\qquad --- Quanta Magazine, 2026-11-20
+\textbf{This is the honest reading.} Either the per-lift growth factor is
+itself a growing quantity, in which case the chain length is not determined by
+the multiplicativity alone; or the square root enters through some other
+mechanism that the remark does not describe. The development contains the
+machinery that would settle it --- the budget arithmetic of
+Chapter~\ref{ch:budget} --- but the specific claim does not appear in the
+remark, and a reader has to find it in the code.
 \end{quote}
 
-The compilers did the first step. The second step --- checking --- is a
-different activity, performed by a different kind of person, and it has not
-happened.
-
-\section{The build attempt made for this book}
-
-For completeness, and because a book that criticises others for not compiling
-ought to compile, an independent build was attempted in the course of writing
-this one.
-
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[The toolchain.] \texttt{elan} was installed and the pinned toolchain
-\code{leanprover/lean4:v4.33.1} was fetched.
-\item[The library.] Mathlib was checked out and confirmed at exactly
-\code{0df444a360eaa60ab8c11dca51a86af692955474}, the revision pinned by the
-submission's \texttt{lakefile.toml}. The prebuilt artefacts were retrieved from
-the community cache --- 8{,}690 of them.
-\item[The build.] \texttt{lake build Main} was launched against the project's
-own sources.
-\end{description}
-
-The build was in progress --- compiling the submission's own files --- when the
-writing of this book reached the point where its findings had to be written
-down. The machine available for it has two cores and three gigabytes of RAM;
-the mirror's own README warns that this is ``a very large build ($\approx 17$
-M lines on top of Mathlib)'' for which one should ``use a machine with many
-cores and plenty of RAM, and expect it to run for a long time''.
-
-\begin{seamnote}{Reporting the outcome honestly}
-This book's build did not complete within the time available, and that is
-reported as what it is: an incomplete verification attempt, not a failed one
-and not a successful one. The log is retained.
-
-The finding it does contribute is narrow and worth stating: the submission
-builds far enough to be compiling the project's own modules, with Mathlib at
-the pinned revision satisfied entirely from cache, with no error. That is
-consistent with the two reported independent compilations, and it adds
-nothing to them.
-
-It also contributes a practical datum that the mirror's README lacked: the
-build is tractable with the community's prebuilt Mathlib cache, and the
-binding constraint is the size of the submission's own source, not the
-dependency. A reader with a large machine can complete it.
-\end{seamnote}
-
-\section{Why ``it compiles'' is the beginning and not the end}
-
-There is a temptation, on reading a story like this one, to treat compilation
-as the decisive event: the machine said yes, so the theorem is proved. It is
-worth resisting that, and the reason is not scepticism about the compilers. It
-is that the community has been here before.
-
-The formalisation community's own history contains cases where a development
-compiled cleanly, passed the axiom check, had its statements reviewed --- and
-was then found to be wrong. The most instructive recent example is recorded in
-OpenAI's own project history: a formalised result was withdrawn in October 2026
-with a stated sign error\idx{sign error (withdrawn formalisation)}. The development compiled. The axiom list was clean.
-The failure was in the mathematics of the statement, and no compiler can see
-it.
+\section{What each step must preserve}For the chain to be usable, three things must hold at each stage.
 
 \begin{quote}
-This is the ordinary condition of the subject, and it is why the phrase
-``until it has been compiled \emph{and checked}'' in the mirror's README has
-two clauses rather than one. The second clause has not happened.
+\textbf{Proposition O.} For each $j < m$:
+\begin{enumerate}
+\item the type condition is preserved --- the lifted object remains of the
+required type;
+\item the lifted representation is irreducible, hence cuspidal;
+\item the Bessel period at that stage does not vanish.
+\end{enumerate}
 \end{quote}
 
-\section{What a completed verification would look like}
+These are the descent-tower conditions, and the theorem that establishes them
+is \code{Conclusion1} in
+\code{FunctionModelRallisFromInputs.lean}: for every admissible parameter
+choice satisfying the global hypotheses \code{Hyp3} and the character
+conditions \code{IsMu}, the descent-tower conditions hold.
 
-If someone were to complete the full protocol --- compile, replay the kernel
-independently, and perform a full statement review --- what would they have
-established? This is worth spelling out, because it defines the target that
-Chapter~14 aims at.
+Item 2 deserves a word. A theta lift of a cusp form is irreducible; a theta
+lift of an Eisenstein series is not, and its period is a product of
+$L$-values rather than a new $L$-function. The whole argument is about the
+$L$-function of the zeta function and the Weil expression built from its
+zeros, so it needs the cuspidal case throughout.
 
-They would have established that the Riemann hypothesis is a theorem of Lean
-4, in the sense that the development contains a proof of Mathlib's
-\texttt{RiemannHypothesis} whose only dependencies are the three standard
-axioms and whose statements, on review, match the classical claims.
+\section{The price}Each lift carries a denominator. Formally:
 
-That would be an enormous result. It would settle the problem. And it would
-still require the community to check the review --- one human reading of
-175{,}000 files is itself a document with error bars, and the standard practice
-in the field, as the tooling of the Lean FRO shows, is to have the review
-independently reproduced.
+\begin{quote}
+\textbf{Proposition P.} There exist an integral model $S$ and non-negative
+integers $D_j$ with the property that the output of the chain of length $m$
+lies in $S$ up to the factor
+\[
+\prod_{j < m} D_j.
+\]
+\end{quote}
+
+This is \code{ChainInt}, and it is the formal statement of ``the cost of each
+lift''. The product is what the argument has to pay, and the gain is the
+product of the growth factors.
 
 \begin{keytakeaways}
-
-\item Two independent compilations succeeded on 20 November 2026, by
-Andrew Sutherland at MIT and Simon DeDeo at CMU, and a third using a variant
-of Lean.
-\item Compilation establishes completeness, reproducibility, pinning and the
-axiom question. It does not establish that the statements mean what the claim
-says they mean.
-\item The build attempted for this book reached the stage of compiling the
-submission's own modules with Mathlib satisfied from cache, on a
-two-core machine, and did not complete within the time available.
-\item The community's own history contains a case of a cleanly compiling
-development withdrawn for a mathematical error. That is why ``compiled and
-checked'' has two clauses.
+\item A theta lift is well defined under a weight inequality, and a chain of
+them composes into a single lift with multiplied kernel --- the formal
+statement of the claim that the chain wins multiplicity.
+\item Each step must preserve cuspidality, the type conditions and the
+non-vanishing of the period; these are the descent-tower conditions.
+\item Each step also carries a denominator, and the chain's total denominator
+is the product. Gain and price are both multiplicative.
+\item The proposed chain length $\sqrt{X}$ does not follow from the
+multiplicativity alone; the remark does not account for it, and that is
+flagged here rather than smoothed over.
 \end{keytakeaways}

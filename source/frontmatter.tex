@@ -29,6 +29,8 @@
 \noindent{\color{accent}\rule{\textwidth}{1.8pt}}\par
 \vspace{18pt}
 {\sffamily\large\color{txt}\bookAuthor\par}
+\vspace{6pt}
+{\sffamily\small\color{accent}On the mathematics of Levent Alpöge\par}
 \vspace{8pt}
 {\sffamily\color{txtdim}\bookImprint, publisher\par}
 \vspace{4pt}
@@ -74,6 +76,18 @@ edition. The Lean development examined in this book is the work of its author an
 is not redistributed here; it is cited by the author's own distribution point and
 by the third-party mirror recorded in the Notes and References.\par
 \vspace{10pt}
+\noindent\textbf{Attribution.} The mathematics examined in this book --- the
+method, the argument, the formalisation, and the remark that describes them ---
+is the work of \textbf{Levent Alpöge}. He published the four-page remark
+and the Lean development in public, under his own name, and he is the author of
+the mathematical content reproduced here. This book is the work of the named
+author above: it reads that mathematics, sets it out in prose, and reports what
+has and has not been verified. Quotations from the remark and from the
+submitted source are reproduced for the purposes of criticism and review, with
+attribution; the statements of the mathematics in Part~IV are Alpöge's
+theorem, presented in natural language, and the corresponding Lean declarations
+are cited alongside them.
+
 \noindent\textbf{What this book is.} This book reports and analyses a claim. It
 does not assert that the Riemann Hypothesis has been proved, and it does not assert
 that the claim is false. Chapter~\ref{ch:verdict} states a finding; the finding is that the
@@ -113,8 +127,8 @@ where the source is a document.\par}
 \vspace*{2.5in}
   \begin{center}
     {\large\itshape\color{txt}
-      To the people who read the code instead of the headline,\\[4pt]
-      and to the ones who do both.\par}
+      To the people who read the code instead of the headline,\\
+      \hspace*{1em}and to the ones who do both.\par}
   \end{center}
   \vfill
 \clearpage
@@ -233,6 +247,15 @@ several that would have made the book wrong.
 zeta function from first principles and states the hypothesis precisely;
 Chapter~\ref{ch:barriers} sets out the four obstacles any method must get past; Chapter~\ref{ch:method}
 reconstructs the method from the author's own timeline.
+\item \textbf{Part~\ref{part:proof}} is the proof itself, written in natural
+language so that a reader with a mathematics background can follow it and
+arrive at the result. Chapter~\ref{ch:plan} states the theorem and the plan;
+Chapter~\ref{ch:target} reduces it to a positivity; Chapter~\ref{ch:count}
+builds the arithmetic factor; Chapter~\ref{ch:determinant} constructs the
+determinant; Chapter~\ref{ch:chain2} gives the lift chain; Chapter~\ref{ch:budget2}
+gives the budget and the two thirds; Chapter~\ref{ch:averaging2} gives the
+seesaw and the averaging; and Chapter~\ref{ch:assembly} assembles the proof and
+names the two places where it stops.
 \item \textbf{Part~\ref{part:verify}} is the audit. Chapter~\ref{ch:lean} explains what a proof assistant
 certifies and what it does not. Chapter~\ref{ch:chain} traces the proof chain. Chapter~\ref{ch:inputs}
 examines the load-bearing inputs. Chapter~\ref{ch:scan} reports the static scan.

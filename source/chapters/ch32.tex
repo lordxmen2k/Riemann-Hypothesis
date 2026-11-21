@@ -1,0 +1,201 @@
+% =====================================================================
+%  Chapter 13 — The Verdict, Part I
+% =====================================================================
+
+\part{The Verdict}
+\label{part:verdict}
+\markboth{Part V}{The Verdict}
+
+\chapter{The Finding}
+\label{ch:verdict}
+
+This chapter states the conclusion of the audit. It is stated in one sentence
+first and then defended, because the sentence is the deliverable and the
+defence is the part that should be checked.
+
+\section{The finding}\begin{seamnote}{\textbf{The finding}}
+On the evidence available as of 21 November 2026, the claim that the Riemann
+hypothesis has been proved is \textbf{unresolved}\idx{verdict}. The submitted formalisation
+is of a quality that makes the claim serious, and the reduction from
+Mathlib's \texttt{RiemannHypothesis} to a proved fixed-point formula has been
+traced and found sound. But the load-bearing inputs have never been audited by
+anyone outside the author; the author's own account of the method records an
+a-priori ceiling at two thirds and an obstruction whose stated remedy requires
+a conjecture that remains open; and the remark does not explain how either was
+crossed. The claim is neither established nor refuted\idx{possibility A/B/C}.
+\end{seamnote}
+
+Three words in that sentence carry the weight, and it is worth being exact
+about what each one rules out and what it permits.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[\textbf{Unresolved.}] Not ``probably true'', not ``likely to be
+disproved'', not ``pending compilation''. The specific mathematical content
+of the claim has not been examined by any independent party, so no probability
+is attached to it by this book. What the evidence does support is a statement
+about \emph{where the claim stands}: it is not yet a theorem, because the
+process that turns a formalised development into an accepted theorem has not
+been run.
+
+\item[\textbf{Neither established nor refuted.}] There is no published
+refutation, no counterexample to any intermediate statement, and no
+discovered defect. The audit found the reduction chain sound and the
+architecture appropriate. A refutation would require exhibiting a specific
+false statement or an invalid derivation, and this book did not find one.
+
+\item[\textbf{Serious.}] This is the part most likely to be under-weighted by
+sceptics, and it is why the book does not use the word ``failed''. Zero
+axioms, zero \texttt{sorry}, a correct reduction, a bottom theorem that is
+genuinely proved, and a twenty-component bundle of separately proved theorems
+named after the actual results one needs: that is not the profile of a
+fabrication.
+\end{description}
+
+\section{Four findings that support the finding}\begin{enumerate}
+\item \textbf{The artifact is clean and the reduction is sound.} The
+development contains no axioms and no admitted gaps, and its eight-link chain
+from Mathlib's \texttt{RiemannHypothesis} down to a proved holomorphic
+Lefschetz formula has been traced link by link. The reduction from
+non-vanishing of Dirichlet $L$-functions to RH is the standard argument,
+correctly executed. \hfill(Chapters~2, 7, 9)
+
+\item \textbf{The load-bearing inputs have not been audited.} The
+automorphy step is carried by the bundle \texttt{Af.Hypotheses\_2}, whose
+field \texttt{newform} supplies the automorphic representation the downstream
+theorem consumes. The bundle's other fields are re-derived in the source from
+named published results --- which is the right shape --- but the fidelity of
+those re-derivations to the published theorems is precisely the question, and
+no one outside the author has examined it. \hfill(Chapter~8)
+
+\item \textbf{The author's own account records two unresolved obstacles.} The
+timeline's item 14 states that the method ``would stop at 2/3 a priori'' and
+lists attempts --- a main term, a transfer of constants, killing by twisting,
+``division'' --- without stating that any of them succeeded. Item 17 states
+that the $H^1_o$ classes that twisting fails to kill require ``a significant
+weakening of Vandiver'', which is an open problem, and its footnote is
+hedged with ``maybe?''. GRH is recorded for the following day, with no
+account of the transition. \hfill(Chapters~1, 4, 5)
+
+\item \textbf{No independent review exists, and the machinery to produce one
+does not yet exist in usable form.} The mechanical layers have been cleared:
+the development compiles, independently and reproducibly, and the axiom
+question is settled in the affirmative. The mathematical layer --- statement
+review --- has not begun in public, and the artefact's own author explains
+why: he has ``not mastered a massive neighbourhood around its mathematics'',
+and the prose write-up is not written. \hfill(Chapters~6, 10, 12)
+\end{enumerate}
+
+\section{What this finding is not}\begin{mythbox}{Four misreadings, and why they are wrong}
+\begin{itemize}
+\item \textbf{``So the proof is fake.''} No. Nothing found in this audit
+refutes anything, and the artifact's quality is genuinely high. The correct
+statement is that its correctness has not been established.
+
+\item \textbf{``So it is probably right.''} No. This book attaches no
+probability to the claim. The evidence is consistent with the claim being
+correct, and equally consistent with a formalisation whose deep inputs are
+weaker than advertised. Distinguishing these requires the review that has not
+happened.
+
+\item \textbf{``So the 2/3 ceiling proves it is wrong.''} No. The ceiling is
+what the method produced on 15 November. If the Lean development contains
+something that crosses it --- which is the entire claim --- the remark's
+silence is explicable as compression. The remark is an admitted ``slop''
+summary by a self-declared non-expert in the relevant area, and it explicitly
+tells the reader that the code is the authoritative version.
+
+\item \textbf{``So the 2/3 ceiling proves it is right.''} No, and this is the
+error the coverage made. A method that a competent specialist computed would
+stop at two thirds is a method with a demonstrated ceiling, not a method with
+a demonstrated crossing. The remark's silence is as consistent with a
+successful crossing as with a failure, and it is equally consistent with the
+third possibility --- that the formal statement proved is weaker than the
+headline theorem.
+\end{itemize}
+\end{mythbox}
+
+\section{The three possibilities, stated precisely}Chapter~4 named three possibilities for the 15-to-16 November gap. It is worth
+restating them here in their sharpest form, because they are what a reviewer
+must discriminate between, and they correspond to three different outcomes.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[\textbf{A. The artifact contains the missing ingredient.}] The theta-lift
+chain, or the epsilon estimate, or the hyperplane-section package, or some
+part of the 175 thousand files, contains a step that the remark's compressed
+timeline does not describe, and that step genuinely raises the bound from two
+thirds to all of the zeros. \emph{Outcome: the claim is correct, and the
+remark is simply a bad write-up.} This is a live possibility and it would be
+an extraordinary result.
+
+\item[\textbf{B. The ceiling was a cost accounting the author later
+improved.}] The computation of item 14 was superseded; the remark records a
+superseded state of the argument. \emph{Outcome: the claim is correct, and
+the remark is out of date.} Also live, and also unremarkable.
+
+\item[\textbf{C. The formal theorem is weaker than the headline.}] The
+development proves a statement that implies, or is close to, the two-thirds
+proposition of August 2026, and the top-level theorem is obtained by a step
+that depends on an input whose formal content differs from its informal
+description. \emph{Outcome: the claim is wrong, and the artifact is a
+substantial and honest piece of work that does not do quite what its headline
+says.}
+\end{description}
+
+\begin{seamnote}{How this book rates the three}
+This book does not rate them. That is the point of the finding: the evidence
+available does not discriminate, and a book that pretended otherwise would be
+guessing.
+
+What it can say is this. Possibilities A and B are consistent with everything
+known, including the method's demonstrated quality, its August result, and the
+author's candour. Possibility C is consistent with everything known too, and
+is the standard failure mode of formalised mathematics, and is the only one of
+the three that a compiler cannot detect.
+
+If a reader wants a bet, the honest form of the bet is: the artifact is
+genuinely substantial, the author is being unusually honest about the state of
+it, and the most likely outcome of a full review is a significant
+\emph{reformulation} of the claim rather than either a refutation or a
+triumphal confirmation. But the bet is not the finding, and the finding does
+not depend on it.
+\end{seamnote}
+
+\section{What would change the finding}Three things would, in decreasing order of speed.
+
+\begin{enumerate}
+\item \textbf{A completed statement review} of the load-bearing inputs,
+conducted by somebody with the relevant expertise, published. This is the
+decisive step, and Chapter~14 says what it consists of.
+
+\item \textbf{A published paper} describing the mathematics of the argument,
+with the 15-to-16 November transition explained. This would not by itself
+settle the mathematics, but it would make the review possible, and it would
+close the gap between the two documents that this audit could not close.
+
+\item \textbf{An independent kernel replay} via \texttt{lean4export} and an
+external kernel such as NanoDa, or a check via \texttt{lean4checker}. This
+would strengthen the mechanical layer. It is already effectively done; doing
+it again adds assurance, not information.
+\end{enumerate}
+
+Nothing short of the first would change the finding, and the first is a
+months-long project for a specialist. This is the ordinary state of affairs
+for a large formalisation, and it is not a sign of anything.
+
+\begin{keytakeaways}
+
+\item The finding: the claim is \textbf{unresolved} as of 21 November 2026.
+Neither established nor refuted.
+\item The artifact is clean, its reduction is sound, and its architecture is
+appropriate. This is a serious submission, not a fabrication.
+\item The unexamined part is the fidelity of the load-bearing inputs to the
+published theorems they encode.
+\item The remark's own timeline records two obstacles --- a two-thirds ceiling
+and a Vandiver-dependent obstruction --- and does not say how either was
+crossed.
+\item Three outcomes remain live: the artifact contains the missing
+ingredient; the remark is out of date; or the formal theorem is weaker than
+the headline. The available evidence does not discriminate between them.
+\end{keytakeaways}

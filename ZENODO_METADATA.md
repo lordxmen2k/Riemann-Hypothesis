@@ -12,7 +12,11 @@ This book takes the artifact seriously, reads it, and reports what it establishe
 
 The finding is that the claim is unresolved. The submitted formalisation contains no axioms and no admitted gaps, and the reduction from Mathlib's own RiemannHypothesis down to a proved holomorphic Lefschetz fixed-point formula was traced by hand and found mathematically sound. The book also identifies what remains unaudited: whether the load-bearing inputs carry the classical content they are named for. The author's own timeline records an a-priori ceiling at two thirds of the zeros and an obstruction whose stated remedy requires a weakening of Vandiver's conjecture, which is still open. The book reports what was checked, what was not, and gives a verification protocol that would settle the question.
 
+Part III sets the method out step by step in eleven chapters, with the two-thirds ceiling computed directly from the submitted source, where it turns out to be a literal constant in the segment-degree threshold arithmetic. Part IV writes the same argument as mathematics, so that a reader with a mathematics background can follow it and arrive at the result, with the two places where the proof stops marked in place rather than at the end. Part V is the verification audit; Parts VI and VII give the state of play and the verdict.
+
 The mathematics is explained from first principles: the zeta function, its analytic continuation, the functional equation, the critical strip, Weil's criterion in its positivity form, Landau's oscillation theorem, and the four obstacles that any method must clear, namely the collapse of the Stepanov-Bombieri geometric-arithmetic product over the integers, the open automorphy of the required theta lift, the surviving first cohomology classes, and the author's own recorded two-thirds ceiling.
+
+Attribution: the mathematics examined in this book is the work of Levent Alpoge, who published the remark and the Lean development in public under his own name. This book reads that mathematics, sets it out in prose, and reports what has and has not been verified.
 
 This book is for readers who want the mathematics and are willing to be walked through it, for readers who work on formal verification and want to know what the trust boundary actually is, and for readers who want to know how to evaluate the next claim of this kind.
 

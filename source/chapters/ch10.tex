@@ -17,9 +17,7 @@ $m$. Time to take $m$ like $\sqrt{X}$.''
 This chapter explains what the chain is, what each step does, and --- the
 part that matters --- what the development actually proves about it.
 
-\section{The single lift}
-
-Fix a CM field $E$, and a positive definite Hermitian form $A$ of rank $n$
+\section{The single lift}Fix a CM field $E$, and a positive definite Hermitian form $A$ of rank $n$
 over $E$. The theta series $\theta_A$ attached to $A$ is a modular form on the
 CM lattice of weight $n$. The \emph{theta lift} of a cuspidal representation
 $\pi$ of $\mathrm{U}(E, n)$ to $\mathrm{U}(E, n')$ is the summand of $\theta_A$
@@ -50,9 +48,7 @@ well defined, and it is why the development has a whole subtree devoted to
 representative of the equivalence class is chosen.
 \end{description}
 
-\section{Why iterate at all}
-
-One lift is not enough, because one lift buys one unit of multiplicity and the
+\section{Why iterate at all}One lift is not enough, because one lift buys one unit of multiplicity and the
 argument needs many. So the method iterates: apply the lift again, to the
 output, with a new form and a new character, and again, and again, until the
 chain has length $m$.
@@ -61,9 +57,7 @@ The formalisation of this is in
 \code{Formalism/ThetaLiftIndependence/Statement.lean}, and it is worth reading
 because it makes precise two claims that the remark states only in prose.
 
-\subsection{The chain operator}
-
-The chain is a composite of kernel operators. Write $\kappa_j$ for the matrix
+\subsection{The chain operator}The chain is a composite of kernel operators. Write $\kappa_j$ for the matrix
 of the $j$-th lift and $w_j$ for the weight at that stage. Then
 
 \begin{seamnote}{\code{chainOp} (from \code{Formalism.ThetaLiftIndependence.Statement})}
@@ -82,9 +76,7 @@ def chainOp {R : Type*} [CommSemiring R] {i : Nat -> Type*}
 The composition is by construction. The substantive statements are the two
 following it.
 
-\subsection{The chain collapses: the multiplicativity}
-
-\begin{seamnote}{\code{KerComp}}
+\subsection{The chain collapses: the multiplicativity}\begin{seamnote}{\code{KerComp}}
 {\footnotesize
 \begin{verbatim}
 def KerComp : Prop :=
@@ -116,9 +108,7 @@ product of the adjoints, and it is the reason the Gram matrix of the Weil
 expression can be built out of the chain at all: the positivity requires an
 adjoint, and adjointness is what the theta lift supplies.
 
-\subsection{The integrality of the chain, and its price}
-
-\begin{seamnote}{\code{ChainInt}}
+\subsection{The integrality of the chain, and its price}\begin{seamnote}{\code{ChainInt}}
 {\footnotesize
 \begin{verbatim}
 def ChainInt : Prop :=
@@ -164,9 +154,7 @@ $\Lambda_j$-stable under multiplication by $S$. This is the "integral
 structure" that the remark's item 15 says is glued across the Hecke
 characters to get a ``gcd'' and extra averaging.
 
-\section{What each lift must preserve}
-
-For the chain to be usable, each step must preserve the properties the
+\section{What each lift must preserve}For the chain to be usable, each step must preserve the properties the
 argument needs. The remark's item 9 lists them: ``Norms of the lifts, level,
 cancellation of order-$m$ terms''. The development makes them explicit.
 
@@ -218,9 +206,7 @@ are satisfied, and whether the classical results they encode are the ones
 needed, is exactly the question a referee must answer.
 \end{quote}
 
-\section{The parameters}
-
-The chain is indexed by parameters, and the development's \code{TPar}
+\section{The parameters}The chain is indexed by parameters, and the development's \code{TPar}
 structure is where they live. From the remark and from the statement of
 \code{Hyp3}, the parameters are:
 
@@ -249,9 +235,7 @@ entries of the parameter data are half-integers, the $b$ and $e$ entries are
 integers. These parities are the signature-theoretic data, and they are what
 the Weil expression's interlacing weights are made of.
 
-\section{The orbit sum}
-
-The last piece of the theta-lift subtree is the averaging identity, and it is
+\section{The orbit sum}The last piece of the theta-lift subtree is the averaging identity, and it is
 the formal statement of a classical fact about finite groups:
 
 \begin{seamnote}{\code{OrbitSum}}
@@ -277,9 +261,7 @@ construction is set up so that averaging over the Hecke characters decomposes
 into orbits --- which is the averaging that the Weil expression needs, and
 which Chapter~\ref{ch:averaging} returns to.
 
-\section{What step 4 has shown}
-
-\begin{enumerate}
+\section{What step 4 has shown}\begin{enumerate}
 \item A lift is a well-defined operation on representations of totally
 definite unitary groups, conditional on a weight inequality.
 \item A chain of lifts composes, and the composition is \emph{equal} to a

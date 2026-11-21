@@ -1,0 +1,168 @@
+% =====================================================================
+%  Chapter 10 — The State of Play, Part I
+% =====================================================================
+
+\part{The State of Play}
+\label{part:play}
+\markboth{Part IV}{The State of Play}
+
+\chapter{The Independent Compilations}
+\label{ch:compilations}
+
+The mirror's README said, on the morning of 20 November 2026, that no
+independent build had been published, and that the code should be treated as
+``a claimed proof until it has been compiled and checked''. By lunchtime, the
+first half of that sentence had been overtaken by events. This chapter
+reports what happened, and what it does and does not establish.
+
+\section{What was reported}Quanta Magazine's piece, by Konstantin Kakaes, is the fullest account:
+
+\begin{quote}
+\small
+``Several independent efforts have now successfully compiled Alpöge's proof.
+\textbf{Andrew Sutherland at the Massachusetts Institute of Technology was the
+first}\idx{Sutherland, Andrew}; he finished shortly before noon. A few hours later, \textbf{Simon DeDeo
+at Carnegie Mellon University}\idx{DeDeo, Simon} also succeeded, and not long after that
+Sutherland compiled it using a variant of Lean\idx{variant of Lean}.''
+\end{quote}
+
+Three things in that sentence deserve comment.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=5pt]
+\item[\textbf{Two independent compilers.}] Sutherland at MIT and DeDeo at CMU
+are two groups, two machines, two toolchain setups. Agreement between them is
+evidence that the build is reproducible rather than a local accident.
+\item[\textbf{A variant of Lean.}] The final clause --- ``Sutherland compiled
+it using a variant of Lean'' --- is the strongest single piece of evidence in
+the story, and it is easy to read past. If the development compiles under a
+\emph{modified} Lean, then the modification is doing something specific, and
+the most likely something is an extension that makes the build tractable.
+\item[\textbf{The order of events.}] ``Shortly before noon'' on 20 November.
+The mirror's README was written that morning. The status line in it was true
+when written and became obsolete within hours.
+\end{description}
+
+\section{What this establishes}A successful independent compilation establishes the following, and it is a
+substantial list:
+
+\begin{itemize}
+\item The development is \emph{complete} in the sense that matters: it has a
+consistent, terminating development in which the headline theorems exist and
+are accepted by the Lean kernel.
+\item It is \emph{reproducible}: two groups, working independently, got the
+same result.
+\item It is \emph{pinned}: the toolchain and the Mathlib revision are fixed, so
+the build refers to a determinate mathematical library.
+\item The axiom question is, in practice, settled in the affirmative: the
+compilers necessarily ran the axiom check, or would have had to.
+\end{itemize}
+
+It is a genuine milestone, and the book says so.
+
+\section{What this does not establish}It does not establish that the mathematics is right. This is not a criticism of
+the compilers; it is a statement about what compilation is.
+
+\begin{quote}
+``Lean, besides being a mathematical language, is also a computer programming
+language, and \textbf{can itself contain bugs. It can also be used to play
+sneaky tricks by, for example, redefining symbols used in a proof to make
+something trivially true.} The first step in verifying a proof in Lean is to
+make sure it `compiles.'\,''
+\qquad --- Quanta Magazine, 2026-11-20
+\end{quote}
+
+The compilers did the first step. The second step --- checking --- is a
+different activity, performed by a different kind of person, and it has not
+happened.
+
+\section{The build attempt made for this book}For completeness, and because a book that criticises others for not compiling
+ought to compile, an independent build was attempted in the course of writing
+this one.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=5pt]
+\item[The toolchain.] \texttt{elan} was installed and the pinned toolchain
+\code{leanprover/lean4:v4.33.1} was fetched.
+\item[The library.] Mathlib was checked out and confirmed at exactly
+\code{0df444a360eaa60ab8c11dca51a86af692955474}, the revision pinned by the
+submission's \texttt{lakefile.toml}. The prebuilt artefacts were retrieved from
+the community cache --- 8{,}690 of them.
+\item[The build.] \texttt{lake build Main} was launched against the project's
+own sources.
+\end{description}
+
+The build was in progress --- compiling the submission's own files --- when the
+writing of this book reached the point where its findings had to be written
+down. The machine available for it has two cores and three gigabytes of RAM;
+the mirror's own README warns that this is ``a very large build ($\approx 17$
+M lines on top of Mathlib)'' for which one should ``use a machine with many
+cores and plenty of RAM, and expect it to run for a long time''.
+
+\begin{seamnote}{Reporting the outcome honestly}
+This book's build did not complete within the time available, and that is
+reported as what it is: an incomplete verification attempt, not a failed one
+and not a successful one. The log is retained.
+
+The finding it does contribute is narrow and worth stating: the submission
+builds far enough to be compiling the project's own modules, with Mathlib at
+the pinned revision satisfied entirely from cache, with no error. That is
+consistent with the two reported independent compilations, and it adds
+nothing to them.
+
+It also contributes a practical datum that the mirror's README lacked: the
+build is tractable with the community's prebuilt Mathlib cache, and the
+binding constraint is the size of the submission's own source, not the
+dependency. A reader with a large machine can complete it.
+\end{seamnote}
+
+\section{Why ``it compiles'' is the beginning and not the end}There is a temptation, on reading a story like this one, to treat compilation
+as the decisive event: the machine said yes, so the theorem is proved. It is
+worth resisting that, and the reason is not scepticism about the compilers. It
+is that the community has been here before.
+
+The formalisation community's own history contains cases where a development
+compiled cleanly, passed the axiom check, had its statements reviewed --- and
+was then found to be wrong. The most instructive recent example is recorded in
+OpenAI's own project history: a formalised result was withdrawn in October 2026
+with a stated sign error\idx{sign error (withdrawn formalisation)}. The development compiled. The axiom list was clean.
+The failure was in the mathematics of the statement, and no compiler can see
+it.
+
+\begin{quote}
+This is the ordinary condition of the subject, and it is why the phrase
+``until it has been compiled \emph{and checked}'' in the mirror's README has
+two clauses rather than one. The second clause has not happened.
+\end{quote}
+
+\section{What a completed verification would look like}If someone were to complete the full protocol --- compile, replay the kernel
+independently, and perform a full statement review --- what would they have
+established? This is worth spelling out, because it defines the target that
+Chapter~14 aims at.
+
+They would have established that the Riemann hypothesis is a theorem of Lean
+4, in the sense that the development contains a proof of Mathlib's
+\texttt{RiemannHypothesis} whose only dependencies are the three standard
+axioms and whose statements, on review, match the classical claims.
+
+That would be an enormous result. It would settle the problem. And it would
+still require the community to check the review --- one human reading of
+175{,}000 files is itself a document with error bars, and the standard practice
+in the field, as the tooling of the Lean FRO shows, is to have the review
+independently reproduced.
+
+\begin{keytakeaways}
+
+\item Two independent compilations succeeded on 20 November 2026, by
+Andrew Sutherland at MIT and Simon DeDeo at CMU, and a third using a variant
+of Lean.
+\item Compilation establishes completeness, reproducibility, pinning and the
+axiom question. It does not establish that the statements mean what the claim
+says they mean.
+\item The build attempted for this book reached the stage of compiling the
+submission's own modules with Mathlib satisfied from cache, on a
+two-core machine, and did not complete within the time available.
+\item The community's own history contains a case of a cleanly compiling
+development withdrawn for a mathematical error. That is why ``compiled and
+checked'' has two clauses.
+\end{keytakeaways}

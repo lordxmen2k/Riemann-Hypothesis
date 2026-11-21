@@ -16,19 +16,37 @@
 | | |
 |---|---|
 | Trim size | 6 × 9 in (432 × 648 pt) |
-| Pages | 156 (154 numbered + full-bleed front and back covers) |
-| File size | 1.5 MB |
-| Word count | 31,724 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
-| Chapters | 15, in 5 parts |
+| Pages | 278 (276 numbered + full-bleed front and back covers) |
+| File size | 1.6 MB |
+| Word count | 57,226 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
+| Chapters | 34, in 7 parts |
 | Figures | 9 (4 computed charts, 5 diagrams) |
 | Tables | 5 |
-| Key Takeaways boxes | 17 |
-| Seamnote / callout boxes | 26 |
+| Key Takeaways boxes | 40 |
+| Seamnote / callout boxes | 45 |
 | Index entries | 84 |
 | Glossary terms | 43 |
 | Fonts embedded | Outfit, JetBrains Mono, Fira Math, DejaVu Sans — all subsets, all embedded |
-| PDF bookmarks | 114 outline entries matching the table of contents |
-| Link annotations | 266 in total: 4 external URIs (Apache licence, DOI on the copyright page, DOI in the colophon, and one further DOI) plus internal cross-references from the table of contents, figures, lists and index |
+| PDF bookmarks | 241 outline entries matching the table of contents |
+| Link annotations | 4 external URIs (Apache licence, DOI on the copyright page, DOI in the colophon) plus internal cross-references from the table of contents, figures, lists and index |
+
+### Structure
+
+| Part | Chapters | Content |
+|---|---|---|
+| I | 1–2 | The claim and the artifact |
+| II | 3–5 | RH from first principles; the four obstacles; the method as described |
+| III | 6–16 | **The method, step by step** — eleven chapters walking the nine steps, with the two thirds computed from the source, and a step-to-declaration map |
+| IV | 17–24 | **The proof in natural language** — the same argument written as mathematics, with the two places it stops marked in place |
+| V | 25–28 | The verification: what Lean certifies, the traced chain, the load-bearing inputs, the static scan |
+| VI | 29–31 | The state of play: the compilations, the two-thirds theorem, the missing review |
+| VII | 32–34 | The verdict, the verification protocol, what a proof would change |
+
+**Attribution.** The mathematics --- the method, the argument, the
+formalisation and the remark that describes them --- is the work of Levent
+Alpöge, and is attributed as such on the title page, the copyright page, the
+part opener of Part IV, the cover and the back cover. This book is the
+analysis and the exposition.
 
 ## Cover
 

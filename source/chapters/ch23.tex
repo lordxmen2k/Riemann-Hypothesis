@@ -1,205 +1,169 @@
 % =====================================================================
-%  Chapter 12 — The State of Play, Part III
+%  Chapter 23 — The Proof in Natural Language, 7
 % =====================================================================
 
-\chapter{The Review That Has Not Happened}
-\label{ch:noreview}
+\chapter{The Seesaw and the Averaging}
+\label{ch:averaging2}
 
-The most consequential fact about the claim under examination is an absence,
-and absences are hard to write about without either overstating or
-understating them. This chapter attempts to state it precisely.
+The argument must now average over the Hecke characters, and it cannot do so
+directly: the period it has carries the character, and a period with a
+character in it cannot be averaged. Two devices remove the obstruction in
+sequence.
 
-\section{What exists}
-
-\begin{itemize}
-\item \textbf{The remark.} Four pages, at \path{alpo.ge/remark.pdf}, dated by
-its mirror to 20 November 2026. No theorem statement, no proof, no
-definitions.
-\item \textbf{The Lean development.} 239{,}275{,}554 bytes, 175{,}187 files,
-roughly 17.4 million lines, pinned to Lean \texttt{v4.33.1} and Mathlib
-\code{0df444a360eaa60ab8c11dca51a86af692955474}.
-\item \textbf{A third-party mirror} with a README, a static scan, and a set of
-recommended verification steps.
-\item \textbf{Two independent compilations}, reported the same day.
-\item \textbf{Press coverage} in Quanta Magazine, New Scientist, Scientific
-American, \emph{The Economist}, and a wire report from Agence France-Presse.
-\end{itemize}
-
-That is a complete and, by the standards of announcements, admirably
-well-organised public record.
-
-\section{What does not exist}
-
-\begin{itemize}
-\item \textbf{No preprint.} No arXiv paper, no journal submission, no
-technical report describing the argument. A search of arXiv returns exactly
-one item connected to this story --- arXiv:2608.13637 --- and it is about the
-two-thirds theorem, not about RH.
-\item \textbf{No refereed report.}\idx{refereed report, absence of} No expert has published an assessment.
-\item \textbf{No statement review.} The human check described in Chapter~6
---- reading the formal statements against the classical theorems they claim to
-encode --- has not been performed by anybody outside the author.
-\item \textbf{No written proof.} The remark's author says the prose version
-``is routine'' to produce but has not been written, and the author's own
-summary is what he calls ``slop''.
-\end{itemize}
-
-The wire report put the position plainly:
+\section{The seesaw}Let $G$ be a unitary group over $E$ and let $G^0$ be the totally definite
+unitary group obtained by restricting scalars to the maximal real subfield
+$F$. For an Eisenstein series $E_1$ on $G$ and $E_2$ on $G^0$, the Rallis
+seesaw formula is
 
 \begin{quote}
-\small
-``The claim has not been independently verified, and the proof has not yet been
-reviewed by outside experts.''
+\textbf{Proposition U (seesaw).} For suitable Eisenstein series,
+\[
+\int_{G^0\backslash G} \theta_A(g)\,E_1(g)\,dg
+\;=\;
+\frac{\hat g \cdot L_A\!\left(\tfrac12,\varepsilon\right)}{L(1,\varepsilon)}
+\int_{G\backslash G} \theta_A(g)\,E_2(g)\,dg,
+\]
+where $\hat g$ is the number of components of $G^0\backslash G$ and $L_A$ is
+the $L$-function of the form $A$.
 \end{quote}
-
-\section{Why this absence is the central fact, and not a technicality}
-
-A formalised proof of the Riemann hypothesis would be the most consequential
-mathematical result of the century, and it would be the most consequential
-\emph{proof}. Unlike a paper, it could in principle be checked by anybody with
-a computer. That is the promise of formalisation, and this is the first
-candidate of that kind of scale.
-
-The absence of a review is not a bureaucratic delay. It is the substantive
-step. Consider what a referee must do with this artifact:
-
-\begin{enumerate}
-\item Build it. Done, twice.
-\item Check the axiom list. Done, mechanically.
-\item Read the eight-link chain. Done in this book, for this book.
-\item \textbf{Read the statements of the load-bearing inputs --- the theta
-lift, the automorphy bundle, the admissibility condition, the vanishing
-theorem --- against the published theorems they encode.}
-\item \textbf{Read the applications: check that the classical theorems are
-applied in settings where their hypotheses actually hold.}
-\item \textbf{Compare the formalisation with the remark's own account, and
-resolve the 15-to-16 November gap.}
-\end{enumerate}
-
-Steps 1--3 are the part that has been done. Steps 4--6 are the part that has
-not, and they are the part that could go either way.
-
-\begin{seamnote}{On the scale of the work}
-Step 4 alone is not a single afternoon's reading. The inputs are drawn from
-the theory of automorphic forms, the theory of Galois representations, the
-theory of Iwasawa algebras, and the theory of theta lifts --- four substantial
-fields, none of them easy. The relevant classical statements must be located
-in the literature, compared field by field with the Lean definitions, and the
-comparison written up.
-
-The realistic estimate for a competent specialist is weeks, not days --- and
-that is for one person, reading one input. There are five inputs named in
-\tabref{tab:inputs} and a long tail behind them.
-
-This is why the community's normal mechanism for this kind of work --- a
-specialist reads the development and reports --- has not produced a report
-yet. It is not that nobody has looked. It is that the job is large and the
-incentive structure of the field does not make it anyone's clear priority
-until the claim is on the record in a form that can be cited.
-\end{seamnote}
-
-\section{What the absence does not mean}
-
-It is important not to over-read the absence, because the available evidence
-cuts in both directions and the temptation to pick a side is strong.
 
 \begin{quote}
-\textbf{It is not evidence of a defect.} No referee has reported a defect. No
-mathematician has published a refutation. The press coverage contains
-scepticism, and one prominent response --- Umberto Borretti's ``Re: Riemann''
---- but a sceptical essay is not a refutation, and the absence of a refutation
-is not a refutation of the absence.
-
-\textbf{It is not evidence of a good proof either.} ``Nobody has found a
-problem'' is not a positive statement about a development of 17.4 million
-lines. Nobody has read it.
-
-\textbf{It is evidence about the normal process, not about the mathematics.}
-What it tells us is that the claim has not yet passed through the mechanism
-that would have made it a settled result. That mechanism is slow, and it is
-the same mechanism that every other proof claim has gone through.
+\textbf{Proposition V (why it helps).} The right-hand side is a period against
+an Eisenstein series, and Eisenstein series are attached to Hecke characters.
+The character has been traded for an $L$-value, and $L$-values average.
 \end{quote}
 
-\section{The precedent that matters}
+This is the classical trade: the left-hand side has the character inside the
+integral, where it is awkward; the right-hand side has it inside $L_A$, where
+it is an $L$-value and can be summed over.
 
-Claims to have proved the Riemann hypothesis have a long history, and the
-usual outcome is a long, careful, unglamorous process of elimination. This
-book does not need the parade of earlier claimants, most of which are
-low-quality; their existence is well known and it establishes only that the
-conjecture attracts attempts.
-
-The more useful precedents are two, and they point in opposite directions.
-
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
-  itemsep=5pt]
-\item[The successful formalisations.] Several substantial results in number
-theory and combinatorics have been formalised in Lean, and a few have been
-formally verified at a level that the community accepts: the
-\textbf{Prime Number Theorem for arithmetic progressions}\idx{prime number theorem, formalised}, the
-\textbf{Four Colour Theorem}\idx{four-colour theorem}, the \textbf{Boolean Prime Ideal Theorem},
-\textbf{Apéry's theorem}, and others. The pattern is consistent: the
-formalisation is accompanied by a paper describing the mathematics, a
-statement review, and an independent check of the kernel. Those results are
-uncontroversial because they went through the process.
-
-\item[The withdrawal.] OpenAI's own project history records a withdrawal in
-October 2026 with a stated sign error. The development compiled. The axiom
-list was clean. The error was mathematical. This is the specific scenario
-that a review catches and a compiler does not.
-\end{description}
-
-Taken together, the precedents say two things. They say that the machinery
-works, and that a formalised proof of RH is not an absurd thing to attempt.
-And they say that the specific gap between ``compiles'' and ``accepted'' is
-real, routinely crossed, and routinely not.
-
-\section{Why the author's own words matter here}
-
-One of the most striking features of the remark, reading it as an
-evidentiary document rather than a news story, is how consistently it
-disclaims the kind of authority that would make a review unnecessary.
+\section{The Bessel period}Apply the seesaw to the theta lift. A theta lift to a group of higher rank has
+a period that is a product of ordinary Bessel functions: the Weil
+representation restricted to a torus is one-dimensional, its $L$-function is a
+product of Bessel $L$-functions, and the theta series is a sum over that
+character.
 
 \begin{quote}
-\small
-``in my view of my path I have just taken a step'' \qquad
-``which might make zero sense, and I apologize, though the Lean should suffice
-to clarify everything. I'm just too inexpert in the relevant stuff at the
-moment'' \qquad
-``I personally have little mastery of automorphic forms on higher rank groups
-(youthful foolish stubbornness)'' \qquad
-``I also emphasize that I may have baked lots of strange suboptimal choices
-into the argument''
+\textbf{Proposition W (Bessel period).} For the lift of $\pi$ from
+$\mathrm{U}(E,n)$ to $\mathrm{U}(E,d)$, the period has the form
+\[
+B_A(\varphi, F) \;=\; \sum_{\gamma} \varphi(\gamma)\,\theta_A(\gamma)\,F(\gamma),
+\]
+with $\varphi$ an automorphic form and $F$ a cuspidal form, and this
+quantity does not depend on the Hecke character except through a fixed
+character already extracted from the lift.
 \end{quote}
 
-These are not the words of a person claiming that review is a formality. They
-are the words of a person who knows that review is the substance, and who has
-put the work in a form where a reviewer can do it --- because the author cannot
-do it himself, and says so.
+The formal counterpart is \code{bB} in
+\code{FunctionModelRallisFromInputs.lean}, with the lift operator \code{vth}
+alongside it, and the non-vanishing condition \code{PerNZ}.
 
-There is a reading of the remark in which this is the strongest possible
-stance: the author has produced a machine-checkable artifact precisely so that
-the part he cannot do is done by others. The remark's ``I decided to only
-present Lean'' is then not a retreat from scrutiny but a \emph{design} for it:
-the best available evidence, in the most checkable form, with the author's
-honest assessment of its state attached.
+The character is extracted by the parity alternation: the character used at
+stage $i$ is $\mu_s$ for even $i$ and $\mu_s\eta^{-1}$ for odd $i$, where
+$\eta$ is the fixed character of the tower. The parity is forced --- the
+weight of a theta series of rank $n$ is congruent to $n$ modulo $2$, so the
+available weights alternate and the characters must alternate with them.
 
-That reading is available. So is the other one, in which the same document
-amounts to an assertion with no supporting argument. The evidence currently
-available does not decide between them, and the difference between them is
-exactly what a review would establish.
+\section{The non-vanishing obligation}\begin{quote}
+\textbf{Proposition X.} The period must not vanish: at some interior stage
+$j < m$ the Bessel pairing is non-zero, or at the top stage $j = m$ the
+top-level pairing is non-zero.
+\end{quote}
+
+This is \code{PerNZ}, and it is a real obligation rather than a formality: if
+the period vanishes, the seesaw gives zero and there is nothing to average.
+
+\section{The averaging}With the period independent of the character, the sum over the Hecke
+characters is a sum over a fixed function. But averaging over a finite group
+of a non-constant function loses: the average is smaller than the function's
+value by a variance term, and that variance must be controlled.
+
+The tool is Behrend's construction.
+
+\begin{quote}
+\textbf{Proposition Y (Behrend).} There is a set $T \subseteq \{1,\dots,n-1\}$
+with no three distinct elements satisfying a non-trivial relation
+$\alpha x_1 + \beta x_2 + \gamma x_3 = 0$ with $|\alpha|,|\beta|,|\gamma| \le K$,
+and with
+\[
+|T| \;\ge\; n \exp\!\left(-C\sqrt{\log n \log(K+1)}\right)
+\]
+for an absolute constant $C$.
+\end{quote}
+
+The formal counterpart is \code{BehrendFree}, \code{BehrendBound} and
+\code{ThickSet} in \code{Formalism/BehrendSets/Statement.lean}, with the
+quantitative variance bounds \code{SumSq}, \code{SumLin}, \code{ShortOrdLarge}
+and \code{ShortOrdSq}.
+
+\section{The group, and why it is the right one}The group in the formalisation is
+$(\mathbb{Z}/2^{s+2})^\times / \langle -1\rangle$, cyclic of order $2^s$,
+and the relevant element is the Frobenius $\ell \mapsto \ell$-th power map,
+whose order is what controls the growth of the corresponding $L$-function.
+
+\begin{quote}
+\textbf{Proposition Z.} There are absolute constants $40$ and $8$ such that
+the sums of $\log \ell / \ell^2$ and of $\log \ell / \ell$ over a Behrend-free
+set of $\ell$'s are bounded by $40\log M / M^2$ and $8(1+\log Y)^2/M$
+respectively.
+\end{quote}
+
+This is the arithmetic content: the Behrend structure controls both how many
+elements there are and how much each contributes.
+
+\section{The equidistribution, which is the real payload}\begin{quote}
+\textbf{Proposition AA (the equidistribution).} Let $T \subseteq
+\{1,\dots,n-1\}$ be a Behrend set, and let $\mathrm{thick}(n,T,u)$ be its
+translate by $u \in \mathbb{Z}/n$. Then for every finite set $I$ of
+positions, each with a residue $\mathrm{pos}(i) \bmod n$,
+\[
+\sum_{u \in \mathbb{Z}/n}
+\bigl|\{i \in I : \mathrm{pos}(i) \in \mathrm{thick}(n,T,u)\}\bigr|
+\;=\; |I| \cdot |T|.
+\]
+\end{quote}
+
+Each position lies in exactly $|T|$ of the $n$ translates. That is what makes
+the average over the translates equal to the average over the group, with no
+loss: the Behrend condition guarantees the translates overlap in a controlled
+way, so the average is exact.
+
+The formal counterpart is \code{TranslateMean}, with \code{OrbitOne} and
+\code{WindowTwo} supplying the injectivity and the window bound that make the
+identity hold.
+
+\section{The remark's three pieces}The remark's items 11, 15 and 19 are now in place:
+
+\begin{center}
+\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Item} & \textbf{What it supplies} \\
+\midrule
+11 & The group with small-order Frobenius elements, and the bounds on what
+they contribute. \\
+15 & The equidistribution of the translates --- the ``gcd'' and the
+``extra averaging''. \\
+19 & The precise choice of the Iwasawa tower, ``specifically using
+Behrend''. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+And the remark's own footnote to item 19 --- ``This is the sort of trick that
+intuitively to me is obviously going to be unnecessary'' --- says that the
+author thought the Behrend construction would turn out not to be needed. The
+development contains it anyway.
 
 \begin{keytakeaways}
-
-\item There is no preprint, no refereed report, no statement review and no
-written proof. There is a remark, a mirror, two compilations, and press
-coverage.
-\item The steps that have been completed are the mechanical ones: build, axiom
-check, and the structural trace of Chapter~7. The steps that remain are the
-mathematical ones, and they are the ones that decide the question.
-\item The absence of a review is evidence about the process, not about the
-mathematics. It is not evidence of a defect and it is not evidence of
-correctness.
-\item The remark itself consistently disclaims the authority that would make
-review unnecessary. That disclaimer is the most credible thing in the
-document, and it is also the reason a review is needed.
+\item The seesaw trades a character-dependent period for a period against an
+Eisenstein series, so that the character becomes an $L$-value and can be
+summed over.
+\item The theta lift's period is a product of Bessel functions and does not
+carry the character, which the parity alternation with the fixed character
+$\eta$ arranges.
+\item The price is non-vanishing: the Bessel period must be non-zero, at an
+interior stage or at the top.
+\item Behrend's construction controls the variance of the average, and the
+equidistribution \code{TranslateMean} --- each position lying in exactly
+$|T|$ of the translates --- makes the averaging exact.
 \end{keytakeaways}

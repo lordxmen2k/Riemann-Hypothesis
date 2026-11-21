@@ -1,0 +1,384 @@
+% =====================================================================
+%  Chapter 8 — The Verification, Part III
+% =====================================================================
+
+\chapter{The Load-Bearing Inputs}
+\label{ch:inputs}
+
+Chapter~7 established that the chain from the headline theorem down to a proved
+fixed-point formula is well-formed. That is the easy half. This chapter
+addresses the hard half: the inputs that chain feeds on.
+
+What follows is the part of the audit where a claim like this one is won or
+lost. It is also the part that cannot be completed by reading --- only by
+reading, slowly, against the published literature --- and this chapter is
+honest about where the reading stopped.
+
+\section{The architecture, in one paragraph}The development has three layers, and understanding the architecture tells you
+where to look.
+
+\begin{quote}
+\textbf{Layer 1: published results, re-derived.} Libraries named
+\texttt{PublishedTheorems}, \texttt{LiteratureResults}, and
+\texttt{AutomorphicForms} contain formal re-derivations of classical
+published theorems --- Clozel's cohomology theorem, Clozel's conjecture on
+conjugate algebraicity, Borel injectivity, the Gelfand--Kazhdan
+correspondence, Jacquet--Shalika rigidity, base change for $\mathrm{GL}_2$.
+
+\textbf{Layer 2: bundles.} Structures such as \texttt{Af.Hypotheses\_2}\idx{Hypotheses\_2},
+\texttt{Alg.LemmaM}, \code{GlobalTheory.Ord2.admitted}\idx{admitted (structure)} and \texttt{Hyps}
+gather those results into packages with the fields a downstream argument
+needs.
+
+\textbf{Layer 3: the argument.} The chain of Chapter~7, the theta lift
+machinery, the Weil--Weil positivity arguments, the Rallis seesaw, the
+Iwasawa decomposition.
+\end{quote}
+
+This is the right architecture for a formalisation, and it is the same
+architecture one would use to formalise a hundred other theorems in this area:
+take the published theorems, restate them precisely, derive what you need, and
+build.
+
+It also locates the verification gap exactly. Layer 3 is where the new
+mathematics is, and it is where this audit has been able to check the most.
+Layer 1 is where the risk lives, because a formalisation of a published
+theorem can always be faithful, weakened, or wrong --- and a weakened Layer 1
+propagates silently and without any local sign of trouble.
+
+\section{Input one: the theta lift \texttt{TLiftK}}The statement the whole chain ultimately rests on is
+\texttt{UpperTheory.TP.TLiftK}, defined in
+\code{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}. It is a
+proposition, not a construction, and its shape is as follows (the statement is
+abbreviated here only by eliding the inner quantifiers; the full text is in
+the file):
+
+\begin{quote}
+``For every number field $E$ that is a CM field, every base $B$ of its maximal
+real subfield, and every $n \ge 1$: given a Hermitian form $X$ of rank $n$
+over $E$ with $X.J = 1$, there exists a rank $d \ge d_0$ and, for every $d
+\ge d_0$, a form $W$ with $W.J = \delta \cdot I$, such that: $W$ is skew with
+respect to the standard involution; for every pair of Hecke characters
+$\chi_X, \chi_W$ and every pair of archimedean weights $m_X, m_W$; if the
+restrictions of $\chi_X$ and $\chi_W$ to units are powers of the norm; if both
+have expansions $\exp(\pi_X)$ and $\exp(\pi_W)$; and if $U \subseteq
+\mathbb{C}^{\mathrm{UA}(E,n)}$ is an automorphic unitary representation with
+weight $\lambda$ at every place satisfying the weight bound $d + m_W(w) \le
+2\lambda(w)$ --- then there exists a representation $U'$ which is a lift of
+$U$ with weight $\lambda$.''
+\end{quote}
+
+In plain terms: \emph{a theta lift exists, with the prescribed weight,
+whenever the weight inequality holds.} That is the classical theta-lift
+existence statement of the Weil representation, in the form used in the
+Siegel--Weil and theta-lift literature.
+
+\begin{seamnote}{How the theorem is proved}
+\texttt{TLiftK} is proved by \code{UpperTheory.TP.tLift\_holds\_k}, which in
+turn applies \texttt{tLift\_of\_tools\_k} to the bundle
+\code{UpperTheory.TP.Tools\_k}\idx{Tools\_k} and the height theorem
+\code{GlobalTheory.ThK.Dbl.hgtEx\_of\_k}. The bundle
+\texttt{Tools\_k} is assembled in
+\code{.../ThetaKernels/TPGHolds.lean} from roughly twenty component
+theorems, each a separately named and separately proved result:
+
+\begin{itemize}
+\item \texttt{siegelWeilAniso\_of\_k} --- the anisotropic Siegel--Weil formula
+\item \texttt{frameConj\_k} --- conjugacy of orthonormal frames
+\item \texttt{finLevel\_k} --- finiteness of the relevant level
+\item \texttt{stab2Cpt\_k} --- stability of the point $2$
+\item \texttt{boxSecX\_of\_k} --- the box section
+\item \texttt{cptAll\_of\_k}, \texttt{grpTop\_of}, \texttt{epsOf\_of\_k} ---
+completeness, group topology, and the epsilon estimate
+\item \texttt{thetaBasic\_k}, \texttt{pairEx\_of\_k}, \texttt{splitFree\_k},
+\texttt{vacFix2\_k}, \texttt{actsEx\_k} --- basic theta identities, pairwise
+exterior relations, split-freeness, the vacuum-fixing step, and the action
+exterior relation
+\item \texttt{lieFirst}, \texttt{lieSecond2} --- the first and second Lie
+algebra identities
+\item \texttt{hgtEx\_of\_k} --- the height theorem
+\end{itemize}
+
+Every one of these is a theorem with a proof, and every one of them is a
+recognisable object in the automorphic-forms literature. \textbf{This is the
+strongest evidence in the artifact}, and it is worth saying why. An AI
+hallucination does not produce a consistent twenty-component dependency graph
+whose components are named after the actual theorems one needs, and does not
+make them compose. The structure of this bundle is the structure of a real
+research programme.
+\end{seamnote}
+
+What cannot be established without reading the proofs of the components is
+whether each is the classical theorem or a weakened version of it. That is
+the audit's first open item, and Chapter~14 puts it first.
+
+\section{Input two: the automorphy bundle \texttt{Hypotheses\_2}}The automorphy step --- the one Chapter~4 identified as the second barrier ---
+enters the development as \code{UpperTheory.V.Af.NewformAut}, and it is
+discharged through a structure:
+
+\begin{seamnote}{\code{UpperTheory.V.Af.Hypotheses\_2}}
+\begin{Verbatim}
+structure Hypotheses₂ : Prop where
+  litN  : GlobalTheory.Mem.LiteralAutomorphy.LitN
+  cohC  : ClozelCohC
+  conjC : ClozelConjC
+  borelC: BorelInjC
+  galR  : Z.Bc.GaloisRepRankTwoReal
+  smoR  : StrongMultOneReal
+  gkR   : GelfandKazhdanReal
+  admR  : AdmissibleReal
+  bc    : Br.QuadBC0
+  newform : NewformRep
+  ss    : Lev.CsdSs := Lev.csdSs_of_full litN.aut.car
+  mono  : Lev.CsdMonoOdd := Lev.csdMonoOdd_of_full litN.aut.car
+\end{Verbatim}
+\end{seamnote}
+
+And the theorem that turns this bundle into the automorphy statement is
+\code{UpperTheory.V.Af.newformAut}\idx{newformAut}, whose proof is, in outline:
+
+\begin{quote}
+``Given $P : \texttt{Hypotheses\_2}$, take the newform $f$ and the weight $k$
+and use \textbf{$P.\texttt{newform} \; k \; hk \; f \; (-j)$} to obtain a
+cuspidal representation $\pi$ with infinity type and Satake parameters, and
+use $P.\texttt{ss}$ for semi-simplicity and $P.\texttt{mono}$ for
+odd-monotonicity.''
+\end{quote}
+
+So the automorphy is \emph{supplied by the bundle}. It is not derived from
+nothing; but it is not derived inside the argument either. The bundle is the
+carrier.
+
+This is the pattern to watch, and it is exactly the pattern that
+\texttt{Af.NewformAut}, \texttt{Af.AdVanishK}, \texttt{Af.AdVanishQ} and
+\code{Af.CongruenceNumberRankThree} all follow: each appears as a
+\emph{hypothesis} of a theorem that then produces something.
+
+\begin{seamnote}{Where the bundle's fields come from}
+This is the part that is genuinely reassuring, and it is worth spelling out
+because it is the difference between a hypothesis bundle and an assumption in
+disguise.
+
+The bundle's fields are not opaque. They are themselves derived from named
+published results, and the derivation chains are present in the source. For
+instance, \texttt{ClozelConjC} --- Clozel's statement about conjugate
+algebraicity --- is proved in
+\code{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean} by
+\texttt{clozelConjC\_of\_steps}, from a list of component results that
+includes:
+
+\begin{quote}
+\small
+\texttt{jacquetShalikaRigidity} \quad
+\texttt{clozelCohC} \quad
+\texttt{finExC} \quad
+\texttt{R.exAlgRepCusp} \quad
+\texttt{R.conjAlgRep} \quad
+\texttt{R.cuspSupport} \quad
+\texttt{conjEx} \quad
+\texttt{embed\_of} \quad
+\texttt{partH} \quad
+\texttt{relFacts} \quad
+\texttt{relOnto} \quad
+\texttt{harmSub} \quad
+\texttt{harmNe} \quad
+\texttt{harmInj} \quad
+\texttt{irrCo} \quad
+\texttt{graph} \quad
+\texttt{Lit.Bor.frameEx} \quad
+\texttt{Lit.Bor.oneReal} \quad
+\texttt{Lit.Geo.cuspRapid} \quad
+\texttt{noEis}
+\end{quote}
+
+Read that list as a mathematical argument and it is recognisable: Jacobi--Shalika
+rigidity, finiteness of exceptional subrepresentations, the existence of
+algebraic representations, conjugate algebraicity, automorphic support, the
+embedding theorem, and the Borel and Gelfand--Kazhdan material. This is how
+one proves Clozel's statement: not by assuming it, but by assembling it from
+the theorems it is actually built out of.
+
+And \texttt{borelInjC} is taken directly from
+\texttt{Lit.Geo.borelInjC} --- the Borel injectivity statement, which in the
+literature is itself a theorem in many cases and a conjecture in general, and
+whose status in each case must be checked.
+\end{seamnote}
+
+\begin{keytakeaways}
+
+\item The automorphy step is carried by the bundle \texttt{Hypotheses\_2},
+whose field \texttt{newform} supplies the automorphic representation that the
+downstream theorem consumes.
+\item The bundle's other fields are not assumptions in disguise: they are
+derived in the source from named published results, through chains such as
+\texttt{clozelConjC\_of\_steps} above.
+\item The open question is therefore neither ``is this proved?'' nor ``is this
+assumed?'' but the sharper one: \emph{is each re-derivation faithful to the
+published theorem it re-derives?}
+\end{keytakeaways}
+
+\section{Input three: the admissibility and vanishing packages}The second hypothesis bundle to examine is in
+\code{Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean},
+in the namespace \texttt{GlobalTheory.Ord2}. Its central structure is named
+\texttt{admitted} --- and the name deserves a note, because in the context of
+proof assistants it could be misread.
+
+\begin{quote}
+In this development, \texttt{admitted} is the name of a \emph{representation
+that is admitted into the theory}: it is a structure with the seven fields
+\texttt{cont} (continuity), \texttt{det2} (determinant $\pm 1$), \texttt{odd}
+(oddness under conjugation), \texttt{irr} (irreducibility), \texttt{away}
+(a level away from $l$), \texttt{modular} (the existence of a newform $f$ with
+an attached character $\varphi$ satisfying \texttt{KillsMu} and
+\texttt{Newform.Att}), and \texttt{flag} (the existence of a flag at a place
+above $l$ satisfying \texttt{KillsMu}, \texttt{IsFlagOn} and a congruence
+relation).
+\end{quote}
+
+So it is \emph{admitted}, in the technical sense, not \emph{admitted} in the
+proof-assistant sense. The name is unfortunate and it is worth flagging
+precisely because a reader scanning for unproved things would stop here.
+
+The statement that consumes it is \texttt{VanishOrd}\idx{VanishOrd}: for every odd prime $l$,
+every $E$ containing the $l$-th roots of unity, and every representation $W$
+that is \emph{admitted}, the Bloch--Kato\idx{Kato's Euler systems} Selmer\idx{Selmer group} group of the associated
+representation vanishes. This is a genuine Iwasawa-theoretic statement: it is
+of the shape of the results of Greenberg, Wiles, and Kakde in the Iwasawa
+theory of modular forms.
+
+\begin{quote}
+\textbf{Where the audit stops.} This book has established that
+\texttt{VanishOrd} is a real statement, that its hypothesis is a real
+admissibility condition with the right seven parts, and that it is consumed
+downstream in the right places. It has \emph{not} established where the
+instances of \texttt{admitted} are constructed, and consequently has not
+established that the vanishing theorem is applied in a setting where its
+hypotheses hold. Establishing that requires following the construction of the
+instances, which is a deeper and more specialised exercise than the structural
+trace of Chapter~7, and which is the second item in the protocol of
+Chapter~14.
+\end{quote}
+
+\section{Input four: the epsilon estimate}The remark's item 10 is ``Sufficient lower bound on divisibility of the
+$m$-fold iterated lift.'' In the development, the corresponding object appears
+as \code{PositivityTheory.ThKEst.EpsOf\_k}\idx{EpsOf\_k}, proved in
+\code{.../ThetaKernels/ThkEstEpsOf.lean}. The proof is short, and worth
+reading in full:
+
+\begin{seamnote}{\texttt{epsOf\_of\_k}}
+\begin{Verbatim}
+theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
+  intro F E _ _ _ _ _ σ B hB n X r s hX
+  obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
+  have hτ := hB.cm.2.2.2 (B.emb w).1
+  rcases hX with hX | hX
+  · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J 1 one_ne_zero
+        (r := r) (s := s) (by rw [one_smul]; exact hX.sig w)
+    exact ⟨⟨Or.inl hX.herm, this.1⟩, this.2⟩
+  · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J Complex.I
+        Complex.I_ne_zero (hX.sig w)
+    exact ⟨⟨Or.inr hX.skew, this.1⟩, this.2⟩
+\end{Verbatim}
+\end{seamnote}
+
+What this proves is the \emph{signature} of a Hermitian form over a CM field:
+given the form and a place $w$, it computes the inertia character, and the
+computation is a case split on whether the form is Hermitian or skew-Hermitian
+at $w$, with the answer furnished by
+\code{SignatureOfHermitianForm.of\_sig}.
+
+This is a genuine and classical piece of arithmetic: the signature of a
+Hermitian form over a CM field, computed from the local invariants, is the
+mechanism behind the parity constraint on the weight of a theta lift. It is
+also, notably, a statement about \emph{parity and sign} rather than about
+divisibility as such.
+
+\begin{seamnote}{An honest observation about this input}
+The remark's item 10 promises a ``sufficient lower bound on divisibility''.
+The formalized \texttt{EpsOf\_k}, as read, is a signature computation. These
+are different shapes of statement: a lower bound on divisibility is an
+inequality of the shape $v_p(\cdot) \ge c$, whereas a signature is a
+computation of the inertia characters at a place.
+
+Two readings are available and the audit does not choose between them. Either
+the divisibility bound of item 10 is formalised elsewhere --- perhaps inside
+the component theorems that feed \texttt{Tools\_k}, and the remark's item 10
+refers to that; or the formalized estimate and the described estimate are
+different things, in which case one of the two descriptions is inaccurate.
+
+This is a good example of the kind of small discrepancy that statement review
+is for, and of why the remark cannot substitute for the code. It is not
+evidence of a defect. It is evidence that the two documents are describing
+related but not identical things.
+\end{seamnote}
+
+\section{Input five: the reciprocity condition and the \texttt{Hyps} package}Two final inputs, examined briefly because both were checked.
+
+\paragraph{The reciprocity condition.} \texttt{recT} is defined in
+\code{.../Definitions/NonGaloisDescent/RecT.lean} and
+\texttt{IsRecT}\idx{IsRecT} in \code{.../Definitions/NonGaloisDescent/RecTExists.lean},
+where it is stated as the existence of a witness $a$ and $ha$ satisfying a
+family of local laws \texttt{LawsT} for every irreducible Weil--Deligne
+representation. This is the natural formalisation of a reciprocity
+condition, and \texttt{recTExists} supplies the witness.
+
+\paragraph{The \texttt{Hyps} package.} This is the bundle of hyperplane-section
+hypotheses the character-box argument consumes. The point of interest is that
+it is \emph{constructed}, not assumed: the theorem
+\code{GlobalTheory.Fc.nonempty\_hyps\_of\_allRows}\idx{Hyps package}, in
+\code{.../Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}, produces
+an instance of \texttt{Nonempty (Hyps ...)} from \texttt{AllRows},
+\texttt{ExBL} and \texttt{BaseCond}, assembling the bundle field by field
+from row-wise conditions. That is the right shape, and it is a genuine
+positive finding.
+
+\section{Summary: what the input audit established}\begin{table}[H]
+\centering
+\caption{Status of the load-bearing inputs, as of this audit.}
+\label{tab:inputs}
+\begin{tabular}{@{}p{0.26\textwidth}p{0.30\textwidth}p{0.30\textwidth}@{}}
+\toprule
+\textbf{Input} & \textbf{What was established} & \textbf{What was not} \\
+\midrule
+\texttt{TLiftK} & A precise theta-lift existence statement; proved from a
+twenty-component bundle of separately proved theorems & That each component is
+the classical theorem, and that the bundle suffices \\
+\midrule
+\texttt{Hypotheses\_2} & A bundle whose fields are derived from named
+published results through visible chains & That the re-derivations are
+faithful; that \texttt{NewformRep} is the classical newform--automorphy
+correspondence \\
+\midrule
+\texttt{admitted} / \texttt{VanishOrd} & A real admissibility condition with
+seven parts; a real Selmer-vanishing statement & Where the instances of
+\texttt{admitted} are constructed; that the vanishing applies in the right
+setting \\
+\midrule
+\texttt{EpsOf\_k} & A genuine signature computation for Hermitian forms over
+CM fields & Whether this is the ``divisibility lower bound'' of the remark's
+item 10, or a different statement \\
+\midrule
+\texttt{Hyps} & Constructed from row conditions rather than assumed & The
+fidelity of the row conditions themselves \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{keytakeaways}
+
+\item The development's architecture is sound and appropriate: published
+results are re-derived, bundled, and then consumed by the argument.
+\item The automorphy step is carried by the bundle
+\texttt{Af.Hypotheses\_2}, whose fields are derived in the source from named
+published results --- not assumed, but re-derived, and the fidelity of those
+re-derivations is the open question.
+\item The structure named \texttt{admitted} means ``admitted into the
+theory'', not ``admitted without proof''. It is a real admissibility
+condition.
+\item The formalised epsilon estimate is a signature computation; whether it
+corresponds to the remark's item 10 is an open discrepancy between the two
+documents.
+\item The \texttt{Hyps} package is constructed from row conditions rather
+than assumed, which is the right shape for the kind of bundle that carries
+the most risk.
+\end{keytakeaways}

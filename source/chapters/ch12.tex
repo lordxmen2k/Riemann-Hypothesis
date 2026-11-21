@@ -20,9 +20,7 @@ Hecke characters, Rallis.''
 
 One sentence, and it carries a classical piece of machinery.
 
-\section{What the seesaw is}
-
-The seesaw principle, in the form Rallis uses it, says that a period integral
+\section{What the seesaw is}The seesaw principle, in the form Rallis uses it, says that a period integral
 of a Siegel--Weil theta series on a unitary group is equal, up to explicit
 factors, to a period integral of the \emph{restriction of scalars} of that
 group to a definite unitary group, matched against an Eisenstein series.
@@ -54,9 +52,7 @@ the way of the integral; after it, the character has been traded for an
 $L$-value, and $L$-values average.
 \end{quote}
 
-\section{Why the period becomes a Bessel period}
-
-Apply the seesaw to the theta lift. A theta lift to a group of higher rank
+\section{Why the period becomes a Bessel period}Apply the seesaw to the theta lift. A theta lift to a group of higher rank
 has a period that is, by the structure of the theta series, a product of
 ordinary Bessel functions: the Weil representation restricted to a torus gives
 a one-dimensional character whose $L$-function is a product of Bessel
@@ -85,9 +81,7 @@ the period is character-independent, the summation over characters becomes a
 summation over a fixed function, which the orbit-sum identity of
 Chapter~\ref{ch:step4} can decompose.
 
-\section{The formalisation of the descent tower}
-
-The development states all of this. In
+\section{The formalisation of the descent tower}The development states all of this. In
 \code{Formalism.SharpRestriction.Divisibility.FunctionModelRallisFromInputs.lean}
 the relevant definitions are:
 
@@ -186,9 +180,7 @@ cubic gap condition. \\
 \end{tabular}
 \end{center}
 
-\section{The parity, and how the character is extracted}
-
-One detail in the formalisation is worth a reader's attention, because it is
+\section{The parity, and how the character is extracted}One detail in the formalisation is worth a reader's attention, because it is
 the mechanism by which the character is made to disappear. Recall:
 
 \begin{seamnote}{\code{car}}
@@ -219,9 +211,7 @@ weight-matching condition of \eqref{eq:weightineq}.
 So the tower is: a fixed character $\eta$ times the user's character $\mu$,
 alternating, with the weight at each stage matching the form at that stage.
 
-\section{What step 6 buys}
-
-The seesaw converts a character-dependent period into an $L$-value, and the
+\section{What step 6 buys}The seesaw converts a character-dependent period into an $L$-value, and the
 Bessel structure of the theta series converts the summand into something that
 does not carry the character at all. Between them, the character is available
 to be averaged over, which is what the rest of the argument needs. The cost

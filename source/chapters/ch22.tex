@@ -1,202 +1,166 @@
 % =====================================================================
-%  Chapter 11 — The State of Play, Part II
+%  Chapter 22 — The Proof in Natural Language, 6
 % =====================================================================
 
-\chapter{The Two-Thirds Theorem}
-\label{ch:twothirds}
+\chapter{The Budget}
+\label{ch:budget2}
 
-Three months before the claim under examination, the same author published a
-result that is the single most informative piece of context available. This
-chapter is about it, because what it establishes about the method is far more
-conclusive than anything that can be said about the November claim in
-isolation.
+The chain buys multiplicity and it costs denominators. The budget is the
+accounting of the two, and it is where the argument stops.
 
-\section{What was published}
+\section{The accounting}Recall the two parameters: the \emph{available growth} $c$, the multiplicative
+factor by which the chain enlarges the space, and the \emph{budget} $q$, what
+the segment of the argument actually reaches. The formalisation imposes:
 
-\begin{quote}
-\textbf{Reference.} Levent Alpöge and Ralph Furman\idx{Furman, Ralph}, \emph{More than two
-thirds of the zeta zeros are simple and on the critical line}, arXiv:2608.13637\idx{arXiv:2608.13637}
-(13 August 2026), preprint, 33 pp.\ with appendices. The accompanying Lean
-formalisation is public at \code{github.com/anthropics/formal-math} (formerly
-\code{anthropics/zeta-23-lean}), submitted to the Palomar registry and
-Comparator-validated according to the project's own README.
-\end{quote}
-
-The statement is a proportion theorem: more than two thirds of the zeros of
-the Riemann zeta function are both \emph{simple} and \emph{on} the critical
-line. It is not a proof of RH, and the paper says so --- the hypothesis remains
-unproven.
-
-\section{Why this is the crucial comparison}
-
-Three reasons, in increasing order of importance.
-
-\begin{enumerate}
-\item \textbf{It is the same method.} The argument of August 2026 and the
-argument of November 2026 come from the same programme, with the same
-machinery: theta lifts, the Weil--Weil positivity statement, Rallis seesaw,
-Iwasawa towers. The remark's own timeline starts on 6 October 2026 --- a
-\emph{month} after the two-thirds paper was posted --- and the early entries
-(``Stepanov determinant'', ``$W(1S) \ge 0$ via a determinant'',
-``Bost slope inequality'') are recognisably the same ideas.
-
-\item \textbf{It is the same author, with the same collaborator.} The claim
-under examination is by Levent Alpöge; the two-thirds paper is by Levent
-Alpöge and Ralph Furman, and the remark's acknowledgement list includes
-``especially David Dohan, Ben Michel, \textbf{Ralph Furman}, Eric Price, and
-Cora Vinther''. The collaboration is continuous.
-
-\item \textbf{It is a different answer to the same question, from the same
-method.} In August, the method produced a proportion theorem. In November, the
-remark's item 14 records that the method ``would stop at 2/3 a priori''. The
-number 2/3 in item 14 is almost certainly the same 2/3.
-\end{enumerate}
-
-\begin{deeper}{What the comparison actually proves}
-This is the part that is easy to state and easy to get wrong.
-
-\begin{quote}
-\textbf{What it proves.} The method is real. It produces rigorous,
-independently reproducible, formally verified results. It was applied to the
-Riemann zeta function and it yielded a statement about two thirds of the
-zeros. It does not produce nonsense, and no one who had looked at the August
-paper could reasonably suspect that of the November one.
-
-\textbf{What it does not prove.} That the method can be pushed to 100 per
-cent. In fact, the August paper is evidence that the method has a natural
-ceiling, because it stopped there and was published as such.
-
-\textbf{The gap.} Between ``the method works and stops at two thirds'' and
-``the method works and does not stop'' there is a specific missing ingredient.
-The remark's timeline suggests what it is: item 14's list of ``attempt to get
-a main term and transfer constant to a function field or kill via twisting,
-need for `division'''.
-\end{quote}
-\end{deeper}
-
-\section{Independent reproduction}
-
-The two-thirds result was reproduced independently by a third party. Yousouf
-Lamzouri\idx{Lamzouri, Yousouf}'s arXiv:2609.02882 explicitly credits ``an internal research version
-of Claude developed by Anthropic'' and names ``two mathematicians at
-Anthropic, Levent Alpöge and Ralph Furman'', and reproduces the same constants
-by a different route.
-
-This matters more than a mere corroboration of a number would. It means:
-
-\begin{itemize}
-\item The constants are not an artefact of one implementation.
-\item The method is accessible to a specialist outside the originating group,
-which is the property that distinguishes mathematics from private technique.
-\item Somebody with the relevant expertise has already read the machinery, and
-has reported agreement.
-\end{itemize}
-
-What it does \emph{not} mean is that the November claim has been checked. It
-is a check of the August result.
-
-\section{The record}
-
-The proportion of zeros on the critical line is a benchmark with a long
-history, and the two-thirds result reset it. The figures below are the
-verified records as of late 2026, and the distinctions between them matter
-more than they usually do.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig_records.pdf}
-\caption{The verified records on the proportion of zeros on the critical
-line. Note that the categories are not interchangeable: \emph{on the line},
-\emph{simple and on the line}, \emph{distinct}, and \emph{simple or critical}
-are four different claims, and a result in one of them is not a result in
-another.}
-\label{fig:records}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\caption{Records on the proportion of zeros on the critical line.}
-\label{tab:records}
-\begin{tabular}{@{}p{0.30\textwidth}r p{0.40\textwidth}@{}}
+\begin{center}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.62\textwidth}@{}}
 \toprule
-\textbf{Source} & \textbf{Proportion} & \textbf{Category} \\
+\textbf{Condition} & \textbf{Reading} \\
 \midrule
-Conrey\idx{Conrey, John} (1989); Pratt--Robles--Zaharescu\idx{Pratt--Robles--Zaharescu} (2020) & 41.7293\% &
-asymptotic proportion on the critical line \\
-Pratt--Robles--Zaharescu (2020) & 40.7511\% &
-simple \emph{and} on the critical line \\
-Alpöge--Furman (2026), arXiv:2608.13637 & 67.25\% &
-simple \emph{and} on the critical line \\
-Alpöge--Furman (2026), arXiv:2608.13637 & 83.625\% &
-distinct zeros on the critical line \\
-Lamzouri (2026), arXiv:2609.02882 & 88.76\% &
-simple \emph{or} critical \\
-\midrule
-\textbf{Riemann hypothesis} & \textbf{100\%} & all zeros, on the line \\
+$5 \le k$ & the weight is at least five \\
+$1 \le N_s$ & the integral structure is non-trivial \\
+$40\,(kN_s) \le c$ & the available growth must dominate forty times the
+weight times the level cost \\
+$\tfrac{9}{10}\,c \le q$ & the budget reached must be at least nine tenths
+of the available growth \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{center}
 
-The last row is not a record; it is the target. The gap between 88.76 per cent
-and 100 per cent is what remains.
+The third condition is the one that says the multiplicativity must be strong
+enough to pay for the integrality. The fourth says the argument must actually
+get close to using all of what is available.
 
-\section{What the two-thirds theorem tells us about the November claim}
+\section{The threshold}\begin{seamnote}{The threshold condition, in the source}
+{\footnotesize
+\begin{verbatim}
+theorem threshold_arith_letter_case (k Ns c q bo : Real)
+(hk5 : 5 <= k) (hN : 1 <= Ns) (hc : 40 * (k * Ns) <= c) (hq
+      : 9 / 10 * c <= q)
+    (hb : q - k < bo) : c / 2 <= 2 / 3 * bo - k * Ns
+\end{verbatim}
+}
+\end{seamnote}
 
 \begin{quote}
-\textbf{The favourable reading.} The method works. It is rigorous. It has
-been independently reproduced. It was applied by the same author with the same
-machinery three months before. A method that produced a verified two-thirds
-theorem is not a method that is likely to produce a wrong theorem; it is a
-method that produced a right answer to a question slightly weaker than the one
-now being claimed.
-
-\textbf{The unfavourable reading.} The method stopped at two thirds, and
-stopped there for a reason that the author himself computed: each theta lift
-costs a third of the multiplicity it buys. A method with a per-step cost of
-one third does not naturally scale to 100 per cent; it reaches two thirds and
-then requires something qualitatively new.
-
-\textbf{Which reading is right.} It depends entirely on whether the Lean
-development contains that ``something qualitatively new''. That is the
-question, and it is not answerable from the remark, because the remark does not
-describe it.
+\textbf{Proposition Q (the threshold).} The argument succeeds if and only if
+the available growth $c$ satisfies
+\[
+\frac{c}{2} \;\le\; \frac{2}{3}\cdot(\text{budget reached}) \;-\; kN_s.
+\]
 \end{quote}
 
-There is also a third consideration, and it cuts in favour of the favourable
-reading: the two-thirds theorem was \emph{not} the plan. If the method were
-known to be capable of only two thirds, a mathematician would not spend a
-further three months on it and then announce a proof of the full hypothesis.
-The most economical explanation of the sequence is that the extra work
-produced something, and that the remark's timeline --- a ``slop'' summary,
-written for a general reader, by an author who says he does not fully
-understand the parts he did not do himself --- simply does not describe it.
+Read the two sides.
 
-\section{A note on what the two-thirds theorem is not}
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[Left.] Half the available growth. This is the amount of growth the
+argument needs in order to produce a square-root-quality remainder: the
+remainder's size is the square root of the growth available, so half the
+growth must be at least the square root of itself --- and the budget must
+supply that.
+\item[Right.] Two thirds of the budget the segment reached, less the
+weight-and-level cost charged at each stage.
+\end{description}
 
-It is worth being explicit, because the press coverage of the November claim
-frequently ran the two results together.
+So the fraction of the budget the argument may use is two thirds.
 
-The two-thirds theorem is \emph{not} a proof of RH, a partial proof of RH, or
-a proof of RH for a special case. It is a statement that a large fraction of
-the zeros lie on the critical line. RH is a statement that \emph{all} of them
-do. The difference between 67 per cent and 100 per cent is not a difference
-of degree; it is the difference between a theorem and the conjecture.
+\section{Why the third is lost}The two-thirds is not an arbitrary constant. It is the price of the atypical
+path.
 
-It is also not a numerical result. It is an asymptotic statement about the
-proportion of zeros as $T \to \infty$, proved analytically and formally
-verified.
+\begin{quote}
+\textbf{Proposition R.} At each letter of a segment, the argument splits into
+two cases: the \emph{typical} path, in which the letter's contribution is
+tightly controlled by the per-letter budget, and the \emph{atypical} path, in
+which it may exceed that budget by an amount of order the budget itself. The
+atypical path must be paid for, and what survives of the budget after paying
+for it is two thirds.
+\end{quote}
+
+The formal statement is \code{GoodA} in
+\code{AtypicalPathSmallWeight.lean}: the atypical path satisfies the
+relaxed bound
+\[
+\sum_c \bigl(\text{tangent parts}\bigr) \;\le\; \Xi + 2\cdot B(\mathrm{od}\ i),
+\]
+while the typical path \code{Typ} satisfies the tight bound without the slack.
+And both carry the same requirement
+\[
+\frac{2}{3}\,B(\mathrm{od}\ i) \;\le\; \mathrm{plPart}\ \mu\ (\mathrm{lastIdx}\ r),
+\]
+which says: two thirds of the budget must be carried by the weight available at
+the end of the segment.
+
+\section{What would have to change}\begin{quote}
+\textbf{Proposition S.} To obtain the whole budget rather than two thirds of
+it, the argument would need
+\[
+\frac{c}{2} \;\le\; (\text{budget reached}) \;-\; kN_s,
+\]
+and the difference between the two right-hand sides is exactly one third of
+the budget reached.
+\end{quote}
+
+That is the arithmetic of crossing the ceiling, and the remark's item 14 lists
+three attempts to cross it:
+
+\begin{center}
+\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Attempt} & \textbf{What it would buy} \\
+\midrule
+``get a main term'' & More of the available growth $c$ --- more lifts, or a
+better per-lift multiplicativity. \\
+``transfer constant to a function field'' & Move the constant to a setting
+where the Weil machinery is native and the arithmetic factor exists. \\
+``kill via twisting'' & Eliminate the atypical path outright, so that the
+third is never spent. \\
+``division'' & Something has to be divided; the development has a file named
+for it. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The honest statement}\begin{quote}
+\textbf{Proposition T (the obstruction, stated precisely).} The formalised
+threshold condition holds with the factor $2/3$. Whether a variant with the
+factor $1$ can be established --- by any of the three routes listed above, or
+by a fourth not described in the remark --- is not settled by anything in the
+development that has been audited, and the remark does not say.
+\end{quote}
+
+This is the honest formulation, and it is deliberately weaker than either
+``the proof works'' or ``the proof fails''. What is established is the
+computation of the ceiling; what is not established is its crossing. The
+remark records the ceiling on 15 November and GRH on 16 November, and does not
+say what happened in between.
+
+\section{The reading against the earlier theorem}There is a strong reason to take the ceiling seriously rather than as an
+artifact of the summary. The same author published, three months earlier,
+arXiv:2608.13637, ``More than two thirds of the zeta zeros are simple and on
+the critical line'' --- using the same method family, and formally verified in
+Lean.
+
+\begin{quote}
+The most economical reading is that the budget computation above \emph{is} the
+explanation of the two-thirds theorem: the method, costed, delivers a bound
+covering two thirds of the zeros, which is exactly what the earlier paper
+proves, and the three attempts are what was done about the remaining third.
+\end{quote}
+
+This is a hypothesis, and it is the most plausible one available; but it is a
+hypothesis about the author's intent, and Chapter~\ref{ch:verdict} keeps it
+distinct from what the artifact has been shown to do.
 
 \begin{keytakeaways}
-
-\item The two-thirds theorem --- arXiv:2608.13637, Alpöge and Furman, August
-2026 --- is the same method, the same author, and the same programme as the
-claim under examination, three months earlier.
-\item It was independently reproduced by a third party, Lamzouri,
-arXiv:2609.02882. It is a rigorous result, and it is the strongest positive
-evidence about the method's quality.
-\item It is a \emph{proportion} theorem: 67.25 per cent of zeros are simple
-and on the line. It is not a proof of RH.
-\item The remark's item 14 records that the method ``would stop at 2/3
-a priori''. The most economical explanation of the 15-to-16 November sequence
-is that the extra work produced something the remark does not describe.
+\item The budget condition is $c/2 \le \tfrac23\cdot(\text{budget reached})
+- kN_s$: half the available growth must be covered by two thirds of the
+budget, after the weight-and-level cost.
+\item The missing third is the price of the atypical path, which may exceed
+the per-letter budget by an amount of order the budget itself.
+\item Crossing the ceiling requires one third more of the budget, which is
+what the remark's three attempts --- main term, transfer of constants,
+killing by twisting --- and its ``division'' are for.
+\item The ceiling is computed and formalised; the crossing is not established
+by anything audited, and the remark does not say.
 \end{keytakeaways}

@@ -1,267 +1,271 @@
 % =====================================================================
-%  Chapter 14 — The Verdict, Part II
+%  Chapter 6 — The Verification, Part I
 % =====================================================================
 
-\chapter{A Protocol for Settling This}
-\label{ch:protocol}
+\part{The Verification}
+\label{part:verify}
+\markboth{Part III}{The Verification}
 
-A finding of ``unresolved'' is only useful if it comes with a way to resolve
-it. This chapter gives one, in the order a careful reader should actually
-work, with the commands where they exist and the reading tasks where they do
-not.
+\chapter{What a Proof Assistant Can and Cannot Certify}
+\label{ch:lean}
 
-The protocol is not a contribution to the mathematics. It is a work plan, and
-its purpose is to make the remaining work finite and checkable.
+Before auditing a formalised proof, it is worth being precise about what
+formalisation is, because the gap between what people assume it does and what
+it does is where claims like the one under examination live or die.
 
-\section{Phase 1: mechanical (hours to days)}
+This chapter explains the mechanics from the ground up: what a proof assistant\idx{proof assistant}
+actually checks, what it takes on faith, why ``it compiles'' is a real
+milestone and a real insufficiency, and what the community's own standards are
+for treating a formalisation as verified.
 
-\subsection{Build}
+\section{The smallest possible proof assistant}A proof assistant is a program that checks mathematical arguments. The
+\emph{only} thing it can do without further assumptions is check a formal
+language. Here is the whole idea, in miniature.
 
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-git clone <the author's distribution, or the mirror>
-cd lean
-elan toolchain install $(cat lean-toolchain)
-lake exe cache get
-lake build Main
-\end{Verbatim}
-The cache step matters: it fetches Mathlib's prebuilt \texttt{.olean} files
-for the pinned revision, which turns the dependency from a multi-hour compile
-into a download. This book's own attempt confirmed that the pinned revision
-\code{0df444a360eaa60ab8c11dca51a86af692955474} is available from the
-community cache.
-\end{seamnote}
-
-Record the elapsed time and peak memory. The mirror's README notes that no
-build time or memory figures have been published; a reader who publishes them
-does the next reader a genuine service.
-
-\subsection{Axioms}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-# in a scratch file importing the submission
-import Main
-#print axioms Main.riemannHypothesis
-#print axioms Main.riemannZeta_eq_zero_re
-#print axioms Main.LFunction_ne_zero_of_half_lt_re
-#print axioms Main.LFunction_eq_zero_re
-#print axioms Main.LFunction_eq_zero_re_of_isPrimitive
-\end{Verbatim}
-\end{seamnote}
-
-The expected output is exactly:
+Suppose we want to prove that every natural number is either zero or has a
+successor. In a language with two constants and one constructor:
 
 \begin{Verbatim}
-'Main.riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+inductive Nat where
+  | zero
+  | succ (n : Nat)
 \end{Verbatim}
 
-and the same for the other four. Anything else --- \texttt{sorryAx},
-\texttt{Lean.ofReduceBool}, a custom axiom --- is a finding, and a
-disqualifying one.
+we can write the statement ``for all $n$, $n = 0$ or $n$ is a successor'' and
+prove it by cases on $n$. The proof is a finite term. A checker can verify it by
+recursing through the term: look at the top, see which constructor the proof
+term uses, check that the branch assumptions cover the cases, check that each
+leaf is justified.
 
-\subsection{Independent kernel replay}
+That is the whole idea. \emph{Verification is the mechanical checking of a
+finite term against a set of inference rules.} Everything else --- the
+elaborator that turns human syntax into terms, the library of tactics that
+automate search, the friendly error messages --- is convenience. The kernel is\idx{kernel (Lean)}
+small enough that a careful person can read it and be sure.
 
-This step exists to remove the elaborator from the trust chain. The toolchain
-is \texttt{lean4export}\idx{lean4export} to export the compiled environment, an independent
-kernel implementation such as NanoDa\idx{NanoDa} to re-check it, and \texttt{landrun} to
-run Lean in a sandbox. \texttt{lean4checker} provides a third-party route to
-the same assurance. The Lean FRO documents these tools; they are cited in the
-arXiv literature as ``Lean FRO, 2025/2026''.
+\section{Lean's kernel and its axioms}Lean's kernel is written in a small subset of Lean and is about a thousand
+lines long. It has three jobs: to check that a term is well-typed, to check that
+a proof of a proposition is a term of that proposition's type, and to check
+that any \texttt{axiom} declarations it is asked to accept really are axioms
+and not proofs in disguise.
 
-\begin{seamnote}{Commands (indicative)}
+That last point is the source of the standard check. When you ask Lean what a
+theorem depends on, you get a list:
+
 \begin{Verbatim}
-lake exe export .olean Main.olean > main.json
-# then check main.json with an external kernel, e.g.
-#   python3 -m lean4checker main.json
-# or with a NanoDa-based harness
+#print axioms riemannHypothesis
 \end{Verbatim}
-The exact invocation depends on the tool's current interface; check the
-tool's own documentation rather than trusting this sketch.
-\end{seamnote}
 
-\subsection{Re-run the static scan}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-rg --no-ignore -c '^\s*axiom\s' -g '*.lean' . | wc -l
-rg --no-ignore -c '\bsorry\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '\badmit\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '\bnative_decide\b' -g '*.lean' . | wc -l
-rg --no-ignore -c '^\s*opaque\s' -g '*.lean' . | wc -l
-rg --no-ignore -n '\baddDecl\b' -g '*.lean' .
-rg --no-ignore -n 'maxHeartbeats 0' -g '*.lean' .
-rg --no-ignore -l '\b(elab|macro|syntax)\b' -g '*.lean' .
-\end{Verbatim}
-Compare with \tabref{tab:scan}. Any disagreement with the published scan
-should be resolved before going further, since a disagreement means one of
-the two scans is wrong about something.
-\end{seamnote}
-
-\section{Phase 2: the structural trace (days)}
-
-\subsection{Confirm the chain}
-
-Walk the eight links of Chapter~7 in the source and confirm that each
-declaration is present, with the statement quoted there, and that each proof
-term is what the book says it is. This is cheap and it protects against the
-possibility that the version you downloaded is not the version that was
-announced.
-
-\subsection{Confirm the statement is Mathlib's}
-
-\begin{seamnote}{Commands}
-\begin{Verbatim}
-grep -n "def RiemannHypothesis" \
-  .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-grep -n "def riemannZeta" \
-  .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-\end{Verbatim}
-Both should come back with \texttt{Mathlib}'s own definitions. The mirror
-records \texttt{RiemannHypothesis} at line 185 and \texttt{riemannZeta} at
-line 121 at the pinned commit.
-\end{seamnote}
-
-This is the single most important check in the whole protocol, because it is
-the one that cannot be got wrong in a way that is hard to detect. If
-\texttt{riemannZeta} in the top-level theorem is not Mathlib's, the artifact
-proves nothing about the Riemann hypothesis no matter how clean it is.
-
-\section{Phase 3: statement review (weeks to months)}
-
-This is the phase that has not been done, and the phase that decides the
-question. It cannot be automated, and this book cannot do it, because it
-requires comparing the formalized statements against the published literature
-in four substantial fields.
-
-\subsection{Step 1: the automorphy bundle}
-
-Read \code{UpperTheory.V.Af.Hypotheses\_2} field by field against the
-published statements.
+and the answer, for a theorem that has nothing fishy in it, is a short list of
+Lean's three standard axioms:
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
   itemsep=5pt]
-\item[\texttt{conjC : ClozelConjC}.] The formal statement is a specific
-mathematical assertion about conjugate algebraicity of cuspidal
-representations. Locate Clozel's published statement and compare quantifier
-by quantifier. In particular: is the formal statement a \emph{consequence} of
-published results, as the derivation chain
-\texttt{clozelConjC\_of\_steps} suggests, and if so, is the chain sound? The
-chain's components are named in the source and each has its own file; the
-question is whether each is the classical theorem.
-\item[\texttt{borelC : BorelInjC}.] Borel injectivity is proved in many cases
-and conjectured in general. \emph{Which cases does the formalized statement
-cover?} If it is stated for all $E$ and all $a$ without restriction, and the
-classical result is restricted, that is a finding.
-\item[\code{gkR : GelfandKazhdanReal}.] Compare against the Gelfand--Kazhdan
-correspondence for $\mathrm{GL}_2$.
-\item[\texttt{newform : NewformRep}.] This is the field that supplies the
-automorphic representation. \emph{What exactly does it assert?} It is the
-modularity input, and its content determines whether the automorphy step is a
-theorem or a transfer.
-\item[\texttt{galR}, \texttt{smoR}, \texttt{bc}.] Base change and the strong
-multiplicity-one property for $\mathrm{GL}_2$; compare with the published
-statements.
+\item[\texttt{propext}\idx{propext}] Propositional extensionality: $(P \leftrightarrow Q)$
+implies $P = Q$. This is the principle that logical statements are equal when
+they have the same truth value.
+\item[\texttt{Classical.choice}\idx{Classical.choice}] The axiom of choice.
+\item[\texttt{Quot.sound}\idx{Quot.sound}] The quotient construction is sound: equal
+equivalence classes really do have equal representatives' properties.
 \end{description}
 
-\subsection{Step 2: the admissibility and vanishing packages}
+The point of this check is not that the axioms are innocuous in a philosophical
+sense --- they are ordinary mathematics, and every serious formalisation uses
+them. The point is that the list is \emph{short and standard}. If the list
+contains anything else, the theorem is not doing what it appears to do.
 
-Trace where instances of \code{GlobalTheory.Ord2.admitted} are
-\emph{constructed}, as opposed to assumed. The structure has seven fields:
-continuity, determinant $\pm 1$, oddness, irreducibility, level away from $l$,
-modularity with a newform and an attached character, and the flag condition.
-Each field is a real mathematical condition. The question is whether the
-instances satisfy them, and where the newform in the \texttt{modular} field
-comes from.
-
-Then check the application of \texttt{VanishOrd}: the Selmer-vanishing
-statement is applied to representations that are admitted; is it applied in a
-setting where the hypotheses of the underlying Iwasawa-theoretic theorem
-hold?
-
-\subsection{Step 3: the theta lift}
-
-Read \texttt{UpperTheory.TP.TLiftK} against the classical theta-lift
-existence statement, and then read the twenty components of
-\code{UpperTheory.TP.Tools\_k} --- in particular
-\texttt{siegelWeilAniso\_of\_k}, \texttt{epsOf\_of\_k}, and
-\texttt{hgtEx\_of\_k} --- against the theorems they are named for.
-
-\subsection{Step 4: the applications}
-
-The hardest part, and the one that no mechanical check can help with. A
-faithful formalisation of a classical theorem can still be \emph{applied}
-where the classical theorem does not apply: at a prime that ramifies, to a
-representation that is not cuspidal, to a lift outside the orthogonal
-complement, at a place that the argument assumes is unramified but is not.
-
-\subsection{Step 5: the remark against the code}
-
-Finally, return to the remark with the code in hand and ask the two questions
-the remark refuses to answer:
+Two entries on that list deserve special mention because they are the usual
+failure modes:
 
 \begin{quote}
-\textbf{Question 1.} Item 14 says the method would stop at 2/3 a priori, and
-item 20 says GRH the next day. \emph{Where in the development is the step
-that crosses the ceiling?} If it can be located, the question is answered. If
-it cannot be located, that is the most important negative finding available,
-and it should be published.
+\textbf{\texttt{sorryAx}}\idx{sorryAx} is what the keyword \texttt{sorry} introduces: an
+axiom that says ``this proposition is true'' and records that it was admitted.
+It is a deliberate hole, and it is visible.
 
-\textbf{Question 2.} Item 17 says the $H^1_o$ classes not killed by twisting
-require a significant weakening of Vandiver. \emph{Is there a formalized
-statement corresponding to that weakening, and is it proved?} If yes, the
-author has proved something nobody has. If no, then item 17 describes an
-obstacle the artifact does not remove.
+\textbf{\texttt{Lean.ofReduceBool}}\idx{native\_decide} is what \texttt{native\_decide} introduces:
+it lets a proof claim that a boolean computation evaluates to \texttt{true} by
+running the compiled program. It is sound only under conditions about the
+compiler, and it is a genuine soundness risk in a proof. Its presence in an
+axiom list is a red flag.
 \end{quote}
+
+The mirror's independent scan of the submission reports \texttt{sorry} 0,
+\texttt{admit} 0, \texttt{native\_decide} 0, and \texttt{axiom} 0. This book's
+own independent scan of the complete extraction confirms \texttt{sorry} 0 and
+\texttt{axiom} 0. That is a genuinely good result, and it is a real
+prerequisite.
+
+\section{Why compiling is a milestone}Here is the thing that makes formalisation different from every other kind of
+mathematics.
+
+In ordinary mathematics, a proof is a piece of writing that is \emph{checked by
+readers}. The checking is done by humans, who are fallible, who are rushed,
+who may be motivated, and who may not read the same paper as you. The
+mathematical literature is full of results that turned out to be wrong, and the
+error rate is not zero.
+
+A formalised proof, once it compiles, has been checked by a program whose
+source is a thousand lines long and whose behaviour is completely specified. For
+the \emph{logical} part, this is a categorical improvement over reading.
+
+So the two independent compilations of 20 November 2026 --- Andrew Sutherland
+at MIT first, Simon DeDeo at Carnegie Mellon a few hours later --- are real
+achievements, and they are reported as such in Chapter~10.
+
+But note precisely what they establish. They establish that:
+
+\begin{quote}
+There exists a Lean term of type \texttt{RiemannHypothesis} (as Mathlib
+defines it), such that the term is accepted by the Lean kernel, such that every
+axiom the term depends on is one of Lean's three standard ones, and such that
+every intermediate library it uses was also checked.
+\end{quote}
+
+That is a large claim. It is also, on its own, \emph{not} a claim about the
+Riemann hypothesis.
+
+\section{Why compiling is not enough}This is the part that most commentary gets wrong, and the mistake is not
+stupidity --- it is that the intuition from ordinary mathematics does not
+transfer. In ordinary mathematics, a proof is a text, and the statement of the
+theorem is part of the text, and a reader checks both. In formalisation, the
+statement and the proof are separated, and only the proof is mechanically
+checked.
+
+\begin{seamnote}{The gap, stated by the community itself}
+An arXiv preprint in 2026 (arXiv:2606.29493\idx{arXiv:2606.29493}) makes the point explicitly:
+the Lean kernel verifies that a formal statement has a proof. It does
+\emph{not} verify that the formal statement means what the accompanying prose
+claims it means. The two are connected by human judgement, and human judgement
+is not mechanised.
+
+Quanta Magazine's coverage of the claim under examination puts the same point
+in a different register:
+
+\begin{quote}
+\small
+``Lean, besides being a mathematical language, is also a computer programming
+language, and can itself contain bugs. It can also be used to play sneaky tricks
+by, for example, redefining symbols used in a proof to make something
+trivially true. The first step in verifying a proof in Lean is to make sure it
+`compiles.'\,''
+\end{quote}
+\end{seamnote}
+
+The ``sneaky trick'' Quanta describes is worth spelling out, because it has a
+name in the literature and because it is exactly the failure mode that a
+careful reader must watch for.
+
+Suppose a development defines its own function
+\begin{Verbatim}
+def myZeta (s : Complex) : Complex := 1
+\end{Verbatim}
+and then proves that \texttt{myZeta} has no zeros in $\Re s > 1/2$. The proof
+compiles. The axiom list is clean. And the theorem is true but irrelevant,
+because \texttt{myZeta} is not the Riemann zeta function. If somewhere in the
+175{,}000 files the symbol used by the top-level theorem resolves to a
+definition that is not Mathlib's \texttt{riemannZeta}, the entire artifact
+proves nothing about the Riemann hypothesis while compiling perfectly.
+
+\begin{quote}
+This is not a hypothetical worry about an adversary. It is the ordinary state
+of affairs in a large development, where names are overloaded, where a local
+notation shadows a global one, and where a definition is introduced early and
+never revisited. The defence is not paranoia; it is reading.
+\end{quote}
+
+The defence against the specific worry of this artifact is Chapter~2's
+finding: the statement \texttt{RiemannHypothesis} is \emph{Mathlib's own},
+imported from \code{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}, and not
+defined in the submission. That closes the most catastrophic version of the
+attack. It does not close the version where an intermediate input is a
+restatement of the hard content under a classical name --- which is
+Chapter~8's subject.
+
+\section{The full stack: what a serious verification looks like}The community has developed machinery for this, and the mirror's README
+recommends most of it. The layers, from weakest to strongest:
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=6pt]
+\item[The elaboration.] Lean's elaborator turns the source into kernel terms. It
+is trusted for \emph{well-typedness}, not for correctness, and it is the largest
+and least audited part of the system.
+
+\item[The kernel.] The kernel checks the terms. This is the layer that does the
+real work, and it is small.
+
+\item[Independent kernel replay.] A separate implementation re-checks the
+compiled environment. The tooling here includes \texttt{lean4export}, which
+exports a compact representation of a compiled environment, \texttt{landrun}\idx{landrun},
+which runs Lean in a sandbox, and independent kernel implementations such as
+NanoDa. The Lean FRO (Formalisation and Reasoning Overview) documents this
+toolchain; its tools are cited in the arXiv literature as ``Lean FRO,
+2025/2026''.
+
+\item[Third-party checking.] \texttt{lean4checker}\idx{lean4checker} exists so that a party
+untrusted by the original authors can verify a compiled environment without
+trusting the elaborator or any of the repository's own metaprogramming.
+
+\item[The registry.] The Palomar\idx{Palomar registry} registry records formalisations along with
+their metadata and their verification status, so that claims about a
+formalisation can be checked against a third-party record rather than against
+the authors' own README.
+\end{description}
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth]{../figures/fig_protocol.pdf}
-\caption{The protocol, in order. The first three steps are mechanical and
-have effectively been done. The last three are mathematical, have not been
-done, and are the ones that decide the question.}
-\label{fig:protocol}
+\includegraphics[width=\textwidth]{../figures/fig_architecture.pdf}
+\caption{Three distinct questions sit behind the word ``verified''. The first
+two are mechanical and are answered by a compiler and an axiom check. The third
+is mathematical, is the one that matters, and is answered by a person reading
+statements.}
+\label{fig:architecture}
 \end{figure}
 
-\section{What a result at each step would mean}
+\section{Statement review: the part that is not mechanised}What is the human process that closes the gap? In the Lean community it is
+called \emph{statement review}\idx{statement review}, and it has a recognisable shape.
 
-\begin{table}[H]
-\centering
-\caption{Outcomes.}
-\label{tab:outcomes}
-\begin{tabular}{@{}p{0.28\textwidth}p{0.56\textwidth}@{}}
-\toprule
-\textbf{Step} & \textbf{If it succeeds} \\
-\midrule
-Build & The artifact is complete and reproducible. Confirms the claim of
-October--November 2026 on a third machine. \\
-Axiom check & The formal layer is sound. Removes the crudest hypotheses from
-consideration. \\
-Kernel replay & The result does not depend on the elaborator or on the
-repository's metaprogramming. \\
-Statement review & \textbf{The claim is settled, in one direction or the
-other.} This is the step that matters. \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{enumerate}
+\item \textbf{Read the statement, not the proof.} The reviewer checks that the
+theorem as formalised says what the theorem as claimed says. Usually this
+means: does the formal statement have the right quantifiers, the right
+hypotheses, the right exceptions?
+\item \textbf{Check that the statement is not vacuous.} A statement proved by
+contradiction from an inconsistent hypothesis proves nothing. So the reviewer
+checks that the hypotheses of the top-level theorem are actually satisfiable,
+and that the theorem is not an artefact of a definition that was quietly
+narrowed.
+\item \textbf{Check that the named inputs are the classical inputs.} When a
+development names a lemma \texttt{siegelWeil\_k}, the reviewer asks: is this
+the Siegel--Weil formula, or a statement that happens to be named after it and
+is weaker?
+\item \textbf{Check that the method actually applies.} A lemma may be a faithful
+formalisation of a classical theorem and still be applied in a setting where the
+classical theorem does not hold --- a CM field with a prime that ramifies, a
+representation that is not cuspidal, a lift that is not in the orthogonal
+complement.
+\end{enumerate}
 
-It is worth being explicit that a statement review could \emph{refute} the
-claim. If a reader finds that \texttt{ClozelConjC} as formalized is strictly
-weaker than Clozel's published statement, or that the instances of
-\texttt{admitted} are not constructed but assumed, the chain breaks, and the
-result would be a negative finding about the artifact rather than about the
-Riemann hypothesis. That would be a valuable outcome, and it is the kind of
-outcome that only a review can produce.
+For a 175{,}187-file development, this is a serious undertaking. The relevant
+scale is not ``read the paper''; it is ``read the paper and then read the
+machine-checked version of every load-bearing lemma in it, against the
+classical statements''. That is why the audit in Chapter~8 is organised around
+identifying the load-bearing inputs rather than around reading the code.
 
 \begin{keytakeaways}
 
-\item Phase 1 --- build, axiom check, kernel replay, static scan --- is
-mechanical and has effectively been done. It is cheap and reproducible.
-\item Phase 2 --- confirming the chain and confirming that the statement is
-Mathlib's --- takes days and protects against working with the wrong version.
-\item Phase 3 --- statement review of the five load-bearing inputs, their
-applications, and the remark against the code --- is weeks to months of
-specialist work, and it is the step that decides the question.
-\item A successful review could refute the claim as well as confirm it. That
-is what makes it worth doing.
+\item A proof assistant mechanically checks a finite term against inference
+rules. It does not check that the proposition being proved is the interesting
+one.
+\item \texttt{\#print axioms} is the standard check, and a clean result lists
+only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The
+submission's axiom list is clean, which is a real and necessary result.
+\item Compilation establishes that a term of type \texttt{RiemannHypothesis}
+exists and depends on nothing unproved. It does not establish that the
+statement of that type means what the claim says it means. That step is
+human, and it is called statement review.
+\item The community's tooling for going further --- independent kernel replay
+via \texttt{lean4export} and NanoDa, sandboxed execution via
+\texttt{landrun}, third-party checking via \texttt{lean4checker}, and the
+Palomar registry --- is aimed squarely at the mechanical layers. None of it
+reaches the mathematical one.
 \end{keytakeaways}
