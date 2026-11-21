@@ -1,0 +1,614 @@
+% =====================================================================
+%  BACK MATTER
+%  Conclusion, glossary, notes and references, further reading, index,
+%  acknowledgments, about the author, colophon.
+% =====================================================================
+
+\backmatter
+
+% ---- What's Next ----------------------------------------------------------
+\chapter*{What's Next}
+\addcontentsline{toc}{chapter}{What's Next}
+\markboth{What's Next}{What's Next}
+\thispagestyle{plain}
+
+The most likely near future is not a resolution. It is a review.
+
+The claim under examination has cleared the mechanical stages and stalled at
+the mathematical one. That is the ordinary condition of a large formalisation,
+and the machinery for the review exists --- the protocol of Chapter~\ref{ch:protocol}
+is a summary of it --- but the work has to be done by people with the relevant
+expertise, and it is months of reading per input.
+
+Three specific things would move the situation, and they are worth watching
+for.
+
+\begin{enumerate}
+\item \textbf{A written account of the mathematics.} The remark's author says
+a prose write-up is routine and has not been written. When one appears, it
+will resolve the 15-to-16 November gap in the only way that matters, and it
+will make the review possible in the way that a 175-thousand-file development
+does not.
+
+\item \textbf{An independent statement review.} Someone in automorphic forms
+and Iwasawa theory reading \texttt{Af.Hypotheses\_2}, \texttt{TLiftK} and
+\texttt{admitted} against the published theorems. This is the step that
+decides the question, and it is currently the step nobody has taken.
+
+\item \textbf{An extension of the August result.} If the method can be pushed
+past two thirds --- even to three quarters --- that would be independent
+evidence about the ceiling, and it would be checked by people who are not
+involved in the claim.
+\end{enumerate}
+
+What would not move the situation is more coverage. The story has been
+covered extensively, and coverage cannot distinguish the three possibilities
+in Chapter~\ref{ch:verdict}, because all three are consistent with everything
+that has been said in public.
+
+\vspace{10pt}
+\noindent{\small\color{txtdim}\sffamily
+For the reader who wants to follow this: the claim's own words are the best
+primary source, the mirror's README states the verification standard precisely,
+and the two-thirds paper is the best available evidence about the method. All
+three are in the Notes and References.\par}
+
+% ---- Glossary --------------------------------------------------------------
+\chapter*{Glossary}
+\addcontentsline{toc}{chapter}{Glossary}
+\markboth{Glossary}{Glossary}
+\thispagestyle{plain}
+
+\noindent\small
+Every term below is defined here in the sense in which the book uses it. Terms
+marked \(\dagger\) are used in the sense given by the cited source rather than
+in a general sense.
+
+\vspace{8pt}
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=5pt]
+
+\item[Analytic continuation] An extension of a function to a larger domain,
+agreed with the original wherever they overlap. For $\zeta$, the extension
+from $\Re s > 1$ to all of $\CC$ is what makes the zeros in the critical strip
+accessible at all.
+
+\item[Automorphic form] A holomorphic function on an arithmetic group
+satisfying a functional equation under that group, whose $L$-function is then
+an $L$-function of the group. The theory of automorphic forms supplies the
+$L$-functions whose zeros are studied in this book.
+
+\item[Automorphy] The property of a representation of a Galois group of
+arising from an automorphic form. Proving that a given Galois representation
+is automorphic is one of the hardest known problems in number theory, and it
+is one of the load-bearing steps of the method under examination.
+
+\item[Axis] A vertical or horizontal line in the complex plane. The
+\emph{critical axis} of $\zeta$ is $\Re s = \tfrac12$.
+
+\item[CM field] A number field $E$ that is a quadratic extension $F(i)$ of a
+totally real field $F$, with complex conjugation. CM fields carry rigid
+analytic structures that make the divisibility statements of Chapter~5
+possible.
+
+\item[Compiler] The program that turns Lean source into kernel terms and
+checks them. In the Lean 4 toolchain, \texttt{lean} performs elaboration and
+the kernel performs verification.
+
+\item[Critical line] The vertical line $\Re s = \tfrac12$ in the complex
+plane. The Riemann hypothesis is the assertion that all the non-trivial zeros
+of $\zeta$ lie on it.
+
+\item[Critical strip] The band $0 < \Re s < 1$, containing all the non-trivial
+zeros of $\zeta$.
+
+\item[Dirichlet character] A homomorphism from $(\ZZ/N\ZZ)^\times$ to
+$\mathbb{C}^\times$, giving the $L$-function $L(s,\chi) = \sum \chi(n)n^{-s}$.
+The Riemann hypothesis is a statement about $\zeta$, which is the $L$-function
+of the trivial character; the generalised version concerns all of them.
+
+\item[Elaboration] Lean's process of turning human-written syntax into
+kernel-checkable terms. Elaborated output is trusted for well-typedness, not
+for correctness, which is why independent kernel replay exists.
+
+\item[Euler--Maclaurin summation] The formula used to evaluate $\zeta(s)$ in
+the half-plane $\Re s > 1$ by a finite sum plus an integral plus Bernoulli
+corrections. The figures in this book use it.
+
+\item[Functional equation] The identity $\Lambda(s) = \Lambda(1-s)$ relating
+the completed zeta function $\Lambda(s) = \pi^{-s/2}\Gamma(s/2)\zeta(s)$ to
+its reflection. It is the mechanism by which a non-vanishing result on one
+side of the critical line is transferred to the other.
+
+\item[Guinand's theorem] Refinements of the moments of $\zeta$ on the critical
+line, by Édouard Guinand, published in the \emph{Proceedings of the London
+Mathematical Society} in 1949 and 1950.
+
+\item[Harmonic analysis on $\mathrm{GL}_2$] The theory, originating with
+Hecke, of the automorphic forms and $L$-functions of $\mathrm{GL}_2$; the
+source of the local factors $\det(1 + XA_y)/\det(1 - A_y)$ in the Lefschetz
+formula of Chapter~7.
+
+\item[Iwasawa algebra] A one-dimensional local algebra of the form
+$\ZZ_p[[T]]$, occurring as the characteristic ideal of an Iwasawa module. The
+Iwasawa tower of the submission supplies the arithmetic growth that the
+integers otherwise lack.
+
+\item[Iwasawa tower] A tower of number fields, or of curves over finite
+fields, whose Iwasawa algebras are controlled. Behrend's construction of
+such towers for function fields is invoked in the remark's item 19.
+
+\item[Kato's Euler system] A class of Euler systems for modular forms
+developed by Masaki Kato, whose existence is one of the inputs to the
+admissibility and vanishing packages of Chapter~8.
+
+\item[Kernel] The small, trusted part of a proof assistant that checks terms
+against inference rules. Lean's kernel is roughly a thousand lines.
+
+\item[Lefschetz fixed-point formula] The identity relating the alternating sum
+of traces of maps induced on cohomology to the fixed points of the map. The
+étale version used in the submission is proved in
+\texttt{EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}.
+
+\item[Level] A positive integer $N$ such that a modular form has good
+reduction away from $N$. A condition on the level is a condition on the
+arithmetic side.
+
+\item[Mathlib] The large community library of mathematics formalised in Lean.
+The submission is pinned to a specific revision of it.
+
+\item[Multiplicity] The exponent of a point in a divisor. In the
+Stepanov--Bombieri method, multiplicity is what converts a geometric dimension
+count into an arithmetic bound; over $\ZZ$, it is the missing ingredient, and
+supplying it is the central idea of the method under examination.
+
+\item[Newform] A normalised cuspidal eigenform of weight $2$ at a level, whose
+$L$-function has Euler product over the primes not dividing the level.
+
+\item[\texttt{opaque}] A Lean declaration whose definition is not unfolded by
+the kernel. Sound in principle; a place to look in an audit.
+
+\item[Palomar registry] A registry of formalisations and their verification
+status, intended to let claims about a formalisation be checked against a
+third-party record.
+
+\item[Poisson summation] The identity
+$\sum_{n \in \ZZ} f(n) = \sum_{k \in \ZZ} \hat f(k)$ that underlies the
+Parseval arguments of the remark's item 5.
+
+\item[Proof assistant] A computer program that checks mathematical arguments
+in a formal language.
+
+\item[Rallis seesaw] An identity relating period integrals on one group to
+period integrals on another, after which the period of the iterated theta
+lift becomes a Bessel period independent of the Hecke characters.
+
+\item[Riemann hypothesis] The assertion that every non-trivial zero of the
+Riemann zeta function has real part exactly $\tfrac12$.
+
+\item[Riemann zeta function] The analytic continuation of
+$\zeta(s) = \sum_{n \ge 1} n^{-s}$ from the half-plane $\Re s > 1$ to the
+whole complex plane, meromorphic with a single simple pole at $s = 1$.
+
+\item[Riemann--von Mangoldt formula] The formula giving the number of zeros of
+$\zeta$ up to height $T$:
+$N(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + O(\log T)$.
+
+\item[Selmer group] A subgroup of a Galois module consisting of elements
+satisfying local conditions at every place. Its vanishing is the content of
+the statement \texttt{VanishOrd} in Chapter~8.
+
+\item[Siegel--Weil formula] The formula relating the Fourier expansion of a
+theta series to an $L$-function. It is one of the classical inputs to the
+bundle \texttt{Tools\_k}.
+
+\item[Statement review] The human process of checking that the formal
+statements in a development mean what the accompanying prose claims they
+mean. It is the step that a compiler does not perform, and it is the step
+outstanding in this case.
+
+\item[Structure constant] The number, in a finite-dimensional representation,
+of the coefficient of the identity in a product. The GGP periods and
+interlacing weights of the remark's item 7 are structure constants of this
+kind.
+
+\item[Submodule $\mathbb{C}^{\mathrm{UA}(E,n)}$] The space of unitary
+automorphic representations of the unitary group $\mathrm{U}(E,n)$; the space
+in which the theta lift of the submission takes place.
+
+\item[Theta lift] An operation producing a new automorphic representation from
+an old one, via a theta series attached to a Hermitian form. The iterated
+theta lifts of the remark's item 8 are the method's central device.
+
+\item[Trivial zeros] The zeros of $\zeta$ at $s = 0, -2, -4, \dots$, which
+come from the poles of the gamma factor rather than from $\zeta$ itself, and
+which the Riemann hypothesis excepts.
+
+\item[Vandiver's conjecture] The conjecture that the plus part of the class
+group of the maximal real subfield of a cyclotomic field has odd order. Open;
+verified for primes below $2^{31}$ by Hart, Harvey and Ong in 2017.
+
+\item[von Mangoldt function] The function $\Lambda(n)$, equal to $\log p$ if
+$n$ is a power of a prime $p$ and $0$ otherwise. Its summatory function
+$\psi(x) = \sum_{n \le x}\Lambda(n)$ encodes the primes.
+
+\item[Weil's criterion] The positivity condition
+$\sum_\rho \hat g(\rho)\hat g(1-\rho) \ge 0$, for all admissible test
+functions $g$, which is equivalent to the Riemann hypothesis. Derived from
+Weil's 1952 paper.
+
+\item[Weil expression] The real-valued function $W(t)$ built from the
+ordinates of the zeros of $\zeta$, whose non-negativity is equivalent to the
+Riemann hypothesis, and whose positivity the remark seeks to obtain via a
+determinant.
+
+\item[$\Theta$] The supremum of the real parts of the zeros of $\zeta$.
+Landau's oscillation theorem gives $\psi(x) - x = \Omega_\pm(x^{\Theta-\varepsilon})$,
+and RH is the assertion $\Theta = \tfrac12$.
+
+\end{description}
+
+% ---- Notes and References --------------------------------------------------
+\chapter*{Notes and References}
+\addcontentsline{toc}{chapter}{Notes and References}
+\markboth{Notes and References}{Notes and References}
+\thispagestyle{plain}
+
+\noindent\small
+Full citations for every source relied on in the text. Where a claim could
+not be tied to a primary record, the omission is itself noted. Entries marked
+\emph{[artifact]} refer to files in the submitted Lean development, quoted by
+their path relative to the archive root.
+
+\vspace{10pt}
+{\sffamily\bfseries\small Primary artifact}
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=4pt]
+\item \textbf{Alpöge, Levent.} \emph{Remark}. Four pages, unpublished;
+distributed at \texttt{alpo.ge/remark.pdf} and mirrored on 20 November 2026.
+[artifact] Quoted throughout Parts~I and~II.
+\item \textbf{Submitted Lean development.} \texttt{alpo.ge/lean.tar.gz.part01}
+through \texttt{.part14}; 239\,275\,554 bytes; mirrored as
+\texttt{github.com/CocoSgt/riemann-hypothesis-lean}, release \texttt{v2026-11-20},
+SHA-256 \texttt{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc}.
+[artifact] All Lean quotations in Chapters~7--9.
+\item \textbf{README of the mirror repository.} \emph{Status}: ``As of mirroring
+(2026-11-20), no independent build or review of this code has been published.
+Treat it as a claimed proof until it has been compiled and checked.'' [artifact]
+Quoted in Chapters~1 and~2 with its date, which matters.
+\item \textbf{\texttt{lean-toolchain}} [artifact]: \texttt{leanprover/lean4:v4.33.1}.
+\item \textbf{\texttt{lakefile.toml}} [artifact]: Mathlib pinned at
+\texttt{0df444a360eaa60ab8c11dca51a86af692955474}; confirmed locally.
+\item \textbf{\texttt{src/Main.lean}}, \texttt{src/Statements.lean} [artifact]:
+quoted in full in Chapter~2.
+\item \textbf{\texttt{CharacterBoxes/MainConclusion.lean}},
+\texttt{CharacterBoxes/EveryCharacter.lean},
+\texttt{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} [artifact]:
+quoted in Chapter~7.
+\item \textbf{\texttt{Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean}},
+\texttt{GaloisRepresentationsOfThetaLift.lean},
+\texttt{Development.lean},
+\texttt{GeometricFlagBases/WeightOneGeometricRealization.lean} [artifact]:
+quoted in Chapter~7.
+\item \textbf{\texttt{AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean}}
+and \texttt{AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}
+[artifact]: Chapter~7.
+\item \textbf{\texttt{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}},
+\texttt{.../ThetaKernels/TLiftK.lean}, \texttt{.../ThetaKernels/TPGHolds.lean},
+\texttt{.../ThetaKernels/ThkEstEpsOf.lean} [artifact]: Chapter~8.
+\item \textbf{\texttt{AutomorphicVarieties/AutomorphicForms/Hypotheses2.lean}},
+\texttt{.../TemperedLocalComponents/NewformAut.lean},
+\texttt{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean},
+\texttt{.../PublishedTheorems/GelfandKazhdanReal.lean} [artifact]: Chapter~8.
+\item \textbf{\texttt{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean}}
+[artifact]: the structure \texttt{GlobalTheory.Ord2.admitted} and the statement
+\texttt{VanishOrd}; Chapter~8.
+\item \textbf{\texttt{AbelianVarietyTheory/Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}}
+[artifact]: the construction of the \texttt{Hyps} package; Chapter~8.
+\end{enumerate}
+
+\vspace{8pt}
+{\sffamily\bfseries\small The mathematics}
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=4pt,start=14]
+\item \textbf{Alpöge, Levent, and Ralph Furman.} \emph{More than two thirds of
+the zeta zeros are simple and on the critical line}. arXiv:2608.13637,
+13 August 2026. Preprint, 33 pp. with appendices. Accompanying Lean
+formalisation at \texttt{github.com/anthropics/formal-math} (formerly
+\texttt{anthropics/zeta-23-lean}).
+\item \textbf{Lamzouri, Yousouf.} arXiv:2609.02882, 2026. Independently
+reproduces the constants of the preceding paper by a different route and
+credits ``an internal research version of Claude developed by Anthropic'' and
+``two mathematicians at Anthropic, Levent Alpöge and Ralph Furman''. The
+precise title was not independently confirmed in this book's research and is
+not asserted here.
+\item \textbf{van Frankenhuijsen, Maarten.} \emph{The Riemann Hypothesis for
+Function Fields over a Finite Field}. arXiv:0806.0044, 2008. The source of the
+statement that the Stepanov and Bombieri methods require a product $C \times C$
+with one geometric and one arithmetic coordinate, and that over $\ZZ$ the
+product $\operatorname{Spec}\ZZ \times \operatorname{Spec}\ZZ =
+\operatorname{Spec}\ZZ$ is one-dimensional.
+\item \textbf{Weil, André.} The criterion for the Riemann hypothesis as a
+positivity condition on a quadratic form, in the paper of 1952 published from
+Lund. Confirmed via Burnol, arXiv:math/9810169, and Groskin, arXiv:2607.02828.
+\item \textbf{Guinand, Édouard.} \emph{Proceedings of the London Mathematical
+Society}, (3) \textbf{1} (1949) and (3) \textbf{2} (1950). The frequently
+repeated 1955 title \emph{Sur les zéros de la fonction zêta de Riemann} could
+not be verified and is not cited here.
+\item \textbf{Titchmarsh, Edward C.} \emph{The Theory of the Riemann
+Zeta-function}, 2nd ed., revised by D. R. Heath-Brown. Clarendon Press, 1986.
+Theorem 15.11 for the quantitative oscillation $\Omega_\pm(x^{1/2}\log\log\log x)$.
+\item \textbf{Landau, Edmund.} The oscillation theorem for $\psi(x)$, in the
+general Dirichlet-integral form; see Titchmarsh, above, and
+Iwaniec--Kowalski, \emph{Analytic Number Theory}.
+\item \textbf{Bost, Albert H.} \emph{La conjecture de Weil: preuve d'un théorème
+de D. Bertrand et P. Swinnerton-Dyer}. \emph{Annales scientifiques de l'École
+Normale Supérieure} \textbf{30} (1997), no.~1, 229--288.
+DOI \texttt{10.1016/S0012-9593(97)89923-8}. The precise ``slope inequality''
+as used in the argument was not retrieved from a primary text and is therefore
+paraphrased rather than quoted in this book.
+\item \textbf{Behrend, Theodor.} The construction of Iwasawa towers for
+function fields, 1940. No DOI or OpenAlex record was retrievable in this
+book's research, and no identifier is asserted. The number-field analogue
+remains open for $d \ge 2$.
+\item \textbf{Hart, G. L., D. Harvey, and L. Ong.} \emph{Irregular primes to two
+billion}. \emph{Mathematics of Computation} \textbf{86} (2017), 3031--3049.
+DOI \texttt{10.1090/mcom/3211}; arXiv:1605.02398. The bound $2^{31}$ on
+Vandiver's conjecture.
+\item \textbf{Gan, Wee-Tak, and Ichino, Ai.} The unitary Gross--Prasad
+theorem, and the related results for theta lifts. \emph{The Gross--Prasad
+theorem and local theta correspondence}; the orthogonal case remains open.
+The commonly used attribution ``Gross--Petersson'' is a misattribution and is
+not used here.
+\item \textbf{Jacquet--Shalika rigidity}, \textbf{Borel injectivity}, the
+\textbf{Gelfand--Kazhdan correspondence} for $\mathrm{GL}_2$, and
+\textbf{Kato's Euler systems} are the published results underlying the
+\texttt{Hypotheses\_2} bundle of Chapter~8. Individual primary citations for
+each were not separately retrieved for this book, and the bundle's own
+derivation chains in the artifact are the reference given in the text.
+\end{enumerate}
+
+\vspace{8pt}
+{\sffamily\bfseries\small The mathematics of the problem}
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=4pt,start=26]
+\item \textbf{Mathlib.} \texttt{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}
+at revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}:
+\texttt{riemannZeta} at line 121, defined as \texttt{hurwitzZetaEven 0}, the
+analytic continuation rather than the Euler product; \texttt{RiemannHypothesis}
+at lines 185--186. The Euler-product zeta function is separate, as
+\texttt{zeta : ArithmeticFunction} $\mathbb{N}$. Both definitions were read directly
+from the source at the pinned commit.
+\item \textbf{The Riemann explicit formula}, the equivalence of RH with
+$\psi(x) = x + O(x^{1/2}\log^2 x)$, and the equivalence with Weil's criterion:
+standard; see Titchmarsh and Iwaniec--Kowalski, above.
+\item \textbf{Pratt, Robby, Matthew Robles, and Kamal Zaharescu.} Bounds on the
+proportion of zeros on the critical line: 41.7293 per cent on the line and
+40.7511 per cent simple and on the line, as the 2020 records.
+\item \textbf{Conrey, John B.} (1989) on the proportion of zeros on the
+critical line, as the earlier asymptotic record.
+\end{enumerate}
+
+\vspace{8pt}
+{\sffamily\bfseries\small Formal verification, and the claim}
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=4pt,start=30]
+\item \textbf{arXiv:2606.29493.} The explicit statement that the Lean kernel
+verifies that a formal statement has a proof, and does not verify that the
+formal statement matches the informal claim it is meant to capture.
+\item \textbf{Lean FRO.} The Formalisation and Reasoning Overview, at
+\texttt{lean-lang.org/fro/about/}. Documents the tools --- Comparator,
+\texttt{lean4export}, \texttt{landrun}, kernel replay, Palomar, and the
+\texttt{formalization.yaml} metadata convention. Cited in the arXiv
+literature as ``Lean FRO, 2025/2026''. No peer-reviewed paper titled
+``LeanFRO'' was located, and none is cited.
+\item \textbf{\texttt{lean4checker}} (\texttt{github.com/leanprover/lean4checker}),
+for third-party checking of a compiled environment.
+\item \textbf{Quanta Magazine.} Kakaes, Konstantin. ``A claimed proof of the
+Riemann hypothesis'', 20 November 2026. Source for the independent
+compilations by Andrew Sutherland (MIT) and Simon DeDeo (CMU), and for the
+caveat about Lean's being a programming language that ``can also be used to
+play sneaky tricks by, for example, redefining symbols used in a proof to
+make something trivially true''.
+\item \textbf{Agence France-Presse.} Report of 20 November 2026: ``The claim
+has not been independently verified, and the proof has not yet been reviewed by
+outside experts.''
+\item \textbf{OpenAI project history.} The record of a formalised result
+withdrawn in October 2026 with a stated sign error --- cited as the precedent
+for the distinction between compiling and being correct.
+\end{enumerate}
+
+\vspace{8pt}
+{\sffamily\bfseries\small Deliberately not cited}
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=4pt,start=36]
+\item \textbf{The ``Saouter--Demichel--Planchat'' paper and the ``LP method
+with crossing-zero value $L = 0.40$''.} No such paper and no such value were
+located in arXiv, Crossref, HAL or OpenAlex during this book's research. The
+two-thirds result is attributed to arXiv:2608.13637, and no crossing value is
+asserted anywhere in this book.
+\item \textbf{Community discussion threads}, including Hacker News threads,
+sceptical blog responses, and a separate announced GRH claim by another
+party. These are evidence that discussion exists, and are not used as
+mathematical sources or as evidence about the state of the mathematics.
+\item \textbf{Secondary descriptions of the argument.} No account of the
+mathematics has been taken from press coverage. Every description of the
+method in this book derives either from the remark itself or from the
+artifact's source.
+\end{enumerate}
+
+% ---- Further Reading -------------------------------------------------------
+\chapter*{Further Reading}
+\addcontentsline{toc}{chapter}{Further Reading}
+\markboth{Further Reading}{Further Reading}
+\thispagestyle{plain}
+
+\noindent\small
+
+\textbf{For the hypothesis itself.} Edward C. Titchmarsh, \emph{The Theory of
+the Riemann Zeta-function}, 2nd ed., revised by D. R. Heath-Brown, Clarendon
+Press, 1986, remains the standard single reference. For a shorter and more
+reflective account: A. Ivić, \emph{The Riemann Zeta-Function}, and the
+collected essays in \emph{The Riemann Zeta-Function and Its Derivatives}.
+
+\textbf{For the function-field proof.} Maarten van Frankenhuijsen's
+arXiv:0806.0044 is the most accessible account of why the Stepanov and
+Bombieri methods work over finite fields and why the arithmetic analogue
+fails. Weil's original proof is in \emph{Number Theory: An Introduction to
+Mathematical Analysis of the Theory of Numbers} (1952).
+
+\textbf{For the automorphic machinery.} The reference here is
+\textsc{Automorphic Forms, Representations and $L$-functions}, Proceedings of
+the 1989 Princeton conference, for the general setting; and the work of
+Gan--Ichino, and of Liu and W. Zhang, for the unitary theta lifts and the
+Gross--Prasad theorem in the unitary case. The distinction between the
+proved unitary case and the open orthogonal case is the point of Chapter~4's
+second barrier.
+
+\textbf{For Iwasawa theory.} Coates--Su, \emph{Iwasawa Theory for Number
+Fields}, for the general framework; Greenberg and Wan's work for the
+function-field and number-field towers. Behrend's 1940 construction is the
+origin of the idea invoked in the remark's item 19.
+
+\textbf{For formalisation.} The Lean documentation; the Lean FRO pages at
+\texttt{lean-lang.org/fro/about/}; and the Palomar registry, whose entries
+record the verification status of formalisations including the two-thirds
+theorem's. For the standard of what a formalised proof should be accompanied
+by, arXiv:2606.29493 is the most directly relevant recent statement.
+
+\textbf{For the claim under examination.} The remark itself, the mirror
+repository's README, and the two-thirds paper. Everything else that has been
+written about this claim is either a summary of those or a summary of the
+press coverage, and this book has tried to use only the first kind.
+
+% ---- Index -----------------------------------------------------------------
+\printindex
+
+% ---- Acknowledgments -------------------------------------------------------
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\markboth{Acknowledgments}{Acknowledgments}
+\thispagestyle{plain}
+
+This book exists because a remarkable document was made available in public,
+and because the question it raises is more interesting than the answer anyone
+currently has to it.
+
+The mathematics in Chapter~3 and Chapter~4 is standard, and the people who
+built it over two centuries --- Riemann, Hadamard, de la Vallée Poussin,
+Hardy, Littlewood, Weil, Stepanov, Bombieri, Guinand, Bost, Behrend --- are
+owed more than a footnote each. Their results are the terrain; the claim under
+examination is an attempt at a route across it, and the route is only
+intelligible because of the terrain.
+
+The claim itself belongs to Levent Alpöge, who made the artifact available
+under his own name and who wrote a document that is, to this book's lasting
+impression, more candid about its own limits than most published mathematics.
+The four-page remark deserves to be read as evidence rather than as a
+news hook, and the passages where it says ``the Lean should suffice to
+clarify everything'' and ``I'm just too inexpert in the relevant stuff at the
+moment'' are the reason this book could be written as an audit rather than as
+an obituary for a claim.
+
+Thanks are due to the compilers --- Andrew Sutherland and Simon DeDeo --- who
+did the unglamorous work of finding out whether the artifact builds, and to
+the mirror's maintainer, whose README is a better piece of technical writing
+than most published formalisation papers.
+
+The verification work in Chapters~7 to~9 was done on the submitted source
+tree, and the corrections log that accompanies this book records the places
+where the writer's initial assumptions had to be revised in the course of it.
+Several of those revisions made the book weaker in tone and stronger in fact,
+which is the only trade this book regards as a good one.
+
+\begin{flushright}
+\emph{Gerald Enrique Nelson Mc Kenzie}\\
+Tico Internet LLC\\
+21 November 2026
+\end{flushright}
+
+% ---- About the author ------------------------------------------------------
+\chapter*{About the Author}
+\addcontentsline{toc}{chapter}{About the Author}
+\markboth{About the Author}{About the Author}
+\thispagestyle{plain}
+
+\noindent\textbf{Gerald Enrique Nelson Mc Kenzie}\par
+\vspace{6pt}
+
+\noindent\small
+Gerald Enrique Nelson Mc Kenzie is the author of \emph{Uniworld: A Relational
+Monism of Inseparable Frames} (Tico Internet LLC, 2026 First Edition, Apache
+License 2.0, DOI 10.5281/zenodo.24119718). He writes at the intersection of
+mathematics, formal verification and the assessment of machine-generated
+claims, and he is not a number theorist, which this book says wherever it
+matters.
+
+His interest in this subject is practical rather than decorative. A proof
+claim that arrives as seventeen million lines of code is a new kind of
+evidentiary object, and the question of how to read one --- what to check
+first, what a compiler settles, what it cannot settle, and in what order ---
+is a question that will recur for every important formalisation from now on.
+The answer he has arrived at is that the mathematics has to be read, and that
+saying so is more useful than either applause or dismissal.
+
+He publishes under the imprint Tico Internet LLC.
+
+\vfill
+\noindent{\sffamily\small\color{txtdim}\rule{\textwidth}{0.4pt}}\par
+\noindent{\sffamily\footnotesize\color{txtdim}
+\emph{Corrections.} Corrections to this edition are welcomed and will be
+carried in a later printing. The corrections log accompanying the research
+materials for this title records, in the open, the places where the writer's
+initial assumptions were revised during preparation.\par}
+
+% ---- Colophon -------------------------------------------------------------
+\clearpage
+\thispagestyle{empty}
+\vspace*{1.0in}
+\begin{center}
+\begin{minipage}{0.92\textwidth}
+{\sffamily\fontsize{15}{18}\selectfont\bfseries\color{txt} \bookTitle\par}
+\vspace{4pt}
+{\sffamily\small\color{txtdim} \bookSubtitle\par}
+\vspace{18pt}
+{\color{accent}\rule{\textwidth}{1.6pt}}\par
+\vspace{14pt}
+{\small\color{txt}
+\noindent\textbf{Author}\quad \bookAuthor\par
+\vspace{4pt}
+\noindent\textbf{Publisher}\quad \bookImprint\par
+\vspace{4pt}
+\noindent\textbf{Edition}\quad \bookEdition\par
+\vspace{4pt}
+\noindent\textbf{DOI}\quad \href{https://doi.org/\bookDOI}{\texttt{\bookDOI}}\par
+\vspace{4pt}
+\noindent\textbf{Licence}\quad \bookLicense\par
+\vspace{4pt}
+\noindent\textbf{Source code}\quad None published for this edition. The Lean
+development examined in this book is the work of its author and is not
+redistributed here.\par
+\vspace{14pt}
+\noindent\textbf{Subject headings}\quad
+Riemann hypothesis --- Mathematical verification; Number theory ---
+Computational methods; Formalization (Computer science); Machine learning ---
+Mathematical applications; Proof assistants; Theta functions; Iwasawa theory.\par
+\vspace{14pt}
+\noindent\textbf{Errata}\quad
+No errata have been recorded for this edition.\par
+\vspace{14pt}
+\noindent\textbf{Extent}\quad
+\bookPages{} numbered pages, with full-bleed front and back
+covers;\ \bookWords{} words.\par
+\vspace{14pt}
+\noindent\rule{\textwidth}{0.4pt}\par
+\vspace{10pt}
+\noindent\textbf{Signed}\quad
+\emph{Gerald Enrique Nelson Mc Kenzie}\par
+\vspace{4pt}
+\noindent Tico Internet LLC\par
+\vspace{4pt}
+\noindent \bookFactsDate\par
+}
+\end{minipage}
+\end{center}

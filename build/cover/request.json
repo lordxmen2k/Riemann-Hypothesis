@@ -1,0 +1,11 @@
+{
+  "requests": [
+    {
+      "prompt": "Watercolour painting, vertical composition, 2:3 aspect ratio. An abstract mathematical atmosphere rather than a literal diagram. A deep indigo and midnight-blue watercolour wash fills the frame edge to edge. Running down the exact centre is a single luminous pale sea-green and turquoise vertical line, glowing softly, like a horizon drawn in wet pigment, slightly uneven and hand-made. Drifting along that line are small soft-edged dark droplets, irregularly spaced, concentrated in the upper two thirds, like scattered ink marks or seeds. Near the bottom the wash deepens toward near-black and warm amber and ochre blooms bleed upward into the blue. Visible brushwork, pigment granulation, soft edge blooms, the texture of cold-press watercolour on heavy cotton rag paper. Muted, sophisticated, slightly melancholy, luminous in the centre. Large areas of calm empty wash at the very top and at the very bottom, suitable for a title block. Absolutely no text, no letters, no numbers, no letterspacing, no symbols, no signature, no watermark, no border, no frame, no rectangle edges.",
+      "aspect_ratio": "2:3",
+      "area": "4K",
+      "n": 1,
+      "output_file": "cover_art"
+    }
+  ]
+}

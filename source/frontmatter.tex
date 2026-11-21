@@ -1,0 +1,286 @@
+% =====================================================================
+%  Is the Riemann Hypothesis Solved?
+%  Front matter: half-title, title page, copyright, dedication, epigraph,
+%  contents, figures, tables, preface, how to use.
+% =====================================================================
+
+% ---- Half-title ---------------------------------------------------------
+\pagestyle{plain}
+\clearpage
+\thispagestyle{empty}
+\vspace*{1.15in}
+{\sffamily\fontsize{22}{26}\selectfont\color{txt}\bookTitle\par}
+\vspace{10pt}
+{\sffamily\fontsize{11}{14}\selectfont\color{txtdim}\bookSubtitle\par}
+\vfill
+{\sffamily\small\color{txtdim}\bookAuthor\par}
+\vspace{6pt}
+{\sffamily\small\color{txtdim}\bookImprint\par}
+\clearpage
+
+% ---- Title page ---------------------------------------------------------
+\clearpage
+\thispagestyle{empty}
+\vspace*{0.75in}
+{\sffamily\fontsize{26}{30}\selectfont\bfseries\color{txt}\bookTitle\par}
+\vspace{12pt}
+{\sffamily\fontsize{12}{16}\selectfont\color{accent}\bookSubtitle\par}
+\vspace{22pt}
+\noindent{\color{accent}\rule{\textwidth}{1.8pt}}\par
+\vspace{18pt}
+{\sffamily\large\color{txt}\bookAuthor\par}
+\vspace{8pt}
+{\sffamily\color{txtdim}\bookImprint, publisher\par}
+\vspace{4pt}
+{\sffamily\color{txtdim}\bookEdition\par}
+\vspace{18pt}
+{\sffamily\small\color{txtdim}
+Facts current as of \bookFactsDate.\par}
+\vfill
+\clearpage
+
+% ---- Copyright page -----------------------------------------------------
+\clearpage
+\thispagestyle{plain}
+\noindent{\sffamily\bfseries\color{txt}\bookTitle}\par
+\noindent{\sffamily\small\color{txtdim}\bookSubtitle}\par
+\vspace{14pt}
+\noindent\rule{\textwidth}{0.4pt}\par
+\vspace{10pt}
+\noindent Copyright \textcopyright\ \bookCopyright\ \bookAuthor. All rights reserved.\par
+\vspace{6pt}
+\noindent \bookImprint, publisher.\par
+\vspace{10pt}
+\noindent\textbf{Edition:} \bookEdition.\par
+\vspace{6pt}
+\noindent\textbf{Subject headings:} Riemann hypothesis --- Mathematical
+verification; Number theory --- Computational methods; Formalization
+(Computer science); Machine learning --- Mathematical applications.\par
+\vspace{10pt}
+\noindent\textbf{Licence.} This work is published under the Apache License,
+Version 2.0. The complete licence text is available at
+\href{https://www.apache.org/licenses/LICENSE-2.0}{\texttt{apache.org/licenses/LICENSE-2.0}}.
+The book may be copied, modified and redistributed, including for commercial
+purposes, provided that this notice and the attribution required by the licence
+are retained.\par
+\vspace{10pt}
+\noindent\textbf{DOI:} \href{https://doi.org/\bookDOI}{\texttt{\bookDOI}}\par
+\vspace{10pt}
+\noindent\textbf{ISBN:} 978-1-0000-0000-0 (placeholder; to be assigned on
+publication).\par
+\vspace{10pt}
+\noindent\textbf{Source code.} No source repository is published for this
+edition. The Lean development examined in this book is the work of its author and
+is not redistributed here; it is cited by the author's own distribution point and
+by the third-party mirror recorded in the Notes and References.\par
+\vspace{10pt}
+\noindent\textbf{What this book is.} This book reports and analyses a claim. It
+does not assert that the Riemann Hypothesis has been proved, and it does not assert
+that the claim is false. Chapter~13 states a finding; the finding is that the
+matter is unresolved on the available evidence, and the book says precisely what
+would settle it. Quotations from the document under examination are reproduced for
+the purposes of criticism and review. Every fact concerning the mathematics is
+taken from a public or peer-reviewed source, identified in the Notes and
+References.\par
+\vspace{10pt}
+\noindent\textbf{Disclaimers.} The names of mathematicians, institutions and
+software projects mentioned in this book are the names of the people and things
+whose work is being discussed. Their inclusion is not a statement that they
+endorse, support, or have verified anything described here. In particular, the
+author of the claim under examination is thanked in that claim for a list of
+advisers; this book reports that list as part of the document, and draws no
+inference from it.\par
+\vspace{10pt}
+\noindent\textbf{Facts current as of} \bookFactsDate. Statements that are likely to
+change --- the status of independent compilation, the status of independent
+review, the state of the underlying literature --- are date-stamped where they
+appear. Nothing in this book should be read as a statement about events after
+that date.\par
+\vspace{8pt}
+\noindent{\color{accent}\rule{\textwidth}{0.4pt}}\par
+\vspace{8pt}
+{\small\color{txtdim}\sffamily
+\noindent A note on the subject's provenance. The document examined in this book
+is the work of Levent Alpöge, who published it under his own name and made it
+available for public download. This book discusses it in order to evaluate it.
+It reproduces short quotations under the fair-use provisions for criticism and
+review, attributes every quotation, and links to the original in every case
+where the source is a document.\par}
+
+% ---- Dedication ---------------------------------------------------------
+\clearpage
+\thispagestyle{empty}
+\vspace*{2.5in}
+  \begin{center}
+    {\large\itshape\color{txt}
+      To the people who read the code instead of the headline,\\[4pt]
+      and to the ones who do both.\par}
+  \end{center}
+  \vfill
+\clearpage
+
+% ---- Epigraph ------------------------------------------------------------
+\clearpage
+\thispagestyle{empty}
+\vspace*{2.0in}
+  \begin{center}
+    \begin{minipage}{0.88\textwidth}
+      \raggedright
+      {\sffamily\color{accent}\rule{\textwidth}{2pt}}\par
+      \vspace{14pt}
+      {\large\itshape\color{txt}
+      ``I am presenting the world with a complete argument before having mastered
+      a massive neighbourhood around its mathematics.''\par}
+      \vspace{12pt}
+      {\raggedleft\sffamily\small\color{txtdim}
+      Levent Alpöge, \emph{Remark}, 2026\par}
+    \end{minipage}
+  \end{center}
+  \vfill
+\clearpage
+
+% ---- Contents -----------------------------------------------------------
+\clearpage
+\pdfbookmark[0]{Contents}{contents}
+\tableofcontents
+
+% ---- List of figures ----------------------------------------------------
+\clearpage
+\pdfbookmark[0]{List of Figures}{list-of-figures}
+\listoffigures
+
+% ---- List of tables -----------------------------------------------------
+\clearpage
+\pdfbookmark[0]{List of Tables}{list-of-tables}
+\listoftables
+
+% ---- Preface ------------------------------------------------------------
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+\markboth{Preface}{Preface}
+
+\thispagestyle{plain}
+
+On 20 November 2026 a mathematician working at Anthropic published a four-page
+note claiming to have proved the Riemann Hypothesis, together with a 239-megabyte
+Lean development containing 175{,}187 source files. Within hours, two
+university-based mathematicians had compiled it. Within days, the world's
+newspapers had called it the greatest mathematical result of the century, and
+the remark's own author was describing it as ``one dawn across science of
+something far greater''.
+
+That combination --- an astonishing claim, a real machine-checkable artifact,
+instant global attention, and no peer review --- is rare, and it is the reason
+this book exists. It is not a book about the Riemann Hypothesis. There are
+several of those, and they are better at being about the Riemann Hypothesis.
+It is a book about \emph{what it takes to know whether a machine-checked proof
+of the Riemann Hypothesis is a proof}, and about a specific case in which the
+question can be asked concretely.
+
+Three commitments govern how the book is written.
+
+The first is \textbf{that the artifact is taken seriously}. Most commentary on
+claims like this one consists of either applause or dismissal. Both are cheap.
+The Lean development in question is unusually substantial: it contains no axioms
+and no admitted gaps, it is organised around genuine mathematics, and its
+top-level statement is Mathlib's own definition of the Riemann Hypothesis
+rather than a convenient restatement of something weaker. That is worth
+something. A book that treated it as obviously fraudulent would be no more
+useful than one that treated it as obviously right.
+
+The second is \textbf{that the code is read, not summarised}. Every Lean
+statement quoted in this book was read in the submitted source tree, at the
+pinned revision, and the dependency chain from the headline theorem down to the
+classical fixed-point formula was traced by hand and reported in full, in
+Chapter~7. This is the part of the work that is reproducible by any reader with
+the same tools.
+
+The third is \textbf{that the question is answered without flinch}. The answer,
+reached in Chapter~13, is that the claim is \emph{unresolved}. The artifact
+compiles; nobody has audited the mathematics; and the author's own account of
+the method records an a-priori ceiling at two thirds of the zeros, and an
+obstruction whose stated remedy requires a conjecture that is still open. That is
+not a verdict of ``false''. It is a verdict of ``not established'', accompanied
+by a protocol --- Chapter~14 --- that would settle it.
+
+Readers who want only the finding may read Chapter~13 and Chapter~14 and stop.
+Readers who want the mathematics may read Part~II first. Readers who want to
+know what a proof assistant can and cannot certify may read Chapter~6 and
+Chapter~9 and skip the rest.
+
+One note on scope and honesty. This book is written by someone who is not a
+number theorist, and who says so rather than hiding it. The analytic number
+theory is explained from first principles wherever it is used; the claims about
+the state of the literature are sourced and date-stamped; and where the audit
+reached the limit of what could be checked without running the compiler, that
+limit is marked in the text rather than papered over. The corrections log that
+accompanies this book records, in the open, the places where the writer's
+initial assumptions had to be revised in the course of the work --- including
+several that would have made the book wrong.
+
+% ---- How to use this book -----------------------------------------------
+\chapter*{How to Use This Book}
+\addcontentsline{toc}{chapter}{How to Use This Book}
+\markboth{How to Use This Book}{How to Use This Book}
+
+\thispagestyle{plain}
+
+\begin{takeaway}{The shape of the book}
+\begin{itemize}
+\item \textbf{Part I} reports the claim and the artifact: what was said on
+20 November 2026, and what was actually submitted.
+\item \textbf{Part II} gives the mathematics. Chapter~3 builds the Riemann
+zeta function from first principles and states the hypothesis precisely;
+Chapter~4 sets out the four obstacles any method must get past; Chapter~5
+reconstructs the method from the author's own timeline.
+\item \textbf{Part III} is the audit. Chapter~6 explains what a proof assistant
+certifies and what it does not. Chapter~7 traces the proof chain. Chapter~8
+examines the load-bearing inputs. Chapter~9 reports the static scan.
+\item \textbf{Part IV} places the claim in its context: the independent
+compilations, the two-thirds theorem that preceded it, and the absence of any
+independent review.
+\item \textbf{Part V} gives the finding, the protocol that would settle it, and
+what a proof would actually change.
+\end{itemize}
+\end{takeaway}
+
+Three readings are possible, and each is coherent.
+
+\emph{If you want to know what happened.} Read Chapters~1, 2, 10, 12 and 13.
+That is the news, the artifact, the compilations, the state of the review, and
+the finding.
+
+\emph{If you want the mathematics.} Read Chapters~3, 4 and 5, then 8. These
+assume no background beyond undergraduate analysis, and every result the
+argument depends on is stated, sourced, and explained where the statement alone
+is not enough.
+
+\emph{If you want to check the book.} The audit in Part~III is written so that
+it can be repeated. Chapter~7 gives the exact file paths and the exact theorem
+names, so that the chain can be walked independently. Chapter~14 gives the
+commands. Chapter~9 gives the scan so that the scan can be re-run and compared,
+including the possibility that a reader's numbers differ.
+
+\begin{mythbox}{Three things this book will not do}
+\begin{itemize}
+\item It will not declare the Riemann Hypothesis proved. The evidence assembled
+here does not support that, and the author of the claim himself says he has
+``just taken a step''.
+\item It will not declare the claim false. Nothing found in this audit refutes
+it, and the artifact is of a quality that makes refutation implausible on the
+strength of a reading of the remark.
+\item It will not treat a missing referee report as evidence of a defect. The
+absence of review is a fact about the world, not a fact about the mathematics.
+It is reported as the first and largest obstacle to a verdict.
+\end{itemize}
+\end{mythbox}
+
+\vspace{8pt}
+\noindent{\small\color{txtdim}\sffamily
+Conventions. Mathematical statements are given in ordinary notation. Code is
+set in a monospaced face and quoted exactly as it appears in the submitted
+source, including its file paths. Where the book says that something was
+``verified'', it means it was checked against the primary record named in the
+Notes and References --- not that it was recalled. Where the book says
+``unverified'', it means exactly that, and the sentence in question says what
+would be needed to verify it.\par}

@@ -1,0 +1,22 @@
+{
+  "seed_material": "Is the Riemann Hypothesis Solved? | Tico Internet LLC | 2026-11-21",
+  "seed": 58067312192058,
+  "rng": "python random.Random(seed).choice on a shrinking list",
+  "draw_order": [
+    "watercolour",
+    "Swiss / International style",
+    "blueprint / technical drawing",
+    "holographic gradient",
+    "vaporwave",
+    "minimalist geometric",
+    "retro sci-fi pulp",
+    "woodcut / linocut",
+    "isometric 3D",
+    "paper-cut layers",
+    "vintage NASA poster",
+    "cyberpunk neon",
+    "art deco",
+    "ink and line art"
+  ],
+  "drawn_style": "watercolour"
+}

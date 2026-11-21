@@ -1,0 +1,227 @@
+% =====================================================================
+%  Chapter 15 — The Verdict, Part III
+% =====================================================================
+
+\chapter{What Would Change}
+\label{ch:consequences}
+
+This chapter closes the book by separating two things that the coverage of
+this story has tended to run together: what a proof of the Riemann hypothesis
+would change, and what is already true regardless.
+
+\section{If the claim is confirmed}
+
+Suppose the review of Chapter~14's Phase 3 succeeds. What follows?
+
+\subsection{For number theory}
+
+The consequences would be transformative and would take decades to absorb.
+
+\begin{itemize}
+\item \textbf{Error terms.} The prime number theorem would acquire the
+$\operatorname{Li}(x) + O(x^{1/2}\log x)$ error term, and the Riemann explicit
+formula would become an exact computational instrument rather than an
+asymptotic one.
+\item \textbf{Analytic number theory.} The whole apparatus built on
+zero-free regions --- de la Vallée Poussin's method, Vinogradov's bounds,
+the zero-density estimates --- would be re-based on a foundation that no
+longer needs the $\exp(-c\sqrt{\log x})$ refinements, and a large part of the
+subject's technical complexity would become unnecessary.
+\item \textbf{L-functions.} For every Dirichlet $L$-function and, under GRH,
+for the Dedekind zeta functions of number fields, the zero-free region would
+be the critical line exactly. Explicit formulas for primes in arithmetic
+progressions, in short intervals, and almost all of the analytic theory of
+$L$-functions would sharpen correspondingly.
+\item \textbf{Randomness.} The Katz--Sarnak\idx{Katz--Sarnak} programme, which proves
+distributional results for primes \emph{under} RH, would become unconditional.
+\item \textbf{Higher $L$-functions.} Under GRH, the same reflection argument
+that this book traced in Chapter~7 --- non-vanishing to the right of the line
+plus the functional equation gives zeros on the line --- would extend to
+automorphic $L$-functions via the analogue of the functional equation, and
+the Artin holomorphy\idx{Artin holomorphy conjecture} conjecture would become substantially more tractable.
+\end{itemize}
+
+\subsection{For mathematics as a subject}
+
+The more interesting consequences are not about the Riemann hypothesis.
+
+\begin{quote}
+\textbf{A proof of RH by machine, reviewed by humans, would be the first
+instance of a major mathematical theorem established in this manner.}
+\end{quote}
+
+The historical precedents are worth remembering. The four-colour theorem was
+proved with a computer check in 1976, and it took decades for the community
+to settle what that meant --- whether a computer-assisted proof is a proof,
+and what standards apply to the checking. The eventual consensus was yes, with
+conditions: the check must be independently reproducible, and the argument
+must be written up in a form a reader can evaluate.
+
+The same conditions apply here, and the machinery exists: the Lean FRO's
+tools, \texttt{lean4checker}, the Palomar registry, the \texttt{Comparator}
+protocol. What is missing is not a mechanism but a review.
+
+\subsection{For AI and mathematical research}
+
+The episode is also a substantial data point about AI in mathematics, and
+the owner of this book's remit is as much about that as about the hypothesis.
+
+The sequence of events is unusual and worth taking seriously in both
+directions.
+
+\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+  itemsep=5pt]
+\item[\textbf{What it shows.}] A formal proof of the most famous open problem
+in mathematics was, at least in outline, produced by a collaboration between a
+specialist and a large language model, in a form that a compiler accepts. The
+author's own account is that the human supplied the mathematical steering ---
+finding the toy setting where two ideas combined --- and the model supplied
+breadth and execution.
+
+\item[\textbf{What it does not show.}] That the model found the proof. The
+author's account is the opposite: the human recognised the key idea, and the
+model was faster at execution than at the part the author could not follow.
+And the claim has not been verified. A formal artifact that compiles is a
+\emph{candidate} for a proof, not a proof, and the author's own decision to
+publish only Lean has been correctly described by commentators as making the
+claim unfalsifiable by discourse --- the code either checks or it does not ---
+which is exactly why the statement review is the whole game.
+
+\item[\textbf{The general lesson.}] The valuable output here was not a
+finished theorem but a \emph{structured, checkable, 17-million-line candidate}
+that a human could not have produced at all, and that a human with the right
+expertise might still turn into a theorem. That is a different and more
+modest claim than ``AI solved the Riemann hypothesis'', and it may be the
+more important one. The August 2026 two-thirds theorem is the cleanest
+evidence: it is a genuine, verified, independently reproduced mathematical
+result of AI-assisted work, and it was not a proof of RH.
+\end{description}
+
+\section{If the claim is refuted}
+
+Suppose instead that the review finds that the formalized statement is
+weaker than advertised, or that an instance of \texttt{admitted} is assumed
+rather than constructed.
+
+That would be a genuinely valuable outcome, and it is worth being clear that
+it would not be a vindication of scepticism. It would mean that a
+175-thousand-file, axiom-free, sorry-free formalisation of a substantial
+mathematical programme had a defect --- which is a normal, expected,
+``Tuesday'' outcome in the formalisation literature, and which the mirror's
+own status line anticipated.
+
+It would also not mean that the Riemann hypothesis is still as far from
+proved as it was in 2025. The August 2026 two-thirds theorem would remain a
+genuine result. The formalisation would remain a substantial piece of work
+that a community could build on. And the framework --- the
+theta-lift-and-multiplicity programme, the Weil--Weil positivity engine, the
+Rallis seesaw and Iwasawa apparatus, all of it formalised --- would remain
+available.
+
+\begin{quote}
+This is worth saying because the history of the subject is full of cases where
+a failed proof attempt left behind the tools for a later success. Bombieri's
+proof of the Weil bound for function fields was preceded by years of
+fruitless work on the error term. The theory of $L$-functions was built by
+people who were trying and failing to prove the Riemann hypothesis.
+\end{quote}
+
+\section{What is true regardless}
+
+The book's closing claim is this. Whatever happens to the claim, the following
+remain true as of 21 November 2026, and they are the durable content of this
+story.
+
+\begin{enumerate}
+\item \textbf{The Riemann hypothesis is not settled.} No proof is established.
+It remains, by the most recent assessments, an open problem, and the
+compilation of an artifact does not change that.
+
+\item \textbf{More than two thirds of the zeros of $\zeta$ are simple and on
+the critical line.} This is a theorem --- arXiv:2608.13637 --- proved with
+the same machinery, formally verified in Lean, and independently reproduced by
+a third party.
+
+\item \textbf{The method works.} A theta-lift-based approach to Weil positivity
+over the integers, producing rigorous results about the zeros of $\zeta$, is
+now a demonstrated technique rather than a proposal. That is a genuine change
+in the subject's toolkit.
+
+\item \textbf{Formal verification at this scale is feasible.} 17.4 million
+lines, an axiom-free axiom set, two independent compilations, and a
+development that a specialist could plausibly review. The scale of the
+artifact is not the obstacle to verification; the review is.
+
+\item \textbf{The evaluation criteria are clear, and they are met by nobody
+else yet.} Compile, check the axioms, replay the kernel, and then read the
+statements. The first three have been done. The fourth has not.
+\end{enumerate}
+
+\section{A closing word about how to read announcements}
+
+The most durable thing this book can offer a reader is not a verdict on one
+claim. It is a procedure.
+
+\begin{quote}
+When a proof of something important arrives, and it arrives as code, ask five
+questions in order.
+
+\textbf{Does it compile, and did more than one person do it?}\idx{evaluation procedure} If not, nothing
+else matters.
+
+\textbf{What are its axioms?} If the list is not Lean's three standard ones,
+stop.
+
+\textbf{Is the statement the right one?} Not ``is it a statement about
+$\zeta$'' --- is it \emph{Mathlib's} $\zeta$, and is it the full strength, or
+a weakened variant that happens to be provable?
+
+\textbf{What are the load-bearing inputs, and what are they, really?} Find the
+five or six theorems that everything else depends on, and read their
+\emph{statements} against the literature. Not their proofs --- their
+statements.
+
+\textbf{Does the author's account match the artifact?} Find the place where
+the claim's own narrative and the code diverge, and resolve it.
+\end{quote}
+
+Applied to this case, the first two questions are answered, the third is
+answered, the fourth is the open work, and the fifth is where the two
+documents come apart. That is the state of the claim, and it is a perfectly
+good thing for a reader to be able to say.
+
+\begin{keytakeaways}
+
+\item If confirmed, RH would transform the error terms in analytic number
+theory and would be the first major theorem established in a machine-checked
+form.
+\item The AI dimension is best stated modestly: a structured, checkable
+candidate was produced that a human could not have produced at all. The
+August two-thirds theorem is the cleanest verified example.
+\item If refuted, the outcome would still be valuable: the formalised
+programme would remain as a toolkit, and the subject's history is full of
+cases where a failed attempt supplied the tools for a later success.
+\item What is true regardless: RH is not settled; more than two thirds of the
+zeros are simple and on the line; the method works; verification at this
+scale is feasible; and the evaluation procedure is known.
+\end{keytakeaways}
+
+\vspace{12pt}
+\begin{quote}
+\small\itshape
+``It is natural to feel that this is an end, in my case a loss of a principal
+guiding light, but what I saw during the course of progress so amazed me that
+I believe it is one dawn across science of something far greater.''
+\par
+\vspace{6pt}
+\hfill --- Levent Alpöge, \emph{Remark}, 2026
+\end{quote}
+
+\vspace{8pt}
+\begin{quote}
+\small\itshape
+This book does not know whether the dawn has come. It has established what it
+would take to find out, and it has established that the question is being
+asked in a form that can be answered --- which is more than could be said for
+almost every previous attempt at this problem.
+\end{quote}

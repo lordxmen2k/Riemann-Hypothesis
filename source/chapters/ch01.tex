@@ -1,0 +1,232 @@
+% =====================================================================
+%  Chapter 1 — The Claim
+% =====================================================================
+\part{The Claim}
+\markboth{Part I}{The Claim}
+
+\chapter{What Was Actually Said}
+\label{ch:claim}
+
+On 20 November 2026 the Riemann hypothesis --- a conjecture about the zeros of
+the most studied function in mathematics, open since 1859 --- acquired, briefly
+and very publicly, a claimed proof. The claimant was Levent Alpöge\idx{Alpöge, Levent}, a junior
+fellow at Harvard working on arithmetic geometry at Anthropic. The proof, such
+as it was, was presented in two forms: a four-page document of remarkable
+candour, and a Lean development of 175{,}187 files and roughly 17.4 million
+lines.
+
+This chapter reports what that document actually says. It is worth doing
+carefully, because the document is not the thing most readers have encountered.
+The press coverage was a distillation of a distillation, and the two most
+quotable lines in the story --- ``I believe I have\ldots discovered a proof'' and
+``it is a loss of a principal guiding light'' --- are not the same kind of
+statement as the twenty-item technical timeline that follows them on the next
+page. Both are in the source. They carry different weight, and the weight
+should be assigned honestly.
+
+\section{The four pages}
+
+The document is titled simply \emph{Remark}. It has no abstract, no theorem
+statement, no definition of the objects it names, and no proof. What it has is
+a narrator, a collaborator, and a defence of the decision to publish nothing
+but code.
+
+\begin{quote}
+\small
+``I believe I have, working with Claude\idx{Claude (AI assistant)}, discovered a proof\textsuperscript{1}
+of the Riemann Hypothesis. In fact, the method easily extends much further,
+resolving the so-called Generalized Riemann Hypothesis, and I expect, with more
+time, the Extended Riemann Hypothesis too. Claude and I have also formalized
+the arguments without assumptions. It is natural to feel that this is an end, in
+my case a loss of a principal guiding light, but what I saw during the course of
+progress so amazed me that I believe it is one dawn across science of something
+far greater.''
+\end{quote}
+
+Three claims are made in that paragraph, and they have different strengths. The
+first --- a proof of RH --- is the headline. The second --- a proof of GRH for
+Dirichlet $L$-functions --- is stronger and, as the Lean artifact's own export
+list shows, is what the code actually delivers. The third --- a proof of the
+extended Riemann hypothesis for number fields --- is explicitly hedged with
+``I expect, with more time'', and the artifact does not claim it.
+
+The collaboration itself is stated as fact and is not in dispute. The remark
+attributes the work jointly to the author and to Claude, an AI assistant, and
+this book's treatment of the artifact assumes that attribution is accurate. It
+also assumes, as the author says, that the human contributed the mathematical
+steering: the remark describes the author finding the toy setting in which two
+ideas combined, and describes Claude as having run far ahead near the end.
+
+\section{The four pages say they are insufficient}
+
+The second paragraph of the remark is the most important sentence in the
+document, and it is easy to miss because it arrives early and in a rush.
+
+\begin{quote}
+\small
+``The argument is incredibly long at the moment, and while its formalization is
+finished and it is routine to produce a huge, unreadable document containing
+sufficient detail, in my view of my path I have just taken a step.''
+\end{quote}
+
+Read the structure of that sentence carefully. The formalisation is
+\emph{finished}. A human-readable write-up of the argument \emph{is routine} and
+could be produced. What is missing is not the proof but the author's
+\emph{understanding} of it. And the author says so without hedging.
+
+Page 2 makes the same point in a different register, in the middle of a
+paragraph about how to publish:
+
+\begin{quote}
+\small
+``This puts us in the rather extraordinary situation this age has made possible,
+in which I am presenting the world with a complete argument before having
+mastered a massive neighbourhood around its mathematics. It being obviously
+inappropriate to attempt to post some massive unreadable travesty of `slop', I
+decided to only present Lean.''
+\end{quote}
+
+Three separate concessions are packed into those sentences, and the whole
+assessment of this claim turns on taking them at face value rather than
+rounding them up.
+
+\begin{enumerate}
+\item The author has \emph{not mastered} the mathematics surrounding his
+argument.
+\item The document is explicitly a \emph{``slop'' summary} --- the author's word
+for it --- of parts of the reasoning that he does not personally understand.
+\item The mathematical statement of the result therefore consists of a Lean
+bundle and nothing else. There is no prose description of the proof for a
+referee to check, because the author says a prose description cannot yet be
+written.
+\end{enumerate}
+
+There is also a footnote that fixes the scale of the artifact: ``I of course
+amused myself, and hit 250,000+ pages.'' The remark is describing the rendered
+Lean output, not the source.
+
+\section{The timeline, and what it concedes}
+
+The remark's second half is a twenty-item timeline, dated, which the author
+introduces with the note that ``a trusted mathematician advised me to just get to
+the point and have some sort of timeline'' and that it is ``a rough timeline
+Claude provided after a thorough search.'' Two entries in that timeline are
+load-bearing for any assessment of the claim, and this book returns to them in
+detail in Chapter~5.
+
+\begin{seamnote}{The two entries that matter most}
+\begin{itemize}
+\item \textbf{14. 11/15/26:} precise computation of the ``cost'' of each lift,
+showing that one would stop at 2/3 a priori, attempt to get a main term and
+transfer constant to a function field or kill via twisting, need for
+`division'.
+
+\item \textbf{17. 11/15/26:} for the classes in $H^1_o(\QQ_\ell/\ZZ_\ell(-e))$
+that we couldn't kill by twisting, fight for a significant weakening of
+Vandiver.
+\end{itemize}
+\end{seamnote}
+
+Read the dates: entry 14 and entry 17 are both 15 November. Entry 20, which
+reads simply ``11/16/26: GRH'', is the following day. So the author's own record
+of the work says that on 15 November the method had a computed ceiling at two
+thirds and an unresolved obstruction requiring a weakening of a conjecture that
+is still open; and that on 16 November, the day after, GRH was established.
+
+The remark offers no account of how either gap was closed. It does not say. And
+the remark explicitly disclaims the authority of its own summary: the parts of
+the timeline in which ``Claude is the expert and not me'' are, the author
+writes, ``sort of paraphrasing a `slop' summary, which might make zero sense,
+and I apologize, though the Lean should suffice to clarify everything. I'm just
+too inexpert in the relevant stuff at the moment.''
+
+That last clause --- \emph{``the Lean should suffice to clarify everything''} ---
+is the claim this book takes most seriously, and the one it spends the most
+effort testing.
+
+\section{The interesting sentence}
+
+One line in the remark deserves more attention than it has received, because it
+is the clearest statement of the mathematical idea in the document:
+
+\begin{quote}
+\small
+``In Stepanov's argument\idx{Stepanov's method} resolving Riemann over function fields one uses a
+divisor involving multiplicity. This argument is a descendant of Stepanov's, but
+multiplicity is hard to find\idx{multiplicity} over the integers, corresponding to something like
+differentiating whole numbers.''
+\end{quote}
+
+This is a sharp diagnosis of the central difficulty, stated by someone who
+understands it. The function-field proof of the Riemann hypothesis for curves
+over finite fields --- Stepanov's method, refined by Bombieri --- works because
+a curve over a finite field has \emph{two} independent directions to move in:
+one geometric and one arithmetic. A point of multiplicity $m$ in a divisor
+therefore carries $m$-dimensional information, and the method converts that
+information into a bound on the number of points, which becomes a bound on the
+zeros of the $L$-function.
+
+Over the integers there is only one direction. $\operatorname{Spec}\ZZ \times
+\operatorname{Spec}\ZZ = \operatorname{Spec}\ZZ$: the product is
+one-dimensional. Multiplicity, in the sense Stepanov needs it, has no analogue
+there. The remark's phrase ``corresponding to something like differentiating
+whole numbers'' is the author reaching for an arithmetic substitute, and the
+entire proposed method is an attempt to construct one.
+
+Chapter~4 examines this barrier in detail, because it is the single most
+important structural fact about the problem, and because the way the submission
+answers it --- by chaining theta lifts, each of which is supposed to buy one
+unit of the missing multiplicity --- is the most interesting mathematical idea
+in the story.
+
+\section{The publication decision, and its consequences}
+
+The remark describes a difficult decision. There was a timing constraint
+(``the precise timing is horrible''), there was an announcement protocol to
+respect, and there was a pressing practical problem: the only written form of
+the proof that existed was the Lean bundle.
+
+\begin{quote}
+\small
+``It being obviously inappropriate\idx{statement review} to attempt to post some massive unreadable
+travesty of `slop', I decided to only present Lean.''
+\end{quote}
+
+This decision is the origin of nearly everything that makes the claim hard to
+evaluate. A conventional mathematical claim comes with a statement, and the
+community's first move is to check whether the statement is the interesting one.
+Here the statement is a file, and the interesting statement is buried inside a
+dependency graph of 175 thousand files.
+
+It also means the claim cannot be assessed by reading. It can only be assessed
+by compiling and by auditing --- which is what Chapters~6 through~9 do, and
+which is why the audit in this book is technical rather than rhetorical.
+
+\begin{keytakeaways}
+
+\item The document under examination is a four-page narrative plus a Lean
+bundle. It contains no proof, no theorem statement in prose, and no definition
+of the objects it names.
+\item The author states plainly that he has not mastered the surrounding
+mathematics, that his own summary is ``slop'', and that the formalisation
+``should suffice to clarify everything''.
+\item The author's timeline records an a-priori ceiling at two thirds and an
+obstruction requiring a weakening of Vandiver --- both on 15 November --- with
+GRH recorded the following day and no account of how either was closed.
+\item The remark's central mathematical idea --- finding an arithmetic
+substitute for Stepanov's multiplicity over $\ZZ$ --- is a real and sharp
+observation about where the difficulty lies.
+\end{keytakeaways}
+
+\section*{A note on how to read the rest of this book}
+
+Chapters~1 and~2 are the news and the artifact. Chapters~3 to~5 are the
+mathematics, written so that a reader with undergraduate analysis can follow
+them and a specialist will not find them condescending. Chapters~6 to~9 are the
+audit, and are the part of the book with original work in it: the dependency
+chain was traced by hand from the source tree, the scan was run over the full
+extraction, and the load-bearing inputs were identified by reading them.
+Chapters~10 to~12 place the claim against the literature and the prior work.
+Chapters~13 to~15 give the finding, the protocol, and the consequences.
+
+If you want only the finding, read Chapter~13 and then Chapter~14.
