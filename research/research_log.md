@@ -258,3 +258,26 @@ and both now name it.
 **Verification after the pass.** 0 LaTeX errors, 0 missing characters, 0 overfull hboxes above
 25 pt, 0 words outside the safe area, 0 blank pages, all fonts embedded, 241 bookmarks, 526 link
 annotations, 276 numbered pages plus two cover leaves, 57,326 words.
+
+**Second correction round.** A page-by-page sweep of the rendered book with
+the extracted word boxes found two tables overrunning the text block, with
+the running foot printed on top of the last row. The Chapter 6 table of nine
+steps is now set one size down with tighter rows; the Chapter 16 directory
+census is rebalanced, which both fixed the overflow and stopped the
+descriptions from breaking every two words. A folio-overlap check across
+every page now returns nothing.
+
+The build log, which had carried 42 warnings, is now silent. The enumitem
+complaints about the description lists are resolved by stating the label
+width rather than leaving it to be derived; the hyperref complaints about
+mathematics in section titles are resolved with plain-text bookmark
+alternatives; the caption complaints are resolved by issuing the per-type
+skips at the start of the document; and the two microtype complaints are
+resolved by switching off microtype's own protrusion tables, which XeTeX's
+native protrusion makes redundant, with the typesetting checked to be
+identical.
+
+The covers were carrying a second typeface: most of their type is set in
+`sffamily`, and without an explicit sans face that resolves to Latin Modern
+Sans. Both cover files now set the sans and mono faces, and the finished
+cover uses Outfit alone.

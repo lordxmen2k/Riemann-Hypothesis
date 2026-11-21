@@ -109,8 +109,10 @@ Quantitative checks on the finished file:
 | Undefined references | **0** |
 | Overfull hboxes above 25 pt | **0** (largest remaining is 19 pt, in a table cell) |
 | Missing characters | **0** (was 42: 32 × U+211C and 10 × U+229E) |
+| LaTeX warnings | **0** (was 42: 35 enumitem, 5 hyperref, 2 microtype) |
 | Blank pages | none |
-| Words outside the safe area | **0**, checked page by page against the extracted word boxes (one hit was the running foot and was cleared by the table fix) |
+| Words outside the safe area | **0**, checked page by page against the extracted word boxes |
+| Folio overlapping any other text | **0**, checked the same way: every folio on every page against every word on that page |
 | Stray control sequences in the extracted text | none (checked for `\idx{`, `\begin{`, `\end{`, `\item`, `\code{`, `\path{`, `PLACEHOLDER`, `TODO`, `XXX`, code fences, `##`, `**`) |
 | Fonts embedded | yes, all |
 | Trim size | 432 × 648 pt = 6 × 9 in |
@@ -188,6 +190,40 @@ overwrite the other's work.
 **Stale text.** The back cover listed five parts; the book has seven. The
 copyright page and the colophon said that no source repository was
 published; the owner has supplied one for this title, and both now name it.
+
+**Two tables that ran over the page.** The Chapter 6 table of nine steps and
+the Chapter 16 directory census both overran the text block, and the running
+foot was printed on top of the last row. The first was set one size down with
+tighter rows; the second was rebalanced, the path column narrowed and the
+prose column widened from 0.22 to 0.50 of the measure, which both fixed the
+overflow and stopped the descriptions from breaking every two words.
+
+**The warnings.** Four kinds, all of them now gone:
+
+* *enumitem* complained 35 times that the label width of the description
+  lists was negative. The lists set `leftmargin=0pt` so that the label and
+  the text both start at the left margin, which leaves the computed label
+  width negative; `labelwidth=0pt,labelsep=0pt` states the same thing
+  without the complaint. The rendering is unchanged.
+* *hyperref* complained five times that mathematics cannot go into a PDF
+  bookmark. Two section titles contain mathematics, and each now carries a
+  plain-text alternative for the bookmark.
+* *caption* complained twice that the per-type caption skips were unused.
+  They are now issued at the start of the document, when the caption package
+  knows that a table and a figure caption type exist.
+* *microtype* complained twice about the protrusion slots of T and t. Its
+  inheritance table for the TU encoding asks for the cedilla and caron forms
+  of those letters, which a Unicode encoding gives slots of their own, so the
+  lookup fails. XeTeX performs character protrusion itself, from the font's
+  own tables, so microtype's own protrusion tables are not in play: they are
+  switched off, the engine's protrusion stays, and the typesetting is byte
+  for byte the same. This was checked by building the same paragraph with
+  the setting on and off and comparing the extracted positions.
+
+**The covers.** They set most of their type in `\sffamily`, and without an
+explicit sans face that is Latin Modern Sans, so the cover carried two
+typefaces where the book carries one. Both cover files now set the sans and
+mono faces as well, and the finished cover uses Outfit and nothing else.
 
 **Not tested.** The book was not proof-read by a second reader, and the
 mathematics has not been checked by a number theorist. The author is not a

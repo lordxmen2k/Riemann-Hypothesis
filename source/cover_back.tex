@@ -16,6 +16,17 @@
   ItalicFont={Outfit Regular}, ItalicFeatures={FakeSlant=0.20},
   BoldItalicFont={Outfit Bold}, BoldItalicFeatures={FakeSlant=0.20},
   Ligatures={TeX}]
+% The cover sets most of its type in \sffamily. Without an explicit
+% sans face that is Latin Modern Sans, so the cover would carry two
+% typefaces where the book carries one.
+\setsansfont{Outfit}[
+  UprightFont={Outfit Regular}, BoldFont={Outfit Bold},
+  ItalicFont={Outfit Regular}, ItalicFeatures={FakeSlant=0.20},
+  BoldItalicFont={Outfit Bold}, BoldItalicFeatures={FakeSlant=0.20},
+  Ligatures={TeX}]
+\setmonofont{DejaVu Sans Mono}[
+  UprightFont={DejaVu Sans Mono}, BoldFont={DejaVu Sans Mono Bold},
+  Ligatures={TeX}]
 
 \definecolor{ink}{HTML}{0C1016}
 \definecolor{accent}{HTML}{8FD6C0}

@@ -59,7 +59,7 @@ theorem depends on, you get a list:
 and the answer, for a theorem that has nothing fishy in it, is a short list of
 Lean's three standard axioms:
 
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+\begin{description}[style=nextline,leftmargin=0pt,labelwidth=0pt,labelsep=0pt,font=\sffamily\bfseries\small,
   itemsep=5pt]
 \item[\texttt{propext}\idx{propext}] Propositional extensionality: $(P \leftrightarrow Q)$
 implies $P = Q$. This is the principle that logical statements are equal when
@@ -184,7 +184,7 @@ Chapter~8's subject.
 \section{The full stack: what a serious verification looks like}The community has developed machinery for this, and the mirror's README
 recommends most of it. The layers, from weakest to strongest:
 
-\begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
+\begin{description}[style=nextline,leftmargin=0pt,labelwidth=0pt,labelsep=0pt,font=\sffamily\bfseries\small,
   itemsep=6pt]
 \item[The elaboration.] Lean's elaborator turns the source into kernel terms. It
 is trusted for \emph{well-typedness}, not for correctness, and it is the largest

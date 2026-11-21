@@ -117,7 +117,13 @@
   breaksymbolright={},
   fontsize=\footnotesize
 }
-\usepackage{microtype}
+% XeTeX performs character protrusion itself, from the font's own tables.
+% microtype's protrusion tables are meant for pdfTeX, and its inheritance
+% list for the TU encoding asks for slots that a Unicode encoding does not
+% provide, so it warns twice about characters it never sets here. Turning
+% microtype's own protrusion off leaves the engine's protrusion in place and
+% the warning out of the log; the typesetting is byte for byte the same.
+\usepackage[protrusion=false]{microtype}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{pgfplots}
@@ -270,8 +276,12 @@
 \captionsetup{font=footnotesize,labelfont={tt,bf,color=accent},
   textfont={color=txtdim},labelsep=period,width=0.96\textwidth,
   justification=justified,singlelinecheck=false,skip=7pt}
-\captionsetup[table]{skip=6pt}
-\captionsetup[figure]{skip=7pt}
+% The per-type skips are set at the start of the document: issued in the
+% preamble, before the caption package knows that a table and a figure
+% caption type exist, they are reported as unused.
+\AtBeginDocument{%
+  \captionsetup[table]{skip=6pt}%
+  \captionsetup[figure]{skip=7pt}}
 
 % ---- Epigraph (the book class does not supply one) ----------------------
 \providecommand{\epigraphname}{Epigraph}
@@ -325,7 +335,8 @@
     \draw (0,0) rectangle (0.66,0.66);%
     \draw (-0.11,0.33) -- (0.77,0.33);%
     \draw (0.33,-0.11) -- (0.33,0.77);}}}
-\providecommand{\RiemannHypothesis}{\textsc{RiemannHypothesis}}
+% A Lean identifier is case-sensitive, so it is set in the code face
+\providecommand{\RiemannHypothesis}{\code{RiemannHypothesis}}
 \providecommand{\riemannZeta}{\zeta}
 \providecommand{\dd}{\mathrm{d}}
 \providecommand{\Tr}{\operatorname{Tr}}
