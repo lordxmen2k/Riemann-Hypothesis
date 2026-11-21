@@ -73,7 +73,7 @@ in the namespace \code{GlobalTheory.Ord2}, the structure \code{admitted} carries
 the admissibility condition and the statement is
 
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def VanishOrd : Prop :=
   forall (l : Nat) [Fact l.Prime], l != 2 ->
 forall (Omega : Type) [Field Omega] [Algebra Rat Omega]
@@ -81,7 +81,7 @@ forall (Omega : Type) [Field Omega] [Algebra Rat Omega]
       (iota : Qbar l ~+*~> Complex) (e : Nat), 1 <= e ->
       forall W : R2 Omega l, admitted iota e W ->
         BlochKatoSelmerVanishes l (Loc.colRep W)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -107,7 +107,7 @@ whether the $H^1_o$ classes are killed.
 \section{The exact point at which the chain does not close}Let us put the whole method together and locate the break precisely.
 
 \begin{center}
-\begin{tabular}{@{}p{0.26\textwidth}p{0.68\textwidth}@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.26\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.68\textwidth}@{}}
 \toprule
 \textbf{Step} & \textbf{Status} \\
 \midrule

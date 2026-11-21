@@ -48,7 +48,7 @@ cyclic groups rather than as an analytic heuristic.
 
 \begin{seamnote}{\code{Formalism.BehrendSets.Statement} (excerpt)}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def BehrendFree (K : Nat) (T : Finset Nat) : Prop :=
 forall alpha beta gamma : Int, alpha != 0 -> beta != 0 ->
     gamma != 0 -> alpha + beta + gamma = 0 ->
@@ -72,7 +72,7 @@ exists T : Finset Nat, (forall t in T, 8 * L * t < n) and
 (n : Real) / (8 * L) * Real.exp (-C * Real.sqrt (Real.log n
         * Real.log (2 * (L : Real) + 1)))
         <= (T.card : Real)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -98,7 +98,7 @@ That is exactly what the development's variance statements record. In
 
 \begin{seamnote}{The variance statements}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def SumSq : Prop := forall M Y : Nat, 2 <= M ->
 sum l in (range Y).filter (PmOne M), Real.log l / (l :
     Real)^2
@@ -121,7 +121,7 @@ def ShortOrdSq : Prop := forall (s Lw Y : Nat), 1 <= Lw -> 8
         orderOf (frob s l hl) <= 4 * Lw),
 Real.log l / (l : Real)^2 <= 80 * (Lw : Real)^2 * Real.log
       ((2 : Real)^s) / ((2 : Real)^s)^2
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -146,7 +146,7 @@ $(\mathbb{Z}/2^{s+2})^\times$:
 
 \begin{seamnote}{\code{Formalism.BehrendSets.Statement}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 abbrev OrdGrp (s : Nat) : Type :=
 (ZMod (2^(s+2)))^x / Subgroup.zpowers (-1 : (ZMod
     (2^(s+2)))^x)
@@ -157,7 +157,7 @@ def frob (s l : Nat) (hl : Nat.Coprime l (2^(s+2))) : OrdGrp
 
 def OrdCard : Prop := forall s : Nat, Nat.card (OrdGrp s) =
   2^s and IsCyclic (OrdGrp s)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -193,14 +193,14 @@ structure across Hecke characters for a `gcd', extra averaging''.
 
 \begin{seamnote}{\code{TranslateMean}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def TranslateMean : Prop := forall (n : Nat) [NeZero n] (T :
   Finset Nat), (forall t in T, t < n) ->
 forall {iota : Type} (I : Finset iota) (pos : iota -> ZMod
     n),
 sum u : ZMod n, (I.filter (fun i => pos i in thick n T
       u)).card = I.card * T.card
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -236,7 +236,7 @@ which together are what make the translates genuinely non-overlapping in the
 controlled sense.
 
 \section{How this plugs back into the chain}\begin{center}
-\begin{tabular}{@{}lp{0.68\textwidth}@{}}
+\begin{tabular}{@{}l>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.68\textwidth}@{}}
 \toprule
 \textbf{Remark item} & \textbf{What it provides} \\
 \midrule

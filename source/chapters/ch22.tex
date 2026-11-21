@@ -13,7 +13,7 @@ factor by which the chain enlarges the space, and the \emph{budget} $q$, what
 the segment of the argument actually reaches. The formalisation imposes:
 
 \begin{center}
-\begin{tabular}{@{}p{0.30\textwidth}p{0.62\textwidth}@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.30\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.62\textwidth}@{}}
 \toprule
 \textbf{Condition} & \textbf{Reading} \\
 \midrule
@@ -33,12 +33,12 @@ get close to using all of what is available.
 
 \section{The threshold}\begin{seamnote}{The threshold condition, in the source}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 theorem threshold_arith_letter_case (k Ns c q bo : Real)
 (hk5 : 5 <= k) (hN : 1 <= Ns) (hc : 40 * (k * Ns) <= c) (hq
       : 9 / 10 * c <= q)
     (hb : q - k < bo) : c / 2 <= 2 / 3 * bo - k * Ns
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -105,7 +105,7 @@ That is the arithmetic of crossing the ceiling, and the remark's item 14 lists
 three attempts to cross it:
 
 \begin{center}
-\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.32\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.62\textwidth}@{}}
 \toprule
 \textbf{Attempt} & \textbf{What it would buy} \\
 \midrule

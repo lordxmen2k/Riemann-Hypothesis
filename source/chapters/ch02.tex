@@ -31,16 +31,20 @@ reproducible in principle. It also means that a future audit is a statement
 about \emph{that} revision of Mathlib and not about whatever Mathlib has
 become by the time the audit is done.
 
-\section{The shape of the development}The tree is not one program but ten libraries, each a separate Lean package
-within the Lake workspace. The census below was computed for this book by
-counting files on disk.
+\section{The shape of the development}The tree is not one program but eleven Lean libraries, each a separate package
+within the Lake workspace. One of the eleven is virtual: \texttt{GroundTheoryFields}
+declares glob patterns that pick up two subdirectories which already live inside
+\texttt{GroundTheory}, so it adds no files of its own. Nine directories and two
+top-level modules therefore account for all 175{,}187 files. The census below was
+computed for this book by counting files on disk.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_library.pdf}
-\caption{The submitted development by library, on a logarithmic scale. The
+\caption{The submitted development by directory, on a logarithmic scale. The
 concentration is extreme: one library, \texttt{Development}, holds 81 per cent
-of the files. Counts were computed locally from the extracted submission.}
+of the files. Counts were computed locally from the extracted submission; the
+bar for the two top-level modules is short because the scale is logarithmic.}
 \label{fig:library}
 \end{figure}
 
@@ -50,11 +54,11 @@ of the files. Counts were computed locally from the extracted submission.}
 \centering
 \caption{Library census of the submitted development.}
 \label{tab:census}
-\begin{tabular}{@{}lrl@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.30\textwidth}r l@{}}
 \toprule
 \textbf{Library} & \textbf{Files} & \textbf{Share} \\
 \midrule
-\texttt{Development}      & 141{,}928 & 81.1\% \\
+\texttt{Development}      & 141{,}928 & 81.0\% \\
 \texttt{Formalism}        & 18{,}254  & 10.4\% \\
 \texttt{GroundTheory}     & 8{,}507   & 4.9\% \\
 \texttt{ReciprocityTheory}& 3{,}845   & 2.2\% \\
@@ -63,7 +67,7 @@ of the files. Counts were computed locally from the extracted submission.}
 \texttt{Lemmata}          & 167       & 0.1\% \\
 \texttt{BuildAid}         & 5         & $<0.01\%$ \\
 \texttt{Supplements}      & 3         & $<0.01\%$ \\
-\texttt{Main}             & 1         & $<0.01\%$ \\
+\texttt{Main, Statements} & 2        & $<0.01\%$ \\
 \midrule
 \textbf{Total}            & \textbf{175{,}187} & 100\% \\
 \bottomrule
@@ -86,7 +90,7 @@ shared abstractions factored out as they were discovered.
 is 433 bytes long and reads in full:
 
 \begin{seamnote}{\path{src/Main.lean}}
-\begin{Verbatim}
+\begin{leanquote}
 import Statements
 import Supplements.Kernels.MainTheoremsAll
 
@@ -101,7 +105,7 @@ theorem LFunction_eq_zero_re : DirichletLZerosOnLine := claimAll.2.1
 
 theorem LFunction_eq_zero_re_of_isPrimitive :
     PrimitiveDirichletLZerosOnLine := critAll
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 Six theorems, all discharging into named constants. Note what is \emph{not}
@@ -115,7 +119,7 @@ because a formalisation claim can always be true in the trivial sense that the
 statement was weakened. Here it is not.
 
 \begin{seamnote}{\path{src/Statements.lean} (the two statements that matter)}
-\begin{Verbatim}
+\begin{leanquote}
 def RiemannZetaZerosOnLine : Prop :=
   forall s : Complex, riemannZeta s = 0 ->
     (not exists n : Nat, s = -2 * ((n : Complex) + 1)) ->
@@ -125,7 +129,7 @@ def DirichletLNonvanishingRightOfHalf : Prop :=
   forall (N : Nat) [NeZero N] (chi : DirichletCharacter Complex N) (s : Complex),
     1 / 2 < s.re -> (chi != 1 or s != 1) ->
     DirichletCharacter.LFunction chi s != 0
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 These are the standard formulations, faithfully transcribed. The first says:

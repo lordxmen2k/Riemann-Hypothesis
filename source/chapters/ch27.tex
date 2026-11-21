@@ -117,7 +117,7 @@ enters the development as \code{UpperTheory.V.Af.NewformAut}, and it is
 discharged through a structure:
 
 \begin{seamnote}{\code{UpperTheory.V.Af.Hypotheses\_2}}
-\begin{Verbatim}
+\begin{leanquote}
 structure Hypotheses₂ : Prop where
   litN  : GlobalTheory.Mem.LiteralAutomorphy.LitN
   cohC  : ClozelCohC
@@ -131,7 +131,7 @@ structure Hypotheses₂ : Prop where
   newform : NewformRep
   ss    : Lev.CsdSs := Lev.csdSs_of_full litN.aut.car
   mono  : Lev.CsdMonoOdd := Lev.csdMonoOdd_of_full litN.aut.car
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 And the theorem that turns this bundle into the automorphy statement is
@@ -266,7 +266,7 @@ as \code{PositivityTheory.ThKEst.EpsOf\_k}\idx{EpsOf\_k}, proved in
 reading in full:
 
 \begin{seamnote}{\texttt{epsOf\_of\_k}}
-\begin{Verbatim}
+\begin{leanquote}
 theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
   intro F E _ _ _ _ _ σ B hB n X r s hX
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
@@ -278,7 +278,7 @@ theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
   · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J Complex.I
         Complex.I_ne_zero (hX.sig w)
     exact ⟨⟨Or.inr hX.skew, this.1⟩, this.2⟩
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 What this proves is the \emph{signature} of a Hermitian form over a CM field:
@@ -336,7 +336,7 @@ positive finding.
 \centering
 \caption{Status of the load-bearing inputs, as of this audit.}
 \label{tab:inputs}
-\begin{tabular}{@{}p{0.26\textwidth}p{0.30\textwidth}p{0.30\textwidth}@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.26\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.30\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.30\textwidth}@{}}
 \toprule
 \textbf{Input} & \textbf{What was established} & \textbf{What was not} \\
 \midrule

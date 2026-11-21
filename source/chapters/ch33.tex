@@ -14,13 +14,13 @@ The protocol is not a contribution to the mathematics. It is a work plan, and
 its purpose is to make the remaining work finite and checkable.
 
 \section{Phase 1: mechanical (hours to days)}\subsection{Build}\begin{seamnote}{Commands}
-\begin{Verbatim}
+\begin{leanquote}
 git clone <the author's distribution, or the mirror>
 cd lean
 elan toolchain install $(cat lean-toolchain)
 lake exe cache get
 lake build Main
-\end{Verbatim}
+\end{leanquote}
 The cache step matters: it fetches Mathlib's prebuilt \texttt{.olean} files
 for the pinned revision, which turns the dependency from a multi-hour compile
 into a download. This book's own attempt confirmed that the pinned revision
@@ -33,7 +33,7 @@ build time or memory figures have been published; a reader who publishes them
 does the next reader a genuine service.
 
 \subsection{Axioms}\begin{seamnote}{Commands}
-\begin{Verbatim}
+\begin{leanquote}
 # in a scratch file importing the submission
 import Main
 #print axioms Main.riemannHypothesis
@@ -41,14 +41,14 @@ import Main
 #print axioms Main.LFunction_ne_zero_of_half_lt_re
 #print axioms Main.LFunction_eq_zero_re
 #print axioms Main.LFunction_eq_zero_re_of_isPrimitive
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 The expected output is exactly:
 
-\begin{Verbatim}
+\begin{leanquote}
 'Main.riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
-\end{Verbatim}
+\end{leanquote}
 
 and the same for the other four. Anything else --- \texttt{sorryAx},
 \texttt{Lean.ofReduceBool}, a custom axiom --- is a finding, and a
@@ -62,18 +62,18 @@ the same assurance. The Lean FRO documents these tools; they are cited in the
 arXiv literature as ``Lean FRO, 2025/2026''.
 
 \begin{seamnote}{Commands (indicative)}
-\begin{Verbatim}
+\begin{leanquote}
 lake exe export .olean Main.olean > main.json
 # then check main.json with an external kernel, e.g.
 #   python3 -m lean4checker main.json
 # or with a NanoDa-based harness
-\end{Verbatim}
+\end{leanquote}
 The exact invocation depends on the tool's current interface; check the
 tool's own documentation rather than trusting this sketch.
 \end{seamnote}
 
 \subsection{Re-run the static scan}\begin{seamnote}{Commands}
-\begin{Verbatim}
+\begin{leanquote}
 rg --no-ignore -c '^\s*axiom\s' -g '*.lean' . | wc -l
 rg --no-ignore -c '\bsorry\b' -g '*.lean' . | wc -l
 rg --no-ignore -c '\badmit\b' -g '*.lean' . | wc -l
@@ -82,7 +82,7 @@ rg --no-ignore -c '^\s*opaque\s' -g '*.lean' . | wc -l
 rg --no-ignore -n '\baddDecl\b' -g '*.lean' .
 rg --no-ignore -n 'maxHeartbeats 0' -g '*.lean' .
 rg --no-ignore -l '\b(elab|macro|syntax)\b' -g '*.lean' .
-\end{Verbatim}
+\end{leanquote}
 Compare with \tabref{tab:scan}. Any disagreement with the published scan
 should be resolved before going further, since a disagreement means one of
 the two scans is wrong about something.
@@ -95,12 +95,12 @@ possibility that the version you downloaded is not the version that was
 announced.
 
 \subsection{Confirm the statement is Mathlib's}\begin{seamnote}{Commands}
-\begin{Verbatim}
+\begin{leanquote}
 grep -n "def RiemannHypothesis" \
   .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
 grep -n "def riemannZeta" \
   .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-\end{Verbatim}
+\end{leanquote}
 Both should come back with \texttt{Mathlib}'s own definitions. The mirror
 records \texttt{RiemannHypothesis} at line 185 and \texttt{riemannZeta} at
 line 121 at the pinned commit.
@@ -199,7 +199,7 @@ done, and are the ones that decide the question.}
 \centering
 \caption{Outcomes.}
 \label{tab:outcomes}
-\begin{tabular}{@{}p{0.28\textwidth}p{0.56\textwidth}@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.28\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.56\textwidth}@{}}
 \toprule
 \textbf{Step} & \textbf{If it succeeds} \\
 \midrule
