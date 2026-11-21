@@ -87,7 +87,7 @@ def zeta(s, N=28, K=7):
 def fig_critical_line():
     t = np.linspace(0.2, 46.0, 4600)
     z = np.array([zeta(0.5 + 1j * ti) for ti in t])
-    fig, ax = plt.subplots(figsize=(6.2, 2.5))
+    fig, ax = plt.subplots(figsize=(4.6, 2.15))
     ax.plot(t, z.real, color=ACCENT, lw=0.8, label=r"$\Re\,\zeta(\frac{1}{2}+it)$")
     ax.plot(t, z.imag, color=AMBER, lw=0.8, ls=(0, (4, 2)), label=r"$\Im\,\zeta(\frac{1}{2}+it)$")
     ax.axhline(0, color=EDGE, lw=0.8)
@@ -130,7 +130,7 @@ def fig_psi():
     psi = np.cumsum(vals)
     xs = np.arange(0, N + 1)
     y = psi - xs
-    fig, ax = plt.subplots(figsize=(6.2, 2.4))
+    fig, ax = plt.subplots(figsize=(4.6, 2.1))
     w = 400
     ys = np.convolve(y, np.ones(w) / w, mode="valid")
     ax.plot(xs[w // 2:len(ys) + w // 2], ys, color=ACCENTDIM, lw=0.6, alpha=0.85,
@@ -166,7 +166,7 @@ def fig_library():
     names = [n for n, _, _ in libs]
     vals = np.log10([v for _, v, _ in libs])
     cols = [c for _, _, c in libs]
-    fig, ax = plt.subplots(figsize=(6.2, 2.6))
+    fig, ax = plt.subplots(figsize=(4.6, 2.3))
     y = np.arange(len(names))[::-1]
     ax.barh(y, vals, color=cols, height=0.62)
     ax.set_yticks(y)
@@ -191,9 +191,9 @@ def _box(ax, x, y, w, h, text, fc, tc, fs=6.0, ec=None):
 
 
 def fig_chain():
-    fig, ax = plt.subplots(figsize=(6.2, 4.3))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 13.9)
+    fig, ax = plt.subplots(figsize=(4.6, 6.3))
+    ax.set_xlim(0, 4.6)
+    ax.set_ylim(0, 6.3)
     ax.axis("off")
     ax.text(5, 13.55, "The traced proof chain, from Mathlib's statement to the Lefschetz formula",
             ha="center", fontsize=8.2, color=TXT, fontweight="bold")
@@ -237,9 +237,9 @@ def fig_chain():
 
 # ------------------------------------------------------- trust boundary ---
 def fig_architecture():
-    fig, ax = plt.subplots(figsize=(6.2, 3.9))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 9.2)
+    fig, ax = plt.subplots(figsize=(4.6, 4.3))
+    ax.set_xlim(0, 4.6)
+    ax.set_ylim(0, 4.3)
     ax.axis("off")
     ax.text(5, 8.85, "Three different questions, and the tools that answer each",
             ha="center", fontsize=8.4, color=TXT, fontweight="bold")
@@ -274,9 +274,9 @@ def fig_architecture():
 
 # ------------------------------------------------------------ barriers ----
 def fig_barriers():
-    fig, ax = plt.subplots(figsize=(6.2, 3.3))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 8.2)
+    fig, ax = plt.subplots(figsize=(4.6, 3.7))
+    ax.set_xlim(0, 4.6)
+    ax.set_ylim(0, 3.7)
     ax.axis("off")
     ax.text(5, 7.85, "Four obstacles on the route from the method to a proof of RH",
             ha="center", fontsize=8.4, color=TXT, fontweight="bold")
@@ -309,7 +309,7 @@ def fig_barriers():
 
 # --------------------------------------------------------- theta lifts ----
 def fig_theta_lift():
-    fig, ax = plt.subplots(figsize=(6.2, 2.7))
+    fig, ax = plt.subplots(figsize=(4.6, 2.4))
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 5.4)
     ax.axis("off")
@@ -347,7 +347,7 @@ def fig_theta_lift():
 
 # ------------------------------------------------------------- records ----
 def fig_records():
-    fig, ax = plt.subplots(figsize=(6.2, 2.8))
+    fig, ax = plt.subplots(figsize=(4.6, 2.5))
     rows = [
         ("Conrey (1989) / Pratt-Robles-Zaharescu (2020)", 0.417293,
          "on the critical line (asymptotic)"),
@@ -381,9 +381,9 @@ def fig_records():
 
 # ------------------------------------------------------------ protocol ----
 def fig_protocol():
-    fig, ax = plt.subplots(figsize=(6.2, 3.6))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 9.6)
+    fig, ax = plt.subplots(figsize=(4.6, 4.1))
+    ax.set_xlim(0, 4.6)
+    ax.set_ylim(0, 4.1)
     ax.axis("off")
     ax.text(5, 9.25, "A protocol that would settle the claim", ha="center",
             fontsize=8.4, color=TXT, fontweight="bold")

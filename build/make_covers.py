@@ -126,8 +126,8 @@ def front_cover():
     img = Image.open(ART).convert("RGB").resize((int(W_IN * 300), int(H_IN * 300)),
                                                Image.LANCZOS)
     ax.imshow(img, extent=[0, W_IN, 0, H_IN], aspect="auto", zorder=0)
-    scrim(ax, [(0.00, 0.90), (0.40, 0.86), (0.52, 0.30),
-               (0.74, 0.46), (1.00, 0.94)])
+    scrim(ax, [(0.00, 0.92), (0.30, 0.88), (0.45, 0.42), (0.52, 0.30),
+               (0.60, 0.58), (0.72, 0.74), (0.86, 0.82), (1.00, 0.95)])
 
     x0 = 0.60
     x1 = W_IN - 0.52

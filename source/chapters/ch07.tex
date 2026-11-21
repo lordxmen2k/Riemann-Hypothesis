@@ -72,7 +72,7 @@ Here is the source, in full, from
 \begin{seamnote}{\texttt{UpperTheory.riemannHypothesis\_of\_everyCharacter}}
 \begin{verbatim}
 theorem UpperTheory.riemannHypothesis_of_everyCharacter
-    (h : UpperTheory.EveryCharacter\idx{EveryCharacter}) : RiemannHypothesis := by
+    (h : UpperTheory.EveryCharacter) : RiemannHypothesis := by
   intro s hs hn h1
   by_contra hne
   rcases lt_or_gt_of_ne hne with hlt | hgt
@@ -192,7 +192,7 @@ theorem UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter :
   galoisRepresentations_of_thetaLift UpperTheory.TP.K.tLiftK
 \end{verbatim}
 \begin{verbatim}
-theorem galoisRepresentations_of_thetaLift (up : UpperTheory.TP.TLiftK\idx{TLiftK}) :
+theorem galoisRepresentations_of_thetaLift (up : UpperTheory.TP.TLiftK) :
     UpperTheory.GalStar.Row0b recT :=
   galoisLocalGlobalStrong_of_geometry_lift
     UpperTheory.Gal.Int.Geo.geoOne_holds up

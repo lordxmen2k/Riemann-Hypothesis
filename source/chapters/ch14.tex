@@ -22,7 +22,7 @@ its purpose is to make the remaining work finite and checkable.
 git clone <the author's distribution, or the mirror>
 cd lean
 elan toolchain install $(cat lean-toolchain)
-lake exe cache get\idx{lake build}
+lake exe cache get
 lake build Main
 \end{verbatim}
 The cache step matters: it fetches Mathlib's prebuilt \texttt{.olean} files
@@ -42,7 +42,7 @@ does the next reader a genuine service.
 \begin{verbatim}
 # in a scratch file importing the submission
 import Main
-#print axioms Main\idx{axiom check}.riemannHypothesis
+#print axioms Main.riemannHypothesis
 #print axioms Main.riemannZeta_eq_zero_re
 #print axioms Main.LFunction_ne_zero_of_half_lt_re
 #print axioms Main.LFunction_eq_zero_re

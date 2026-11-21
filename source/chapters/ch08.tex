@@ -127,11 +127,11 @@ discharged through a structure:
 structure Hypotheses₂ : Prop where
   litN  : GlobalTheory.Mem.LiteralAutomorphy.LitN
   cohC  : ClozelCohC
-  conjC : ClozelConjC\idx{Clozel's conjecture}
-  borelC: BorelInjC\idx{Borel injectivity}
+  conjC : ClozelConjC
+  borelC: BorelInjC
   galR  : Z.Bc.GaloisRepRankTwoReal
   smoR  : StrongMultOneReal
-  gkR   : GelfandKazhdan\idx{Gelfand--Kazhdan correspondence}Real
+  gkR   : GelfandKazhdanReal
   admR  : AdmissibleReal
   bc    : Br.QuadBC0
   newform : NewformRep
@@ -282,7 +282,7 @@ theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
   have hτ := hB.cm.2.2.2 (B.emb w).1
   rcases hX with hX | hX
-  · have := SignatureOfHermitianForm\idx{signature of a Hermitian form}.of_sig σ _ hτ X.J 1 one_ne_zero
+  · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J 1 one_ne_zero
         (r := r) (s := s) (by rw [one_smul]; exact hX.sig w)
     exact ⟨⟨Or.inl hX.herm, this.1⟩, this.2⟩
   · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J Complex.I
