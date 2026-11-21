@@ -132,16 +132,49 @@ would settle it.
 
 ## M2 — Structure (2026-11-21)
 
-Structure designed **after** the research was collected and reviewed, as required. Five parts,
-fifteen chapters:
+Structure designed **after** the research was collected and reviewed, as required. Seven parts,
+thirty-four chapters:
 
 | Part | Chapters | Purpose |
 |---|---|---|
 | I — The Claim | 1–2 | What was said, and what was submitted |
 | II — The Mathematics | 3–5 | RH from first principles; the four barriers; the method as described |
-| III — The Verification | 6–9 | What Lean can and cannot certify; the traced chain; the load-bearing inputs; the static scan |
-| IV — The State of Play | 10–12 | The independent compilations; the two-thirds theorem; the absence of review |
-| V — The Verdict | 13–15 | The finding stated precisely; a verification protocol; what a proof would change |
+| III — The Method, Step by Step | 6–16 | The nine steps in full, the two thirds computed from the source, and a step-to-declaration map |
+| IV — The Proof in Natural Language | 17–24 | The same argument as mathematics, with the two gaps marked in place |
+| V — The Verification | 25–28 | What Lean can and cannot certify; the traced chain; the load-bearing inputs; the static scan |
+| VI — The State of Play | 29–31 | The independent compilations; the two-thirds theorem; the absence of review |
+| VII — The Verdict | 32–34 | The finding stated precisely; a verification protocol; what a proof would change |
+
+### The two thirds, located
+
+The remark's item 14 records that the method "would stop at 2/3 a priori". The
+constant is not the author's summary of a hand-waving estimate: it is a literal
+`2 / 3` in the submitted source, in
+`Formalism/SharpRestriction/GrowthBounds/SegmentDegree/`, in the threshold
+arithmetic of `ThresholdPowerBoundOfCounts.lean`:
+
+    threshold_arith_letter_case : c / 2 <= 2 / 3 * bo - k * Ns
+    threshold_arith_w_case     : c / 2 <= 2 / 3 * (fl - ...) - k * Ns
+
+and in the path decomposition of `AtypicalPathSmallWeight.lean`, where the
+typical path carries `2 / 3 * B (od i) <= plPart mu (lastIdx r)` and the
+atypical path is allowed an extra `2 * B (od i)` of slack. The missing third is
+the price of the atypical path. The same fraction is the headline of the
+author's own published two-thirds theorem of three months earlier.
+
+### The natural-language proof part
+
+Added on the owner's instruction, so that the book stands on its own as
+mathematics: eight chapters writing the argument as propositions and proofs,
+with the corresponding Lean declaration cited at each statement, and with the
+two places the proof does not close -- the budget factor and the `H^1_o`
+classes -- marked where they occur rather than at the end.
+
+### Attribution
+
+The mathematics is Levent Alpoge's. Attribution appears on the title page, the
+copyright page, the Part IV opener, the cover and the back cover. This book is
+the analysis and the exposition of that work.
 
 ### Scope note
 
