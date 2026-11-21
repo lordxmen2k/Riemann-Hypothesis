@@ -1,0 +1,5 @@
+# the joined archive and the 14 parts are on disk for verification but are not
+# committed: the extracted tree below is the proof as code, and the archive is
+# a byte-identical copy of it (see PROVENANCE.md for the SHA-256).
+lean.tar.gz
+lean.tar.gz.part*
