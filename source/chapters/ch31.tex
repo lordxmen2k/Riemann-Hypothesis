@@ -2,12 +2,22 @@
 %  Chapter 12 — The State of Play, Part III
 % =====================================================================
 
-\chapter{The Review That Has Not Happened}
+\chapter{The Mathematical Review That Has Not Happened}
 \label{ch:noreview}
 
 The most consequential fact about the claim under examination is an absence,
 and absences are hard to write about without either overstating or
 understating them. This chapter attempts to state it precisely.
+
+It is worth being careful about which absence, because on 21 November 2026
+one of the three review layers was closed and the other two were not. The
+formal review happened: the statement was matched against Mathlib by two
+independent tools, and the exported proof was accepted by Lean's kernel and
+by several independently implemented checkers. The review that has not
+happened is the one where a mathematician reads the intermediate statements
+and asks whether each is the classical theorem it is named for. That is the
+absence this chapter is about, and it is the one the joint statement itself
+leaves open.
 
 \section{What exists}\begin{itemize}
 \item \textbf{The remark.} Four pages, at \path{alpo.ge/remark.pdf}, dated by
@@ -19,6 +29,11 @@ roughly 17.4 million lines, pinned to Lean \texttt{v4.33.1} and Mathlib
 \item \textbf{A third-party mirror} with a README, a static scan, and a set of
 recommended verification steps.
 \item \textbf{Two independent compilations}, reported the same day.
+\item \textbf{A joint certification by the Lean and Mathlib communities},
+dated 21 November 2026 at 13:55 UTC, endorsed by the Lean FRO and the
+Mathlib Initiative, confirming that the statement is Mathlib's, that the
+library compiles, and that the exported proof is accepted by Lean's kernel
+and by several independently implemented checkers.
 \item \textbf{Press coverage} in Quanta Magazine, New Scientist, Scientific
 American, \emph{The Economist}, and a wire report from Agence France-Presse.
 \end{itemize}
@@ -34,7 +49,9 @@ two-thirds theorem, not about RH.
 \item \textbf{No refereed report.}\idx{refereed report, absence of} No expert has published an assessment.
 \item \textbf{No statement review.} The human check described in Chapter~6
 --- reading the formal statements against the classical theorems they claim to
-encode --- has not been performed by anybody outside the author.
+encode --- has not been performed by anybody outside the author. The
+mechanical equivalent has been performed, and it succeeded; the human
+equivalent has not begun in public.
 \item \textbf{No written proof.} The remark's author says the prose version
 ``is routine'' to produce but has not been written, and the author's own
 summary is what he calls ``slop''.

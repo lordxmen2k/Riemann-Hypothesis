@@ -5,13 +5,27 @@
 \chapter{A Protocol for Settling This}
 \label{ch:protocol}
 
-A finding of ``unresolved'' is only useful if it comes with a way to resolve
-it. This chapter gives one, in the order a careful reader should actually
-work, with the commands where they exist and the reading tasks where they do
-not.
+A finding of ``formally certified, mathematically unaudited'' is only useful
+if it comes with a way to complete the second half. This chapter gives one,
+in the order a careful reader should actually work, with the commands where
+they exist and the reading tasks where they do not.
 
 The protocol is not a contribution to the mathematics. It is a work plan, and
 its purpose is to make the remaining work finite and checkable.
+
+\begin{seamnote}{What has already been done}
+Phases 1 and 2 below were completed by the community on 20 and 21 November
+2026, and the results are public: the development compiles, the axiom list is
+the three standard ones, the exported proof is accepted by Lean's kernel and
+by independently implemented checkers, and the theorem proved has been matched
+against Mathlib's \texttt{RiemannHypothesis} by two independent tools. The
+commands are given anyway, because a protocol that has been run once should
+be runnable again, and because a reader reproducing them is doing something
+the certification does not do for them.
+
+Phase 3 is the phase that has not been done, and it is the phase that decides
+the mathematics. It is the only phase this book insists on.
+\end{seamnote}
 
 \section{Phase 1: mechanical (hours to days)}\subsection{Build}\begin{seamnote}{Commands}
 \begin{leanquote}
@@ -226,9 +240,12 @@ outcome that only a review can produce.
 \begin{keytakeaways}
 
 \item Phase 1 --- build, axiom check, kernel replay, static scan --- is
-mechanical and has effectively been done. It is cheap and reproducible.
+mechanical, and it was completed by the community on 20 and 21 November 2026,
+with the results and logs public.
 \item Phase 2 --- confirming the chain and confirming that the statement is
-Mathlib's --- takes days and protects against working with the wrong version.
+Mathlib's --- was also completed: the statement comparison was done by two
+independent tools, and this book independently confirms the chain and the
+archive's checksum.
 \item Phase 3 --- statement review of the five load-bearing inputs, their
 applications, and the remark against the code --- is weeks to months of
 specialist work, and it is the step that decides the question.

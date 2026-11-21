@@ -112,6 +112,27 @@ What cannot be established without reading the proofs of the components is
 whether each is the classical theorem or a weakened version of it. That is
 the audit's first open item, and Chapter~14 puts it first.
 
+\begin{seamnote}{Why this is a question about mathematics and not about logic}
+It is easy to misread this chapter, and the misreading is worth naming
+because it is a natural one to fall into from the other direction. If a
+development contains no axioms and no \texttt{sorry}, then every input is
+proved inside the library, and the chain from the headline theorem down to a
+proved fixed-point formula is a chain of theorems. There is no gap in it.
+Nothing is assumed. The Lean kernel has checked every link.
+
+So the question is not whether the argument is valid. It is whether the
+intermediate statements are \emph{true}. A checker verifies that a conclusion
+follows from its premises; it cannot verify that the premises are true. If
+\texttt{TLift\_k} states the classical theta-lift existence theorem and the
+library proves it, then the library contains a proof of the theta-lift
+existence theorem --- which is one of the obstacles the informal route has to
+clear, and which the literature regards as open. If the library's statement is
+weaker than the classical theorem, then the formal development is sound and
+the mathematics is weaker than the headline. Both are consistent with
+everything a machine can check, and the difference between them is exactly
+what a human reader is for.
+\end{seamnote}
+
 \section{Input two: the automorphy bundle \texttt{Hypotheses\_2}}The automorphy step --- the one Chapter~4 identified as the second barrier ---
 enters the development as \code{UpperTheory.V.Af.NewformAut}, and it is
 discharged through a structure:

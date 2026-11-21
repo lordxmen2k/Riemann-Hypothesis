@@ -16,9 +16,9 @@
 | | |
 |---|---|
 | Trim size | 6 × 9 in (432 × 648 pt) |
-| Pages | 278 (276 numbered + full-bleed front and back covers) |
+| Pages | 287 (285 numbered + full-bleed front and back covers) |
 | File size | 1.6 MB |
-| Word count | 57,326 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
+| Word count | 60,430 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
 | Chapters | 34, in 7 parts |
 | Figures | 9 (4 computed charts, 5 diagrams) |
 | Tables | 5 |
@@ -28,7 +28,7 @@
 | Glossary terms | 43 |
 | Fonts embedded | Outfit, JetBrains Mono, Fira Math, DejaVu Sans — all subsets, all embedded |
 | PDF bookmarks | 241 outline entries matching the table of contents |
-| Link annotations | 526 in total: the external URIs (Apache licence, the DOI on the copyright page, the DOI in the colophon, the source repository) plus internal cross-references from the table of contents, figures, lists and index |
+| Link annotations | 531 in total: the external URIs (Apache licence, the DOI on the copyright page, the DOI in the colophon, the source repository) plus internal cross-references from the table of contents, figures, lists and index |
 
 ### Structure
 
@@ -116,8 +116,8 @@ Quantitative checks on the finished file:
 | Stray control sequences in the extracted text | none (checked for `\idx{`, `\begin{`, `\end{`, `\item`, `\code{`, `\path{`, `PLACEHOLDER`, `TODO`, `XXX`, code fences, `##`, `**`) |
 | Fonts embedded | yes, all |
 | Trim size | 432 × 648 pt = 6 × 9 in |
-| Outline matches the contents | yes, 241 entries |
-| Link annotations | 526 |
+| Outline matches the contents | yes, 243 entries |
+| Link annotations | 531 |
 | Figures | 9, each rendered and inspected in place: no overlap between a legend, an annotation and the plotted data |
 | Sparse pages | 23, every one of them a front-matter, part-opener, chapter-tail, figure-only or back-matter page; no accidental gaps |
 
@@ -321,3 +321,57 @@ aa952bc  chore: initialize Riemann hypothesis book project with the submitted re
 ```
 
 plus a final commit for the verified PDF and these notes.
+
+
+---
+
+## Revision of 21 November 2026: the verdict
+
+A critique of the book, made on the evening of 21 November 2026, held that the verdict was out of
+date and partly self-contradictory, and that the cover's "Nobody has checked the mathematics" was
+defensible for the mathematics but not for the formal proof. The critique was checked against
+primary sources and was substantially right on the formal side. The book was revised.
+
+**The evidence that changed the book.** At 13:55 UTC on 21 November 2026 the Lean and Mathlib
+communities, with the endorsement of the Lean FRO and the Mathlib Initiative, published a joint
+statement certifying that the theorem proved is exactly Mathlib's `RiemannHypothesis` (matched by
+two independent tools, `comparator` and `con-leche --compare`), that the library compiles, and that
+the exported proof is accepted by Lean's kernel and by `con-leche`, `con-ron`, `nanoda` and
+`lean4lean` — two of which carry formal soundness proofs relative to set theory. Andrew
+Sutherland's verification page at MIT carries the check-by-check results, and the community's own
+notes carry the size figures, the static scan, and the stated limits of a passing run.
+
+**What changed.**
+
+- The verdict (Ch. 13) is now **"formally certified, mathematically unaudited"**. The earlier
+  "unresolved, neither established nor refuted" was true of the mathematics and false of the
+  formal status, and it read as though it were a statement about both.
+- Ch. 10 was retitled *The Compilations and the Certification* and now reports the joint
+  statement, the four criteria, Sutherland's table, and the `kexactB` and `kcopy` tactics, which
+  assign terms to goals in 67 files without an elaborator type check. This is sound, because the
+  kernel checks every declaration, and it is the reason the proof was re-checked with independent
+  kernels.
+- Ch. 4 gained a section on how the formalisation meets the four walls: each wall of the informal
+  route is met in the development by a proved lemma, so a kernel-checked proof and a surviving gap
+  are not alternatives.
+- Ch. 8 gained a note making the distinction explicit: the load-bearing inputs are proved inside
+  the library, so there is no logical gap; the open question is whether each is the classical
+  theorem it is named for.
+- Ch. 11 now separates the two senses of "two thirds" — the August paper's proportion theorem and
+  item 14's cost accounting of the method — and notes that the second is the one written into the
+  source.
+- Ch. 12 was retitled *The Mathematical Review That Has Not Happened* and now says explicitly that
+  one of the three review layers has closed and two have not.
+- Ch. 14 marks Phases 1 and 2 as completed by the community, with the commands retained so that
+  the protocol stays runnable.
+- The preface, the copyright page's date-stamp, the front cover tagline and the back-cover blurb
+  were brought into line, and the back cover now names Claude as the author's collaborator, which
+  the body of the book already did.
+
+**What did not change.** The substance of the audit: the reduction chain, the architecture, the
+locating of the two-thirds constant in the submitted source, and the four load-bearing inputs. The
+revision makes the book's position more precise, not different.
+
+**Verified after the revision.** 287 pages (285 numbered plus two cover leaves), 60,430 words,
+243 bookmarks, 36 fonts embedded, 0 LaTeX errors, 0 warnings, 0 missing characters, 0 overfull
+hboxes above 25 pt, 0 blank pages, 0 folio overlaps, 0 words outside the safe area.

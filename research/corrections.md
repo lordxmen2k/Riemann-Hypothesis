@@ -60,3 +60,46 @@ gone into print unchecked; corrections to the wider record are listed second.
 - The critical-line figure in Ch. 3 was computed for this book by a Riemann-von Mangoldt
   summation of $\zeta(\tfrac12+it)$ and is labelled as such; it is an illustration, not evidence
   for RH.
+
+
+---
+
+## E. Corrections made after the first edition of the verdict (21 November 2026)
+
+The first draft of this book's verdict was **"unresolved, neither established nor refuted"**. A
+critique of the book, made on the evening of 21 November 2026, pointed out that this was out of
+date and partly self-contradictory. The critique was checked against primary sources, found
+substantially correct on the formal side, and the verdict was revised. The record is:
+
+- **What the critique got right.** On 21 November 2026 at 13:55 UTC the Lean and Mathlib
+  communities, with the endorsement of the Lean FRO and the Mathlib Initiative, published a joint
+  statement certifying the formal status: the theorem proved is exactly Mathlib's
+  `RiemannHypothesis`, matched by two independent tools; the library compiles; and the exported
+  proof is accepted by Lean's kernel and by `con-leche`, `con-ron`, `nanoda` and `lean4lean`.
+  The book's draft verdict said the claim was "not 'pending compilation'", and that the
+  "second step — checking" "has not happened". Both statements were true when written and were
+  false by that evening. The phrase "neither established nor refuted" read, against the joint
+  statement, as a claim that the *formal* status was open. It was not.
+- **What the critique got wrong.** It stated that the load-bearing-inputs worry "does not follow",
+  that the four obstacles "contradict the book's own premises", and that the two-thirds ceiling
+  "looks conflated". All three are answered in the book from primary sources: the load-bearing
+  inputs are proved inside the library, so the question is fidelity and truth rather than logic
+  (Ch. 8); the four obstacles are walls of the *informal* route, each met in the development by a
+  proved lemma (Ch. 4); and the 2/3 in the remark's item 14 is the cost accounting of the method,
+  a different statement from the proportion theorem of the August paper (Ch. 11).
+- **What the critique asserted without checking.** The file count of 175,187 and the size of
+  17.4 million lines are now confirmed by the community's own notes: 175,187 `.lean` files,
+  17,374,215 lines of which 15,531,759 are non-blank, with no comments, and 818,755 theorem and
+  lemma declarations.
+- **What the critique got right about the book.** It said the book left out that Claude was a
+  collaborator. The body of the book does not: Ch. 1 quotes the remark's own opening sentence and
+  the attribution is carried through the argument, the index and the glossary. The **cover copy**
+  did not name it, and the cover and back cover now do.
+- **The revised verdict.** "**Formally certified, mathematically unaudited**" (Ch. 13). The two
+  halves are now separated explicitly, and the book's Ch. 10, Ch. 12, Ch. 14, the preface, the
+  cover and the back cover were brought into line.
+- **A finding the critique did not contain and the book did not have.** The community's notes
+  record that in 67 files a custom tactic (`kexactB`) assigns a term to the goal without the
+  elaborator checking that its type matches, and that `kcopy` does the same by rebuilding a term
+  field by field. This is sound, because the kernel checks every declaration, and it is why the
+  proof was re-checked with independent kernels. It is now in Ch. 10.

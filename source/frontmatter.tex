@@ -88,7 +88,7 @@ in natural language, with the corresponding Lean declarations cited alongside.
 \noindent\textbf{What this book is.} This book reports and analyses a claim. It
 does not assert that the Riemann Hypothesis has been proved, and it does not assert
 that the claim is false. Chapter~\ref{ch:verdict} states a finding; the finding is that the
-matter is unresolved on the available evidence, and the book says precisely what
+matter is unaudited on the available evidence, and the book says precisely what
 would settle it. Quotations from the document under examination are reproduced for
 the purposes of criticism and review. Every fact concerning the mathematics is
 taken from a public or peer-reviewed source, identified in the Notes and
@@ -205,12 +205,19 @@ Chapter~\ref{ch:chain}. This is the part of the work that is reproducible by any
 the same tools.
 
 The third is \textbf{that the question is answered without flinch}. The answer,
-reached in Chapter~\ref{ch:verdict}, is that the claim is \emph{unresolved}. The artifact
-compiles; nobody has audited the mathematics; and the author's own account of
+reached in Chapter~\ref{ch:verdict}, is that the claim is \emph{formally
+certified and mathematically unaudited}. On 21 November 2026 the Lean and
+Mathlib communities, with the endorsement of the Lean FRO and the Mathlib
+Initiative, certified the formal half: the development compiles, the theorem
+proved is exactly Mathlib's \texttt{RiemannHypothesis}, and the exported proof
+is accepted by Lean's kernel and by several independently implemented
+checkers. Nobody has audited the mathematics; and the author's own account of
 the method records an a-priori ceiling at two thirds of the zeros, and an
-obstruction whose stated remedy requires a conjecture that is still open. That is
-not a verdict of ``false''. It is a verdict of ``not established'', accompanied
-by a protocol --- Chapter~\ref{ch:protocol} --- that would settle it.
+obstruction whose stated remedy requires a conjecture that is still open. So
+this is not a verdict of ``false'', and it is not a verdict of ``proved''
+either. It is a verdict of ``the machines have said yes; the mathematicians
+have not yet said anything'', accompanied by a protocol ---
+Chapter~\ref{ch:protocol} --- that would settle it.
 
 Readers who want only the finding may read Chapter~\ref{ch:verdict} and Chapter~\ref{ch:protocol} and stop.
 Readers who want the mathematics may read Part~\ref{part:math} first. Readers who want to

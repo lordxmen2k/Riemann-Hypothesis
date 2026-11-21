@@ -6,7 +6,7 @@
 \label{part:play}
 \markboth{Part IV}{The State of Play}
 
-\chapter{The Independent Compilations}
+\chapter{The Compilations and the Certification}
 \label{ch:compilations}
 
 The mirror's README said, on the morning of 20 November 2026, that no
@@ -60,6 +60,119 @@ compilers necessarily ran the axiom check, or would have had to.
 
 It is a genuine milestone, and the book says so.
 
+\section{The certification of 21 November}The second step was taken the following day, and by the community rather
+than by any single group. At 13:55 UTC on 21 November 2026, the Lean and
+Mathlib communities, with the endorsement of the Lean FRO and the Mathlib
+Initiative, published a joint statement entitled \emph{Lean verification of
+the Riemann Hypothesis}\idx{Lean and Mathlib joint statement}. It is short,
+and it is the most consequential document in the story, so its substance is
+worth setting out.
+
+\begin{quote}
+``We have full confidence that Alpöge's proof of the Riemann Hypothesis is
+correct, and we congratulate him on this achievement. [...] We hereby certify
+that both the statement and the proof of the Riemann Hypothesis are correct.
+The four criteria [...] are all satisfied.''
+\end{quote}
+
+The four criteria, as the statement sets them out, are the following.
+
+\begin{enumerate}
+\item \textbf{The statement of the Riemann Hypothesis is correct.} The
+statement is Mathlib's own \texttt{RiemannHypothesis}, and the statement says
+it ``has been carefully vetted by experts in Lean and number theory''.
+
+\item \textbf{The library compiles correctly.} ``By now, dozens of people have
+reported correct compilation of the codebase, reproducing the same raw proof
+export file. The library compiles without errors or build failures.''
+
+\item \textbf{The code proves the correct statement.} The community added a
+file that isolates the statement of the Riemann Hypothesis and imports only
+Mathlib, and compared it against the theorem proved by Alpöge using two
+independent tools, \texttt{comparator} and \texttt{con-leche --compare}.
+Both confirm that the theorem proved in the library is exactly Mathlib's
+statement.
+
+\item \textbf{The Lean proof is valid.} The exported raw proof has been
+checked by several proof checkers, including Lean's official kernel, the
+\texttt{con-leche} and \texttt{con-ron} checkers, and independent checkers
+contributed by third parties and implemented in different programming
+languages. The statement makes a further point that matters: \texttt{con-leche}
+and \texttt{con-ron} ``come with a formal proof, relative to set theory, that
+they cannot accept a false proof'', which addresses the worry that Lean's own
+logic might have a flaw the proof could exploit.
+\end{enumerate}
+
+Andrew Sutherland's verification page at MIT carries the same thing in table
+form, and is the primary record for the individual runs. It reports, with
+timestamps, that all 175{,}187 modules compile with zero errors; that
+\texttt{\#print axioms} for the five theorems in \texttt{Main.lean} yields
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} only; that
+8{,}322 Mathlib and 378 dependency \texttt{.olean} files are byte for byte
+identical to the official cache; that \texttt{leanchecker} replayed all
+175{,}187 modules through the Lean kernel with zero rejections; that the
+independent Rust kernel \texttt{nanoda} accepts the full export; that
+\texttt{con-leche} accepts 1{,}468{,}418 declarations in verified mode; that
+\texttt{con-leche --compare} judges all five theorems justified by the
+solution; and that \texttt{lean4lean} accepts all 175{,}187 compiled modules.
+The provenance block on the same page gives the source archive's SHA-256 as
+\code{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc} ---
+the hash this book independently computed for the archive it downloaded, from
+the author's own distribution point.
+
+\begin{table}[H]
+\centering
+\caption{The formal verification as recorded on 21 November 2026.}
+\label{tab:certification}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.34\textwidth}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.58\textwidth}@{}}
+\toprule
+\textbf{Question} & \textbf{Answer on 21 November 2026} \\
+\midrule
+Does the development compile? & Yes. 175{,}187 modules, zero errors, reproduced by dozens of independent builders. \\
+Are there axioms beyond the three standard ones? & No. \texttt{\#print axioms} returns \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. \\
+Is the theorem proved the right one? & Yes. Two independent tools match it against Mathlib's \texttt{RiemannHypothesis} in a file importing only Mathlib. \\
+Does an independent kernel accept the proof? & Yes. Lean's kernel, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron} and \texttt{lean4lean}. \\
+Are the intermediate statements true? & \textbf{Unknown. No mathematician has yet read them.} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{One finding from the community's own notes}The verification repository
+the community set up carries a set of notes that are worth reading for what
+they reveal about the shape of the submission, and for one detail this audit
+had not found.
+
+The notes record the size precisely: 175{,}187 \texttt{.lean} files,
+1{,}030{,}531{,}854 bytes, 17{,}374{,}215 lines of which 15{,}531{,}759 are
+non-blank, with no comments at all; 818{,}755 \texttt{theorem} and
+\texttt{lemma} declarations; and every file in the import closure of
+\texttt{Main}. The static scan they publish finds no \texttt{axiom}, no
+\texttt{sorry}, no \texttt{admit}, no \texttt{native\_decide}, no
+\texttt{implemented\_by}, no \texttt{extern}, no \texttt{unsafe}, no
+\texttt{opaque} and no \texttt{skipKernelTC}. The notes are careful about
+what that is worth: \emph{``A text search is not a proof. The axiom check and
+kernel replay in Comparator are.''}
+
+The detail this audit had not found concerns the tactics. The source defines
+\code{kexactB}, a tactic that elaborates a term and assigns it to the goal
+\emph{without the elaborator checking that its type matches the goal}; it is
+used, through small macros, in 67 files. It defines \code{kcopy}, which
+rebuilds a term field by field and assigns it the same way. And
+\texttt{run\_tac} appears 33 times, 31 of them reverting all hypotheses before
+an \texttt{exact}, and one of the remaining two assigning a hypothesis
+directly to the goal. In those places the usual safety net --- the elaborator
+refusing a term whose type does not match the goal --- is absent, and the
+kernel's check is the only thing standing between the source and a false
+theorem.
+
+The notes are explicit that this is sound, and the reasoning is correct: the
+kernel checks every declaration, whatever the elaborator did or did not do
+before it. That is exactly why the community re-checked the exported proof
+with independent kernels rather than trusting the build. It is also, for a
+book of this kind, the clearest possible illustration of why the second step
+is a step and not a formality: in 67 files, the proof's correctness rests on
+the kernel rather than on the elaboration.
+
 \section{What this does not establish}It does not establish that the mathematics is right. This is not a criticism of
 the compilers; it is a statement about what compilation is.
 
@@ -72,9 +185,12 @@ make sure it `compiles.'\,''
 \qquad --- Quanta Magazine, 2026-11-20
 \end{quote}
 
-The compilers did the first step. The second step --- checking --- is a
-different activity, performed by a different kind of person, and it has not
-happened.
+The compilers did the first step, and on 21 November the community took the
+second. What has not happened is the third, and it is the one that matters
+most, because it is the one that requires a mathematician rather than a
+machine. The joint statement says so itself. It anticipates ``all the activity
+in the mathematical community that will help explain the new ideas in this
+proof'', and it does not claim that any human has read the argument.
 
 \section{The build attempt made for this book}For completeness, and because a book that criticises others for not compiling
 ought to compile, an independent build was attempted in the course of writing
@@ -116,10 +232,11 @@ binding constraint is the size of the submission's own source, not the
 dependency. A reader with a large machine can complete it.
 \end{seamnote}
 
-\section{Why ``it compiles'' is the beginning and not the end}There is a temptation, on reading a story like this one, to treat compilation
-as the decisive event: the machine said yes, so the theorem is proved. It is
-worth resisting that, and the reason is not scepticism about the compilers. It
-is that the community has been here before.
+\section{Why the certification is the beginning and not the end}There is a temptation, on reading a story like this one, to treat the
+community's certification as the decisive event: the machine said yes, the
+kernel said yes, four independent checkers said yes, so the theorem is proved.
+It is worth resisting that, and the reason is not scepticism about the
+checkers. It is that the community has been here before.
 
 The formalisation community's own history contains cases where a development
 compiled cleanly, passed the axiom check, had its statements reviewed --- and
@@ -132,37 +249,70 @@ it.
 \begin{quote}
 This is the ordinary condition of the subject, and it is why the phrase
 ``until it has been compiled \emph{and checked}'' in the mirror's README has
-two clauses rather than one. The second clause has not happened.
+two clauses rather than one. The second clause was satisfied on 21 November
+2026, by the community's joint statement and by the checker runs it cites.
+There is a third clause that the phrase does not mention and that this book
+insists on: \emph{read}. A development can compile, pass every kernel and
+match the right statement, and still contain a false intermediate lemma.
+Nothing in the mechanical chain can see that. Only a reader can.
 \end{quote}
 
-\section{What a completed verification would look like}If someone were to complete the full protocol --- compile, replay the kernel
-independently, and perform a full statement review --- what would they have
-established? This is worth spelling out, because it defines the target that
-Chapter~14 aims at.
+\section{What the completed verification established, and what it did not}The full mechanical protocol is now complete, and it is worth stating
+plainly what it established.
 
-They would have established that the Riemann hypothesis is a theorem of Lean
-4, in the sense that the development contains a proof of Mathlib's
-\texttt{RiemannHypothesis} whose only dependencies are the three standard
-axioms and whose statements, on review, match the classical claims.
+\begin{quote}
+The Riemann hypothesis is a theorem of Lean 4, in the sense that the
+development contains a proof of Mathlib's \texttt{RiemannHypothesis} whose
+only dependencies are the three standard axioms, and whose exported proof is
+accepted by Lean's own kernel and by several independently implemented
+checkers, and whose statement has been matched against Mathlib's by two
+independent tools.
+\end{quote}
 
-That would be an enormous result. It would settle the problem. And it would
-still require the community to check the review --- one human reading of
-175{,}000 files is itself a document with error bars, and the standard practice
-in the field, as the tooling of the Lean FRO shows, is to have the review
-independently reproduced.
+That is an enormous result, and it is the reason the joint statement is
+endorsed by the Lean FRO and the Mathlib Initiative rather than being posted
+by an individual. It settles the formal question.
+
+Two things it does not do. It does not settle the mathematical question,
+because the checkers verify derivations and not the truth of the statements
+from which they are made --- the community's own notes put the residue
+exactly: ``A passing run still trusts the checkers, Mathlib's definitions,
+Mathlib's official build cache, the exporter, and the sandboxes.'' And it
+does not settle the question that a reader of this book will actually care
+about, which is whether the intermediate statements are the classical
+theorems they are named for.
+
+The community's own notes list a further limit that a reader of the remark
+alone would not see, and that this audit's static scan did not check:
+Comparator compares the challenge and the solution against the same Mathlib,
+and so cannot detect a modified Mathlib. The pin against that is Mathlib's
+official \texttt{v4.33.1} tag, and the challenge export is reproduced on
+continuous integration. It is a real limitation and a small one, and it is
+the right kind: a limitation with a stated mechanism, rather than a
+concealment.
 
 \begin{keytakeaways}
 
 \item Two independent compilations succeeded on 20 November 2026, by
 Andrew Sutherland at MIT and Simon DeDeo at CMU, and a third using a variant
 of Lean.
-\item Compilation establishes completeness, reproducibility, pinning and the
-axiom question. It does not establish that the statements mean what the claim
-says they mean.
+
+\item On 21 November 2026 the Lean and Mathlib communities, with the
+endorsement of the Lean FRO and the Mathlib Initiative, certified the formal
+status: the statement is Mathlib's, the library compiles, the exported proof
+is accepted by Lean's kernel and by independently implemented checkers, and
+two independent tools confirm the statement.
+
+\item The community's notes record that in 67 files a custom tactic assigns a
+term to the goal without the elaborator checking its type. This is sound,
+because the kernel checks every declaration --- and it is the reason the
+proof was re-checked with independent kernels.
+
 \item The build attempted for this book reached the stage of compiling the
 submission's own modules with Mathlib satisfied from cache, on a
 two-core machine, and did not complete within the time available.
-\item The community's own history contains a case of a cleanly compiling
-development withdrawn for a mathematical error. That is why ``compiled and
-checked'' has two clauses.
+
+\item What remains is the third layer, and it is not a mechanical one: no
+mathematician has read the intermediate statements and confirmed that each
+is the classical theorem it is named for.
 \end{keytakeaways}

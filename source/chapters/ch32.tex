@@ -14,42 +14,64 @@ first and then defended, because the sentence is the deliverable and the
 defence is the part that should be checked.
 
 \section{The finding}\begin{seamnote}{\textbf{The finding}}
-On the evidence available as of 21 November 2026, the claim that the Riemann
-hypothesis has been proved is \textbf{unresolved}\idx{verdict}. The submitted formalisation
-is of a quality that makes the claim serious, and the reduction from
-Mathlib's \texttt{RiemannHypothesis} to a proved fixed-point formula has been
-traced and found sound. But the load-bearing inputs have never been audited by
-anyone outside the author; the author's own account of the method records an
+On the evidence available as of 21 November 2026, 13:55 UTC, \textbf{the
+formal status of the claim is settled and the mathematical status is not}. The
+development compiles; the Lean and Mathlib communities have jointly certified,
+with the endorsement of the Lean FRO and the Mathlib Initiative, that the
+theorem proved is exactly Mathlib's \texttt{RiemannHypothesis}, and that the
+exported proof is accepted by Lean's official kernel and by several
+independently implemented checkers, two of which carry formal soundness proofs
+relative to set theory. \textbf{The claim is formally certified.}
+
+What no one has yet done is read the mathematics. No mathematician has
+confirmed that the load-bearing intermediate statements are the classical
+theorems they are named for; the author's own account of the method records an
 a-priori ceiling at two thirds and an obstruction whose stated remedy requires
 a conjecture that remains open; and the remark does not explain how either was
-crossed. The claim is neither established nor refuted\idx{possibility A/B/C}.
+crossed. \textbf{The claim is formally established and mathematically
+unaudited}\idx{verdict}.
 \end{seamnote}
 
-Three words in that sentence carry the weight, and it is worth being exact
-about what each one rules out and what it permits.
+Four words in that sentence carry the weight, and it is worth being exact
+about what each one rules out and what it permits. The distinction between
+the second and the third is the one that the coverage of 20 and 21 November
+2026 ran together, and it is the one this chapter exists to keep apart.
 
 \begin{description}[style=nextline,leftmargin=0pt,labelwidth=0pt,labelsep=0pt,font=\sffamily\bfseries\small,
   itemsep=6pt]
-\item[\textbf{Unresolved.}] Not ``probably true'', not ``likely to be
-disproved'', not ``pending compilation''. The specific mathematical content
-of the claim has not been examined by any independent party, so no probability
-is attached to it by this book. What the evidence does support is a statement
-about \emph{where the claim stands}: it is not yet a theorem, because the
-process that turns a formalised development into an accepted theorem has not
-been run.
+\item[\textbf{Formally certified.}] This is a statement of fact about the
+21 November joint statement, and it is the half of the position that the
+book's earlier draft of this verdict got wrong by omission. The development
+compiles; the theorem proved has been matched against Mathlib's
+\texttt{RiemannHypothesis} by two independent tools; the exported proof is
+accepted by Lean's kernel and by independently implemented checkers, two of
+which have formal soundness proofs. Whatever else is open, \emph{that} is
+closed, and it is closed by the community that owns the tooling, not by this
+book.
 
-\item[\textbf{Neither established nor refuted.}] There is no published
-refutation, no counterexample to any intermediate statement, and no
-discovered defect. The audit found the reduction chain sound and the
-architecture appropriate. A refutation would require exhibiting a specific
-false statement or an invalid derivation, and this book did not find one.
+\item[\textbf{Mathematically unaudited.}] This is the half that remains open,
+and it is where the review has not happened. No mathematician has read the
+intermediate statements to confirm that each is the classical theorem it is
+named for. The joint statement does not claim otherwise; it says it looks
+forward to ``all the activity in the mathematical community that will help
+explain the new ideas in this proof'', and it does not claim that any human
+has read the argument. The specific mathematical content of the claim has
+not been examined by any independent party, so no probability is attached to
+it by this book.
+
+\item[\textbf{Not refuted.}] Not ``probably true'', not ``likely to be
+disproved''. What the evidence does support is a statement about \emph{where
+the claim stands}: it is not yet a theorem in the sense mathematicians use the
+word, because the process that turns a formalised development into an accepted
+theorem has one step still outstanding, and that step is a human one.
 
 \item[\textbf{Serious.}] This is the part most likely to be under-weighted by
 sceptics, and it is why the book does not use the word ``failed''. Zero
 axioms, zero \texttt{sorry}, a correct reduction, a bottom theorem that is
-genuinely proved, and a twenty-component bundle of separately proved theorems
-named after the actual results one needs: that is not the profile of a
-fabrication.
+genuinely proved, a certified formal status, and a twenty-component bundle of
+separately proved theorems named after the actual results one needs: that is
+not the profile of a fabrication.
+
 \end{description}
 
 \section{Four findings that support the finding}\begin{enumerate}
@@ -77,26 +99,44 @@ weakening of Vandiver'', which is an open problem, and its footnote is
 hedged with ``maybe?''. GRH is recorded for the following day, with no
 account of the transition. \hfill(Chapters~1, 4, 5)
 
-\item \textbf{No independent review exists, and the machinery to produce one
-does not yet exist in usable form.} The mechanical layers have been cleared:
-the development compiles, independently and reproducibly, and the axiom
-question is settled in the affirmative. The mathematical layer --- statement
-review --- has not begun in public, and the artefact's own author explains
-why: he has ``not mastered a massive neighbourhood around its mathematics'',
-and the prose write-up is not written. \hfill(Chapters~6, 10, 12)
+\item \textbf{The formal review has happened and succeeded; the mathematical
+review has not begun.} This is the finding most in need of restating on 21
+November 2026. The development compiles, independently and reproducibly; the
+axiom question is settled in the affirmative; the statement has been matched
+against Mathlib's by two independent tools; and the exported proof has been
+accepted by Lean's kernel and by several independently implemented checkers,
+with the community certifying the result jointly and publicly. The remaining
+layer --- a human statement review --- has not begun in public, and the
+community's own statement says so: it looks forward to the mathematical
+community explaining the new ideas, and it does not claim that any human has
+read the argument. The artefact's own author explains why the prose is
+missing: he has ``not mastered a massive neighbourhood around its
+mathematics''. \hfill(Chapters~6, 10, 12)
 \end{enumerate}
 
 \section{What this finding is not}\begin{mythbox}{Four misreadings, and why they are wrong}
 \begin{itemize}
 \item \textbf{``So the proof is fake.''} No. Nothing found in this audit
-refutes anything, and the artifact's quality is genuinely high. The correct
-statement is that its correctness has not been established.
+refutes anything, and the artifact's quality is genuinely high. The formal
+status is certified by the community that owns the tooling. The correct
+statement is that its \emph{mathematical} correctness has not been
+established.
 
 \item \textbf{``So it is probably right.''} No. This book attaches no
 probability to the claim. The evidence is consistent with the claim being
 correct, and equally consistent with a formalisation whose deep inputs are
 weaker than advertised. Distinguishing these requires the review that has not
 happened.
+
+\item \textbf{``So the certification settles it.''} No, and this is the
+misreading that the book was written to prevent, in the opposite direction.
+The certification settles that the development is complete, that the
+statement is the right one, and that the derivation is valid. It does not
+settle that the intermediate statements are true. A checker verifies that a
+conclusion follows from its premises; it cannot verify that the premises
+are true. The joint statement does not claim otherwise, and the community's
+own notes list what a passing run still trusts, among them ``Mathlib's
+definitions'' and the sandboxes.
 
 \item \textbf{``So the 2/3 ceiling proves it is wrong.''} No. The ceiling is
 what the method produced on 15 November. If the Lean development contains
@@ -184,14 +224,27 @@ Nothing short of the first would change the finding, and the first is a
 months-long project for a specialist. This is the ordinary state of affairs
 for a large formalisation, and it is not a sign of anything.
 
+One item in that list has changed since the first draft of this chapter, and
+it is the one a reader of 21 November will notice: the independent kernel
+replay is no longer a thing to be done. It was done. The \texttt{nanoda},
+\texttt{con-leche}, \texttt{con-ron} and \texttt{lean4lean} runs are public,
+with logs, and they accepted the proof. The list of what would change the
+finding has one fewer entry than it had yesterday, and the one that remains
+is the one that requires a person rather than a machine.
+
 \begin{keytakeaways}
 
-\item The finding: the claim is \textbf{unresolved} as of 21 November 2026.
-Neither established nor refuted.
+\item The finding, as of 21 November 2026 at 13:55 UTC: \textbf{formally
+certified, mathematically unaudited}.
+\item The formal half is closed by the community, not by this book. The
+development compiles, the statement is Mathlib's, the exported proof is
+accepted by Lean's kernel and by independently implemented checkers, and the
+Lean FRO and the Mathlib Initiative certify it jointly.
 \item The artifact is clean, its reduction is sound, and its architecture is
 appropriate. This is a serious submission, not a fabrication.
 \item The unexamined part is the fidelity of the load-bearing inputs to the
-published theorems they encode.
+published theorems they encode. They are proved inside the library, so there
+is no logical gap; the open question is whether they are true.
 \item The remark's own timeline records two obstacles --- a two-thirds ceiling
 and a Vandiver-dependent obstruction --- and does not say how either was
 crossed.

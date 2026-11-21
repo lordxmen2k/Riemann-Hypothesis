@@ -59,20 +59,23 @@
   \node[anchor=north west,inner sep=0,text=txt,align=left] at ([xshift=0.60in,yshift=7.22in]current page.south west)
     {\fontsize{8.3}{11.4}\selectfont\sffamily
      In November 2026 a mathematician published four pages claiming to have\\
-     proved the Riemann Hypothesis, together with a Lean development of\\
-     175,187 files and roughly 17.4 million lines. Two university teams\\
+     proved the Riemann Hypothesis, working with Claude, together with a Lean\\
+     development of 175,187 files and 17.4 million lines. Two university teams\\
      compiled it the same day. The world's newspapers called it the greatest\\
      mathematical result of the century.\\[7pt]
-     \textbf{None of it has been reviewed.}\\[7pt]
+     On 21 November the Lean and Mathlib communities certified it. The\\
+     statement is Mathlib's own; the exported proof is accepted by Lean's\\
+     kernel and by four independently written checkers.\\[7pt]
+     \textbf{No mathematician has read the argument.}\\[7pt]
      This book takes the artifact seriously, reads it, and traces the proof\\
      chain from Mathlib's own definition of the hypothesis down to a proved\\
-     fixed-point formula. It reports what the code actually establishes,\\
-     identifies the load-bearing inputs that nobody has audited, and sets\\
-     out the author's own admissions: a computed ceiling at two thirds of\\
-     the zeros, and an obstruction whose stated remedy requires a conjecture\\
-     that is still open.\\[7pt]
-     The finding is neither applause nor dismissal. The claim is unresolved,\\
-     and Chapter 14 gives the protocol that would settle it.\\
+     fixed-point formula. It identifies the load-bearing inputs that nobody\\
+     has audited, and sets out the author's own admissions: a computed\\
+     ceiling at two thirds of the zeros, and an obstruction whose stated\\
+     remedy requires a conjecture that is still open.\\[7pt]
+     The finding is neither applause nor dismissal. The claim is formally\\
+     certified and mathematically unaudited, and Chapter 14 gives the\\
+     protocol that would settle it.\\
      \\
      The mathematics examined here is the work of Levent Alpöge. This book\\
      is the analysis and exposition of it.};

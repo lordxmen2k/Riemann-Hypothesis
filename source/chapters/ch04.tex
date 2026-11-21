@@ -260,6 +260,42 @@ himself.}
 \label{fig:barriers}
 \end{figure}
 
+\section{How the formalisation meets the four walls}It is worth saying plainly how the walls and the development relate, because
+the two are easily run together in opposite directions and both readings are
+wrong.
+
+\begin{quote}
+\textbf{These four walls are walls in the informal mathematics. The Lean
+development meets each of them by asserting a lemma, and the kernel has
+checked that the lemma is proved.}
+\end{quote}
+
+The theta-lift wall, for instance, is met by the proposition
+\code{UpperTheory.TP.TLift\_K}, whose statement is the classical
+theta-lift existence theorem for the Weil representation under the standard
+hypotheses. The library proves it, from a compactness and stability argument
+assembled out of roughly twenty component theorems --- the anisotropic
+Siegel--Weil formula, the Cartan bound, the section and frame estimates, the
+height theorem --- each of which is a separately named and separately proved
+object in the automorphic-forms literature. Chapter~8 sets out that bundle
+in full.
+
+So the development does not stop at the walls, and it is not the case that a
+kernel-checked proof of Mathlib's hypothesis can also have a surviving gap at
+the theta lift. What the development does is \emph{assert} the theorem that
+the informal route has to earn. Whether the assertion is the classical
+theorem, or a weakened version of it dressed in the classical name, is a
+question of mathematics, and it is a question no kernel can answer.
+
+The same goes for the third wall. The surviving $H^1_o$ classes are met in
+the development by a bundle of proved statements, and the author's own remark
+says that killing them by twisting needed ``a significant weakening of
+Vandiver''. A machine cannot tell whether a proved statement about those
+classes is the theorem the remark needed or something weaker.
+
+This is why the audit in Part~III is not a formality, and why the verdict in
+Part~VII is not ``proved''.
+
 \section{A note on how strong the walls are}It would be a mistake to read this chapter as an argument that the claim is
 implausible. Three qualifications.
 

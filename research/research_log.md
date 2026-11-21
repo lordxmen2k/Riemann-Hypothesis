@@ -281,3 +281,54 @@ The covers were carrying a second typeface: most of their type is set in
 `sffamily`, and without an explicit sans face that resolves to Latin Modern
 Sans. Both cover files now set the sans and mono faces, and the finished
 cover uses Outfit alone.
+
+---
+
+## M6 — Revision of the verdict (2026-11-21, evening)
+
+A critique of the book arrived after the first build, holding that the verdict was out of date and
+partly self-contradictory. It was checked against primary sources rather than answered from
+memory, and it was substantially right on the formal side.
+
+**Sources read directly.**
+
+- The Lean and Mathlib communities' joint statement of 2026-11-21 13:55 UTC, endorsed by the Lean
+  FRO and the Mathlib Initiative, at `leanprover-community.github.io/blog/posts/riemann-hypothesis/`.
+- Andrew Sutherland's verification page at `math.mit.edu/~drew/grh/`, last updated 2026-11-21
+  12:55 UTC, including the full check table and the provenance block.
+- The community verification repository `github.com/leanprover-community/riemann-hypothesis`, in
+  particular `verification/NOTES.md`, for the size figures, the static scan, the tactics and the
+  stated limits.
+
+**What the critique got right.** The draft verdict said the claim was not "pending compilation" and
+that the second step of review "has not happened". Both were true when written and were false by
+the evening of 21 November. The phrase "neither established nor refuted" read, against the joint
+statement, as a claim about the formal status, which was not open.
+
+**What the critique got wrong.** It held that the load-bearing-inputs worry "does not follow"
+because every input is proved inside the library. The book already says this, in Ch. 8, and the
+point is sharpened rather than abandoned: the inputs are proved, so there is no logical gap, and
+the open question is whether each is the classical theorem it is named for. It held that the four
+obstacles contradict the book's premises; they are walls of the informal route, and the development
+meets each of them with a proved lemma, which is now stated explicitly in Ch. 4. It held that the
+two-thirds ceiling is conflated with the August proportion theorem; the remark's item 14 is a cost
+accounting of the method, and the two are different statements, which Ch. 11 now separates.
+
+**What the critique asserted without checking, and is now confirmed.** The 175,187 files and the
+17.4 million lines: the community's notes give 175,187 `.lean` files, 1,030,531,854 bytes,
+17,374,215 lines of which 15,531,759 are non-blank, with no comments, and 818,755 theorem and
+lemma declarations.
+
+**What the critique got right about the book.** The body does not omit Claude — Ch. 1 quotes the
+remark's own opening sentence — but the cover copy did not name it. The cover and back cover now
+do.
+
+**A finding neither the critique nor the book had.** The community's notes record that a custom
+tactic, `kexactB`, assigns a term to the goal without the elaborator checking that its type
+matches, and is used in 67 files; `kcopy` does the same by rebuilding a term field by field. The
+kernel still checks every declaration, so the proof is sound, and this is precisely why the proof
+was re-checked with independent kernels. Now in Ch. 10.
+
+**The revised verdict.** Formally certified, mathematically unaudited. The changes are set out in
+`BUILD_NOTES.md` and the corrections log; the correction is recorded in the open rather than
+quietly amended.

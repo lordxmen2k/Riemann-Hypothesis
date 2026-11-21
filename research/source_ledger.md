@@ -93,3 +93,14 @@ source of truth for facts; the book prose was written from it.
   value $L=0.40$" as the source of the two-thirds result. No such paper or value was located in
   arXiv, Crossref, HAL, or OpenAlex. The two-thirds result is attributed to arXiv:2608.13637
   (Alpöge & Furman), and no $L=0.40$ crossing value is asserted anywhere in this book.
+
+
+---
+
+## Sources added 21 November 2026 (the certification)
+
+| Source | Date | What it supports |
+|---|---|---|
+| Lean and Mathlib communities, "Lean verification of the Riemann Hypothesis", joint statement endorsed by the Lean FRO and the Mathlib Initiative, `leanprover-community.github.io/blog/posts/riemann-hypothesis/` | 2026-11-21 13:55 UTC | The four certification criteria; the two independent statement-comparison tools (`comparator`, `con-leche --compare`); the list of proof checkers; the soundness-theorem point about `con-leche` and `con-ron`; and the statement's own position that it does not claim humans have read the proof |
+| Andrew Sutherland (MIT), "RH Lean proof: verification files", `math.mit.edu/~drew/grh/` | updated 2026-11-21 12:55 UTC | The check-by-check results: 175,187 modules compile with zero errors; `#print axioms` yields `propext`, `Classical.choice`, `Quot.sound` only; Mathlib `.olean` files byte-identical to the official cache; `leanchecker` replayed all modules; `nanoda`, `con-leche` and `lean4lean` accept; the challenge export's SHA-256; and the provenance block, whose source-archive SHA-256 `9631b4f0…f49c7fc` matches the one this book computed independently |
+| Lean community verification repository, `github.com/leanprover-community/riemann-hypothesis`, with `verification/NOTES.md` | 2026-11-21 | The size figures (175,187 files, 1,030,531,854 bytes, 17,374,215 lines of which 15,531,759 non-blank, no comments, 818,755 theorem/lemma declarations, every file in the import closure of `Main`); the static scan; the `kexactB`, `kcopy` and `run_tac` tactics used in 67 files without an elaborator type check; and the stated limits of a passing Comparator run |
