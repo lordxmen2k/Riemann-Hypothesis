@@ -84,7 +84,7 @@ def arrow(ax, x0, y0, x1, y1, color=ACCENTDIM, lw=0.8, ms=6):
 
 # ------------------------------------------------------------- the chain ---
 def fig_chain():
-    H = 7.15
+    H = 6.70
     fig, ax = canvas(H)
     ax.text(W / 2, H - 0.22, "The traced proof chain", ha="center", va="top",
             fontsize=8.4, color=TXT, fontweight="bold")
@@ -103,8 +103,8 @@ def fig_chain():
          "integral clopen decomposition, fixed-point formula", AMBER),
     ]
     top = H - 0.66
-    bh = 0.50
-    gap = 0.145
+    bh = 0.46
+    gap = 0.130
     for i, (name, note, col) in enumerate(rows):
         y = top - (i + 1) * bh - i * gap
         box(ax, L, y, R - L, bh)
