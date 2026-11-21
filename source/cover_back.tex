@@ -1,0 +1,91 @@
+% =====================================================================
+%  Back cover — Is the Riemann Hypothesis Solved?
+%  Typeset standalone at the 6 x 9 in trim, full bleed.
+%  Vertical positions are measured in inches from the foot of the page.
+% =====================================================================
+\documentclass{article}
+\usepackage[paperwidth=6in,paperheight=9in,margin=0pt]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{microtype}
+
+\setmainfont{Outfit}[
+  UprightFont={Outfit Regular}, BoldFont={Outfit Bold},
+  ItalicFont={Outfit Regular}, ItalicFeatures={FakeSlant=0.20},
+  BoldItalicFont={Outfit Bold}, BoldItalicFeatures={FakeSlant=0.20},
+  Ligatures={TeX}]
+
+\definecolor{ink}{HTML}{0C1016}
+\definecolor{accent}{HTML}{8FD6C0}
+\definecolor{txt}{HTML}{E6EBEF}
+\definecolor{dim}{HTML}{8B9BA7}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+\begin{tikzpicture}[remember picture,overlay]
+  % ---- the plate, full bleed (a different crop from the front) ----------
+  \node[anchor=south west,inner sep=0] at (current page.south west)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{../figures/cover_back_art.jpg}};
+
+
+
+  % ---- title strip -------------------------------------------------------
+  \node[anchor=south west,inner sep=0,text=accent] at ([xshift=0.60in,yshift=8.26in]current page.south west)
+    {\fontsize{9.2}{11}\selectfont\sffamily\bfseries
+     {\addfontfeatures{LetterSpace=15}IS THE RIEMANN HYPOTHESIS SOLVED?}};
+
+  \fill[accent] ([xshift=0.60in,yshift=8.00in]current page.south west)
+         rectangle ([xshift=5.48in,yshift=8.02in]current page.south west);
+
+  \node[anchor=south west,inner sep=0,text=dim] at ([xshift=0.60in,yshift=7.66in]current page.south west)
+    {\fontsize{9.8}{12}\selectfont\sffamily Gerald Enrique Nelson Mc Kenzie};
+
+  % ---- blurb -------------------------------------------------------------
+  \node[anchor=north west,inner sep=0,text=txt,align=left] at ([xshift=0.60in,yshift=7.22in]current page.south west)
+    {\fontsize{8.3}{11.4}\selectfont\sffamily
+     In November 2026 a mathematician published four pages claiming to have\\
+     proved the Riemann Hypothesis, together with a Lean development of\\
+     175,187 files and roughly 17.4 million lines. Two university teams\\
+     compiled it the same day. The world's newspapers called it the greatest\\
+     mathematical result of the century.\\[7pt]
+     \textbf{None of it has been reviewed.}\\[7pt]
+     This book takes the artifact seriously, reads it, and traces the proof\\
+     chain from Mathlib's own definition of the hypothesis down to a proved\\
+     fixed-point formula. It reports what the code actually establishes,\\
+     identifies the load-bearing inputs that nobody has audited, and sets\\
+     out the author's own admissions: a computed ceiling at two thirds of\\
+     the zeros, and an obstruction whose stated remedy requires a conjecture\\
+     that is still open.\\[7pt]
+     The finding is neither applause nor dismissal. The claim is unresolved,\\
+     and Chapter 14 gives the protocol that would settle it.};
+
+  % ---- parts -------------------------------------------------------------
+  \node[anchor=south west,inner sep=0,text=accent] at ([xshift=0.60in,yshift=3.18in]current page.south west)
+    {\fontsize{6.8}{8}\selectfont\sffamily\bfseries {\addfontfeatures{LetterSpace=18}INSIDE}};
+
+  \node[anchor=north west,inner sep=0,text=txt,align=left] at ([xshift=0.60in,yshift=3.04in]current page.south west)
+    {\fontsize{8.6}{11.6}\selectfont\sffamily
+     I \quad The Claim\\
+     II \quad The Mathematics\\
+     III \quad The Verification\\
+     IV \quad The State of Play\\
+     V \quad The Verdict};
+
+  % ---- footer ------------------------------------------------------------
+  \fill[dim,opacity=0.45] ([xshift=0.60in,yshift=0.92in]current page.south west)
+         rectangle ([xshift=5.48in,yshift=0.93in]current page.south west);
+
+  \node[anchor=south west,inner sep=0,text=dim] at ([xshift=0.60in,yshift=0.66in]current page.south west)
+    {\fontsize{7.6}{9.6}\selectfont\sffamily
+     Tico Internet LLC \quad\textperiodcentered\quad 2026 First Edition
+     \quad\textperiodcentered\quad Apache License 2.0};
+
+  \node[anchor=south west,inner sep=0,text=dim] at ([xshift=0.60in,yshift=0.46in]current page.south west)
+    {\fontsize{7.6}{9.6}\selectfont\sffamily DOI 10.5281/zenodo.23874214};
+\end{tikzpicture}
+\null
+\end{document}

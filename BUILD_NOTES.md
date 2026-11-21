@@ -17,6 +17,7 @@
 |---|---|
 | Trim size | 6 × 9 in (432 × 648 pt) |
 | Pages | 156 (154 numbered + full-bleed front and back covers) |
+| File size | 1.5 MB |
 | Word count | 31,724 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
 | Chapters | 15, in 5 parts |
 | Figures | 9 (4 computed charts, 5 diagrams) |
@@ -58,10 +59,21 @@ with a luminous pale-green vertical line and drifting dark droplets, with warm
 amber blooming at the foot. No text, no watermark, no logo, no badge; all four
 corners checked.
 
-**Typography.** Set in vector over the plate, not rasterised, so the identity
-block is exact and legible at thumbnail size. The front cover carries the full
-identity block: title, subtitle, author, imprint, edition, licence and DOI.
-The back cover carries the blurb, the five parts, and the footer.
+**Typography.** Set in LaTeX over the plate, in the book's own fonts, so the
+identity block is exact, legible at thumbnail size, and vector. The front cover
+carries the full identity block: title, subtitle, author, imprint, edition,
+licence and DOI. The back cover carries the blurb, the five parts, and the
+footer.
+
+**Legibility scrim.** The alpha ramp that keeps the type readable over the
+watercolour is baked into the 300 DPI plate by `build/make_cover_art.py`
+rather than drawn as a separate overlay. Doing it in the image keeps the
+cover a single JPEG in the PDF: the cover files are 450 KB and 256 KB, and the
+finished book is 1.5 MB rather than the 17 MB the same artwork produced when
+the ramp was a full-resolution raster layer.
+
+The cover documents need two XeLaTeX passes, because `remember picture` only
+resolves the page anchors on the second run. `build/make_covers.sh` does both.
 
 ## What was tested, and what was not
 
@@ -106,7 +118,7 @@ The outcome is reported honestly, because the book makes a claim about it.
 | Toolchain | `elan` installed; `leanprover/lean4:v4.33.1` fetched |
 | Mathlib | Checked out and **confirmed** at the revision the submission pins: `0df444a360eaa60ab8c11dca51a86af692955474` |
 | Cache | `lake exe cache get` retrieved 8,690 prebuilt artefacts for the pinned revision |
-| Build | `lake build Main` launched; the submission's own modules began compiling (`src/Statements.olean`, `Formalism/TameInertiaTowers/StatementGroup.olean`) |
+| Build | `lake build Main` launched; four of the submission's own modules compiled successfully --- `src/Statements.olean`, `Formalism/TameInertiaTowers/StatementGroup.olean`, `Lemmata/FirstBlockLemmaE/Imports.olean`, `Lemmata/GeneralBFactRightTerForm/Imports.olean` |
 | Completion | **Did not complete.** The sandbox has 2 cores and 3 GB of RAM; the mirror's own README warns this is a ~17 M-line build that needs many cores and plenty of RAM and "expect it to run for a long time" |
 
 The build was left running and its log retained at `/workspace/rr/build3.log`.

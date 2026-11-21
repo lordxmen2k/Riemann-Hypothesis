@@ -61,11 +61,14 @@ Regenerating the artwork:
 ```sh
 python3 build/make_figures.py     # four computed charts
 python3 build/make_diagrams.py    # five diagrams, laid out in inches at 4.6 in
-python3 build/make_covers.py      # front and back covers
+./build/make_covers.sh            # front and back covers
 ```
 
 The cover artwork itself was generated as an original watercolour plate and is
-not reproducible from the scripts; the vector typography over it is.
+not reproducible from the scripts. `build/make_cover_art.py` crops it, bakes in
+the legibility scrim and writes the 300 DPI plates; `source/cover_front.tex` and
+`source/cover_back.tex` set the typography over them, so the cover type is
+vector and uses the book's own fonts.
 
 ## The research materials
 
