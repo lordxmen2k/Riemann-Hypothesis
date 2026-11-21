@@ -28,13 +28,13 @@ divergence is logarithmic: to double the sum you need to square the cutoff.
 That is the origin of the prime number theorem, and --- more importantly for
 us --- of the idea that the primes are the \emph{irregular} part of the integers.
 
-Now apply the same reasoning to a complex argument. For $\Re s > 1$ the series
+Now apply the same reasoning to a complex argument. For $\mathrm{Re}\,  s > 1$ the series
 \begin{equation}
 \zeta(s) = \sum_{n=1}^{\infty} n^{-s}
 \label{eq:zeta-series}
 \end{equation}
-converges absolutely, because $n^{-s}$ has modulus $n^{-\Re s}$ and the
-comparison with a $p$-series applies. Here $\Re s$ is the real part of $s$,
+converges absolutely, because $n^{-s}$ has modulus $n^{-\mathrm{Re}\,  s}$ and the
+comparison with a $p$-series applies. Here $\mathrm{Re}\,  s$ is the real part of $s$,
 written $s = \sigma + it$ with $\sigma, t \in \RR$.
 
 In this half-plane the function factors over the primes. Rearranging the sum,
@@ -66,10 +66,10 @@ leftward, or more practically, the alternating series
 \eta(s) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n^{s}}
 \label{eq:eta}
 \end{equation}
-converges for $\Re s > 0$ (Leibniz, with the usual decreasing-terms argument)
+converges for $\mathrm{Re}\,  s > 0$ (Leibniz, with the usual decreasing-terms argument)
 and satisfies $\eta(s) = (1 - 2^{1-s})\zeta(s)$ wherever the latter converges.
-Since $1 - 2^{1-s}$ vanishes at $s = 1$ but nowhere in $\Re s > 0$, the
-relation determines $\zeta$ meromorphically on $\Re s > 0$, with the pole
+Since $1 - 2^{1-s}$ vanishes at $s = 1$ but nowhere in $\mathrm{Re}\,  s > 0$, the
+relation determines $\zeta$ meromorphically on $\mathrm{Re}\,  s > 0$, with the pole
 canceled at $s=1$ because $\eta$ is finite there.
 
 Iterating this idea, using the classical functional equation (given below),
@@ -78,13 +78,13 @@ extends $\zeta$ to all of $\CC$. The result has:
 \begin{itemize}
 \item A single simple pole at $s = 1$, with residue $1$.
 \item No other poles.
-\item No zeros on the line $\Re s = 1$.
+\item No zeros on the line $\mathrm{Re}\,  s = 1$.
 \end{itemize}
 
 The last item is the first non-trivial theorem about $\zeta$, and it is the
-\emph{de la Vallée Poussin theorem}: $\zeta$ has no zeros on $\Re s = 1$. Its
+\emph{de la Vallée Poussin theorem}: $\zeta$ has no zeros on $\mathrm{Re}\,  s = 1$. Its
 proof uses the functional equation together with the non-vanishing of
-$\eta$ on $\Re s = 0$, and it is the ancestor of every later attempt to push
+$\eta$ on $\mathrm{Re}\,  s = 0$, and it is the ancestor of every later attempt to push
 the zero-free region further left.
 
 We will need the functional equation. In its completed form, with the Riemann
@@ -129,14 +129,14 @@ that non-vanishing is the entire difficulty.
 $0 < \sigma < 1$. The Riemann hypothesis is the assertion
 
 \begin{equation}
-\text{every zero } \rho \text{ of } \zeta \text{ has } \Re\rho = \tfrac12.
+\text{every zero } \rho \text{ of } \zeta \text{ has } \mathrm{Re}\, \rho = \tfrac12.
 \label{eq:rh}
 \end{equation}
 
 Equivalently, and this is the form the artifact proves: $\zeta(s) \neq 0$ for
-every $s$ with $\Re s > \tfrac12$ other than the pole at $s=1$. The equivalence
-runs through the functional equation: a zero at $\rho$ with $\Re\rho >
-\tfrac12$ reflects to a zero at $1 - \rho$ with $\Re(1-\rho) < \tfrac12$, and
+every $s$ with $\mathrm{Re}\,  s > \tfrac12$ other than the pole at $s=1$. The equivalence
+runs through the functional equation: a zero at $\rho$ with $\mathrm{Re}\, \rho >
+\tfrac12$ reflects to a zero at $1 - \rho$ with $\mathrm{Re}\, (1-\rho) < \tfrac12$, and
 the trivial zeros at $s = 0, -2, -4, \dots$ are the only exceptions, arising
 from the gamma factor.
 
@@ -278,7 +278,7 @@ critical strip.
 \begin{keytakeaways}
 
 \item The zeta function is defined by a convergent series only for
-$\Re s > 1$; everything interesting requires the analytic continuation, and the
+$\mathrm{Re}\,  s > 1$; everything interesting requires the analytic continuation, and the
 Euler product cannot be used past that line.
 \item RH says every non-trivial zero of $\zeta$ has real part exactly
 $\tfrac12$. It is a statement about one function, and a single counterexample

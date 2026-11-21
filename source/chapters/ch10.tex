@@ -10,7 +10,7 @@ Now the central mechanism. The remark's item 8:
 \begin{quote}
 \small
 ``Iterated theta lifts $U(X_0) \to U(X_1) \to \cdots \to U(X_m)$ between totally
-definite unitary groups, $\pi \mapsto \pi \boxplus \mu_j[t]$, wins multiplicity
+definite unitary groups, $\pi \mapsto \pi \tboxplus \mu_j[t]$, wins multiplicity
 $m$. Time to take $m$ like $\sqrt{X}$.''
 \end{quote}
 
@@ -21,7 +21,7 @@ part that matters --- what the development actually proves about it.
 over $E$. The theta series $\theta_A$ attached to $A$ is a modular form on the
 CM lattice of weight $n$. The \emph{theta lift} of a cuspidal representation
 $\pi$ of $\mathrm{U}(E, n)$ to $\mathrm{U}(E, n')$ is the summand of $\theta_A$
-whose weight matches: the operator $\pi \mapsto \pi \boxplus \mu[t]$ takes $\pi$
+whose weight matches: the operator $\pi \mapsto \pi \tboxplus \mu[t]$ takes $\pi$
 and the character $\mu$ attached to the parameter $t$ to a representation of
 $\mathrm{U}(E, n')$, where $n' > n$.
 
@@ -62,14 +62,14 @@ of the $j$-th lift and $w_j$ for the weight at that stage. Then
 
 \begin{seamnote}{\code{chainOp} (from \code{Formalism.ThetaLiftIndependence.Statement})}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def chainOp {R : Type*} [CommSemiring R] {i : Nat -> Type*}
   [forall j, Fintype (i j)]
 (w : forall j, i j -> R) (K : forall j, i j -> i (j + 1) ->
       R) : (m : Nat) -> (i 0 -> R) -> (i m -> R)
   | 0, f => f
   | m + 1, f => kerOp (w m) (K m) (chainOp w K m f)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -78,14 +78,14 @@ following it.
 
 \subsection{The chain collapses: the multiplicativity}\begin{seamnote}{\code{KerComp}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def KerComp : Prop :=
 forall (R : Type) [CommSemiring R] (i k m : Type) [Fintype
     i] [Fintype k] [Fintype m]
 (w1 : i -> R) (w2 : k -> R) (K1 : i -> k -> R) (K2 : k -> m
       -> R) (f : i -> R),
 kerOp w2 K2 (kerOp w1 K1 f) = kerOp w1 (kerMul w2 K1 K2) f
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -110,7 +110,7 @@ adjoint, and adjointness is what the theta lift supplies.
 
 \subsection{The integrality of the chain, and its price}\begin{seamnote}{\code{ChainInt}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def ChainInt : Prop :=
 forall (R : Type) [CommRing R] (S : Subring R) (i : Nat ->
     Type) [forall j, Fintype (i j)]
@@ -121,7 +121,7 @@ forall (R : Type) [CommRing R] (S : Subring R) (i : Nat ->
 forall f : i 0 -> R, (forall i, f i in S) -> forall (m :
       Nat) (y : i m),
 (prod j in Finset.range m, D j) * chainOp w K m f y in S
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -182,12 +182,12 @@ And the theorem that assembles them is \code{Conclusion1}:
 
 \begin{seamnote}{\code{Conclusion1}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def Conclusion1 (D : D7) (X : ThetaX D) : Prop :=
 forall P : TH.TPar D, Hyp3 X P -> forall mu : Nat -> X.Chr,
     IsMu X P mu ->
     ThetaDescentTowerConditions X P mu
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -240,7 +240,7 @@ the formal statement of a classical fact about finite groups:
 
 \begin{seamnote}{\code{OrbitSum}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def OrbitSum : Prop :=
 forall (H X : Type) [Group H] [Fintype H] [MulAction H X]
     [Fintype X] (k : Type) [Field k]
@@ -250,7 +250,7 @@ forall (H X : Type) [Group H] [Fintype H] [MulAction H X]
       = sum o : MulAction.orbitRel.Quotient H X,
 (Nat.card (MulAction.stabilizer H (Quotient.out o)) : k)^-1
             * F (Quotient.out o)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 

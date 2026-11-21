@@ -64,7 +64,7 @@ Here is the source, in full, from
 \code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean}:
 
 \begin{seamnote}{\code{UpperTheory.riemannHypothesis\_of\_everyCharacter}}
-\begin{Verbatim}
+\begin{leanquote}
 theorem UpperTheory.riemannHypothesis_of_everyCharacter
     (h : UpperTheory.EveryCharacter) : RiemannHypothesis := by
   intro s hs hn h1
@@ -85,7 +85,7 @@ theorem UpperTheory.riemannHypothesis_of_everyCharacter
       · exact hs0 (by simpa using hn')
       · exact hn ⟨n, by rw [hn']; push_cast; ring⟩
   · exact UpperTheory.zeta_ne_zero_of_everyCharacter h s hgt h1 hs
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 Read as mathematics, this is exactly right, and it is worth going through the
@@ -95,17 +95,17 @@ get subtly wrong.
 \begin{itemize}
 \item The goal is \texttt{RiemannHypothesis}, i.e. ``every zero of $\zeta$
 that is not trivial and not $s=1$ has real part $\tfrac12$''. It is proved by
-contradiction: assume there is a zero $s$ with $\Re s \neq \tfrac12$.
-\item If $\Re s > \tfrac12$, then \code{zeta\_ne\_zero\_of\_everyCharacter}\idx{zeta\_ne\_zero\_of\_everyCharacter}
+contradiction: assume there is a zero $s$ with $\mathrm{Re}\,  s \neq \tfrac12$.
+\item If $\mathrm{Re}\,  s > \tfrac12$, then \code{zeta\_ne\_zero\_of\_everyCharacter}\idx{zeta\_ne\_zero\_of\_everyCharacter}
 applies directly and gives a contradiction. That is the \texttt{hgt} branch.
-\item If $\Re s < \tfrac12$, the argument reflects: a zero at $s$ gives a zero
-at $1-s$ by the functional equation, and $\Re(1-s) > \tfrac12$, so the same
+\item If $\mathrm{Re}\,  s < \tfrac12$, the argument reflects: a zero at $s$ gives a zero
+at $1-s$ by the functional equation, and $\mathrm{Re}\, (1-s) > \tfrac12$, so the same
 non-vanishing hypothesis applies to $1-s$. Contradiction.
 \item The reflection is done through the \emph{completed} zeta function,
 $\Lambda(s) = \pi^{-s/2}\Gamma(s/2)\zeta(s)$, using
 \code{completedRiemannZeta\_one\_sub}\idx{functional equation}, which is Mathlib's statement of the
 functional equation $\Lambda(s) = \Lambda(1-s)$. Since the gamma factor and
-the $\pi^{-s/2}$ factor are non-zero for $\Re s > \tfrac12$, a zero of the
+the $\pi^{-s/2}$ factor are non-zero for $\mathrm{Re}\,  s > \tfrac12$, a zero of the
 completed zeta at $s$ is a zero of $\zeta$ at $s$.
 \item The final case split handles the possibility that $\zeta(s) = 0$ comes
 from the gamma factor rather than from $\zeta$: the zeros of $\Gamma(s/2)$ are
@@ -129,15 +129,15 @@ strengthening of the hypothesis. It is a clean reduction.
 \code{CharacterBoxes/EveryCharacter.lean}:
 
 \begin{seamnote}{\code{UpperTheory.EveryCharacter}}
-\begin{Verbatim}
+\begin{leanquote}
 def UpperTheory.EveryCharacter : Prop :=
   forall (N : Nat) [NeZero N] (chi : DirichletCharacter Complex N) (s : Complex),
     1/2 < s.re -> (chi != 1 or s != 1) -> DirichletCharacter.LFunction chi s != 0
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 This is the faithful statement. It says: for every modulus $N \ge 1$, for every
-Dirichlet character $\chi$ modulo $N$, and every $s$ with $\Re s >
+Dirichlet character $\chi$ modulo $N$, and every $s$ with $\mathrm{Re}\,  s >
 \tfrac12$, the $L$-function $L(s,\chi)$ is not zero --- except for the
 principal character at $s = 1$, where $L$ has a pole rather than a zero. The
 disjunction \texttt{chi != 1 or s != 1} encodes exactly that exception.
@@ -176,17 +176,17 @@ would be false and no proof could exist.
 local-global reciprocity condition.
 
 \begin{seamnote}{\texttt{RowSrc.lean} and \code{GaloisRepresentationsOfThetaLift.lean}}
-\begin{Verbatim}
+\begin{leanquote}
 theorem UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter :
     UpperTheory.GalStar.Row0b recT :=
   galoisRepresentations_of_thetaLift UpperTheory.TP.K.tLiftK
-\end{Verbatim}
-\begin{Verbatim}
+\end{leanquote}
+\begin{leanquote}
 theorem galoisRepresentations_of_thetaLift (up : UpperTheory.TP.TLiftK) :
     UpperTheory.GalStar.Row0b recT :=
   galoisLocalGlobalStrong_of_geometry_lift
     UpperTheory.Gal.Int.Geo.geoOne_holds up
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 The vocabulary is the technical vocabulary of the theory: \texttt{Row0b} is a
@@ -199,7 +199,7 @@ The development's own summary of the chain, in
 \code{CharacterBoxes/MainConclusion.lean}, is:
 
 \begin{seamnote}{\texttt{MainConclusion.lean}}
-\begin{Verbatim}
+\begin{leanquote}
 theorem UpperTheory.FinalTheorems.everyCharacter_of_row
     (h : UpperTheory.GalStar.Row0b fun h rc => UpperTheory.Zero.LLC.IsRecT h rc) :
     UpperTheory.EveryCharacter :=
@@ -209,7 +209,7 @@ theorem UpperTheory.FinalTheorems.everyCharacter_of_row
 theorem UpperTheory.FinalTheorems.everyCharacter : UpperTheory.EveryCharacter :=
   UpperTheory.FinalTheorems.everyCharacter_of_row
     UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 Two things are visible here, and both are worth noting.
@@ -237,14 +237,14 @@ are where the mathematics has to be.
 geometry.
 
 \begin{seamnote}{\code{WeightOneGeometricRealization.lean}}
-\begin{Verbatim}
+\begin{leanquote}
 theorem weight_one_geometric_realization :
     LocalSmoothExtension.HolomorphicLefschetzFormula :=
   GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence
 
 theorem geoOne_holds : GeoOne :=
   geometric_realization_of_weight_one weight_one_geometric_realization
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 And the theorem at the bottom, in
@@ -253,7 +253,7 @@ states the holomorphic Lefschetz formula for a finite étale cover of a
 projective scheme over $\CC$:
 
 \begin{seamnote}{The statement, in outline}
-\begin{Verbatim}
+\begin{leanquote}
 theorem GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence :
   forall (Z : Scheme) (s : Z -> Sp Complex) (d : Nat) [SmoothOfRelativeDimension d s],
     IsProjOver s ->
@@ -271,7 +271,7 @@ theorem GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence :
         (hodgeTrace h1 a b <o> hodgePull h2 a b)
       = sum y in F, (Matrix.det (1 + Polynomial.X • (A y).map Polynomial.C)).coeff a
                      / (1 - A y).det
-\end{Verbatim}
+\end{leanquote}
 \end{seamnote}
 
 Read as mathematics, this says: for a smooth projective scheme $Z$ over
@@ -294,12 +294,12 @@ The proof lives in
 \code{Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean},
 and its strategy is visible from its opening moves:
 
-\begin{Verbatim}
+\begin{leanquote}
   obtain ⟨J, _, V, hVd, hVc, hVi⟩ :=
     UpperTheory.Cb.exists_integral_clopen_decomposition_of_smooth Z s d
   ...
   let W : J -> J -> Y.Opens := fun j k => c1 ⁻¹ᵁ V j ∩ c2 ⁻¹ᵁ V k
-\end{Verbatim}
+\end{leanquote}
 
 The proof constructs an \emph{integral clopen decomposition}\idx{clopen decomposition} $\{V_j\}$ of $Z$,
 pulls it back along both maps $c_1$ and $c_2$, forms the cells

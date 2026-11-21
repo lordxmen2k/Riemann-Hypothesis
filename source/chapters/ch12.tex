@@ -73,7 +73,7 @@ The remark's phrase ``independent of the Hecke characters'' should be read
 carefully. It means: the period that the argument needs to average over the
 Hecke characters does not itself carry the Hecke character. The character has
 been absorbed into the summand of the theta series, via the notation
-$\pi \mapsto \pi \boxplus \mu_j[t]$ in the remark's item 8: the $\mu_j$ appear
+$\pi \mapsto \pi \tboxplus \mu_j[t]$ in the remark's item 8: the $\mu_j$ appear
 in the \emph{index} of the lift, not in the period.
 
 That distinction is exactly what makes the rest of the argument possible. Once
@@ -87,7 +87,7 @@ the relevant definitions are:
 
 \begin{seamnote}{The Bessel period and the lift operator}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def bB {D : D7} (X : ThetaX D) (t j : Nat)
     (pos : X.Pos (X.Xs t j) (X.Ys t j) (X.iXYs t j))
 (s : X.FJd (X.Xs t j) (X.Ys t j) (X.iXYs t j)) (phi : X.AF
@@ -100,7 +100,7 @@ def vth {D : D7} (X : ThetaX D) (t : Nat) (mu : Nat ->
 (Phi : X.Sch (X.Ys t (j + 1)) (X.Ys t j)) : X.cusp (X.Ys t
       (j + 1)) ->L[Complex] X.AF (X.Ys t j) :=
 X.th _ _ (car X mu (j + 1) (j + 1)) (car X mu (j + 1) j) Phi
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -123,13 +123,13 @@ And the conditions that must hold at each stage are:
 
 \begin{seamnote}{\code{PerNZ} --- the period must not vanish}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def PerNZ {D : D7} (X : ThetaX D) (t j : Nat) (phi : X.AF
   (X.Xs t j)) (F : X.cusp (X.Ys t j)) : Prop :=
   (j < D.R.m and exists pos s, bB X t j pos s phi F != 0) or
 exists h : j = D.R.m, X.Btop (X.Xs t j) (X.Ys t j) (h >
       X.iYXm t) (X.conjAF _ phi) F != 0
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -143,13 +143,13 @@ by the ordinary Bessel operator and the last stage by the top-level one.
 
 \begin{seamnote}{\code{IsAutRep} --- the lifted form is genuinely automorphic}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def IsAutRep {D : D7} (X : ThetaX D) (V : TH.HSp D) (pi :
   Submodule Complex (X.AF V)) : Prop :=
   X.IsStable V pi and pi != bottom and
 forall pi' : Submodule Complex (X.AF V), pi' <= pi ->
       X.IsStable V pi' -> pi' = bottom or pi' = pi
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -164,7 +164,7 @@ out of its zeros.
 So the descent-tower conditions are, in order of what they check:
 
 \begin{center}
-\begin{tabular}{@{}lp{0.68\textwidth}@{}}
+\begin{tabular}{@{}l>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.68\textwidth}@{}}
 \toprule
 \textbf{Condition} & \textbf{What it guarantees} \\
 \midrule
@@ -185,11 +185,11 @@ the mechanism by which the character is made to disappear. Recall:
 
 \begin{seamnote}{\code{car}}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def car {D : D7} (X : ThetaX D) (mu : Nat -> X.Chr) (s i :
   Nat) : X.Chr :=
   if Even i then mu s * X.etaT⁻¹ else mu s
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -224,7 +224,7 @@ against an Eisenstein series on the totally definite group, and the character
 ends up in an $L$-value.
 \item The theta lift's period is a product of Bessel functions, so it does
 not carry the Hecke character; the character is absorbed into the index of
-the lift, as $\pi \mapsto \pi \boxplus \mu_j[t]$.
+the lift, as $\pi \mapsto \pi \tboxplus \mu_j[t]$.
 \item The price is non-vanishing: \code{PerNZ} requires the Bessel period to
 be non-zero, at an interior stage or at the top stage, and this is a genuine
 obligation.

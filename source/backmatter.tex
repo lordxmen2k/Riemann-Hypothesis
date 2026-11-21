@@ -70,7 +70,7 @@ in a general sense.
 
 \item[Analytic continuation] An extension of a function to a larger domain,
 agreed with the original wherever they overlap. For $\zeta$, the extension
-from $\Re s > 1$ to all of $\CC$ is what makes the zeros in the critical strip
+from $\mathrm{Re}\,  s > 1$ to all of $\CC$ is what makes the zeros in the critical strip
 accessible at all.
 
 \item[Automorphic form] A holomorphic function on an arithmetic group
@@ -84,7 +84,7 @@ is automorphic is one of the hardest known problems in number theory, and it
 is one of the load-bearing steps of the method under examination.
 
 \item[Axis] A vertical or horizontal line in the complex plane. The
-\emph{critical axis} of $\zeta$ is $\Re s = \tfrac12$.
+\emph{critical axis} of $\zeta$ is $\mathrm{Re}\,  s = \tfrac12$.
 
 \item[CM field] A number field $E$ that is a quadratic extension $F(i)$ of a
 totally real field $F$, with complex conjugation. CM fields carry rigid
@@ -95,11 +95,11 @@ possible.
 checks them. In the Lean 4 toolchain, \texttt{lean} performs elaboration and
 the kernel performs verification.
 
-\item[Critical line] The vertical line $\Re s = \tfrac12$ in the complex
+\item[Critical line] The vertical line $\mathrm{Re}\,  s = \tfrac12$ in the complex
 plane. The Riemann hypothesis is the assertion that all the non-trivial zeros
 of $\zeta$ lie on it.
 
-\item[Critical strip] The band $0 < \Re s < 1$, containing all the non-trivial
+\item[Critical strip] The band $0 < \mathrm{Re}\,  s < 1$, containing all the non-trivial
 zeros of $\zeta$.
 
 \item[Dirichlet character] A homomorphism from $(\ZZ/N\ZZ)^\times$ to
@@ -112,7 +112,7 @@ kernel-checkable terms. Elaborated output is trusted for well-typedness, not
 for correctness, which is why independent kernel replay exists.
 
 \item[Euler--Maclaurin summation] The formula used to evaluate $\zeta(s)$ in
-the half-plane $\Re s > 1$ by a finite sum plus an integral plus Bernoulli
+the half-plane $\mathrm{Re}\,  s > 1$ by a finite sum plus an integral plus Bernoulli
 corrections. The figures in this book use it.
 
 \item[Functional equation] The identity $\Lambda(s) = \Lambda(1-s)$ relating
@@ -187,7 +187,7 @@ lift becomes a Bessel period independent of the Hecke characters.
 Riemann zeta function has real part exactly $\tfrac12$.
 
 \item[Riemann zeta function] The analytic continuation of
-$\zeta(s) = \sum_{n \ge 1} n^{-s}$ from the half-plane $\Re s > 1$ to the
+$\zeta(s) = \sum_{n \ge 1} n^{-s}$ from the half-plane $\mathrm{Re}\,  s > 1$ to the
 whole complex plane, meromorphic with a single simple pole at $s = 1$.
 
 \item[Riemann--von Mangoldt formula] The formula giving the number of zeros of
@@ -585,9 +585,10 @@ initial assumptions were revised during preparation.\par}
 \vspace{4pt}
 \noindent\textbf{Licence}\quad \bookLicense\par
 \vspace{4pt}
-\noindent\textbf{Source code}\quad None published for this edition. The Lean
-development examined in this book is the work of its author and is not
-redistributed here.\par
+\noindent\textbf{Source code}\quad \texttt{github.com/lordxmen2k/Riemann-Hypothesis}.
+The book sources, the build scripts, the research ledger and the Lean
+development examined in this book, with its provenance and its checksum, are
+published there.\par
 \vspace{14pt}
 \noindent\textbf{Subject headings}\quad
 Riemann hypothesis --- Mathematical verification; Number theory ---

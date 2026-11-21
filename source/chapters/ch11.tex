@@ -39,7 +39,7 @@ argument can use.
 
 \begin{seamnote}{The two threshold lemmas (\code{ThresholdPowerBoundOfCounts.lean})}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 theorem threshold_arith_letter_case (k Ns c q bo : Real)
 (hk5 : 5 <= k) (hN : 1 <= Ns) (hc : 40 * (k * Ns) <= c) (hq
       : 9 / 10 * c <= q)
@@ -50,7 +50,7 @@ theorem threshold_arith_w_case (k Ns c q fl r : Real)
       Ns) <= c)
     (hq : 9 / 10 * c <= q) (hfl : q - 1 < fl) :
 c / 2 <= 2 / 3 * (fl - (k + r + 1) - (k * Ns + 1)) - k * Ns
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
@@ -104,7 +104,7 @@ appears as the requirement on both.
 
 \begin{seamnote}{\code{Typ} and \code{GoodA} (from \code{AtypicalPathSmallWeight.lean})}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def Typ [NeZero r] (LL : Letters (Fin N)) (B : Fin N -> Nat)
   (od : Fin N -> Fin N)
 (bb : Fin N -> Real) (La : Real) (p : Nat) (mu : Fin (N + 1)
@@ -127,7 +127,7 @@ def GoodA [NeZero r] ... : Prop :=
 (LL.vec i = false -> (sum c, (plPart mu i.castSucc c -
       plPart mu i.succ c) : Int)
         <= Xi r K bb La p i)
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 

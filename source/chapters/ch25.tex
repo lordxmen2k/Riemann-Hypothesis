@@ -25,11 +25,11 @@ language. Here is the whole idea, in miniature.
 Suppose we want to prove that every natural number is either zero or has a
 successor. In a language with two constants and one constructor:
 
-\begin{Verbatim}
+\begin{leanquote}
 inductive Nat where
   | zero
   | succ (n : Nat)
-\end{Verbatim}
+\end{leanquote}
 
 we can write the statement ``for all $n$, $n = 0$ or $n$ is a successor'' and
 prove it by cases on $n$. The proof is a finite term. A checker can verify it by
@@ -52,9 +52,9 @@ and not proofs in disguise.
 That last point is the source of the standard check. When you ask Lean what a
 theorem depends on, you get a list:
 
-\begin{Verbatim}
+\begin{leanquote}
 #print axioms riemannHypothesis
-\end{Verbatim}
+\end{leanquote}
 
 and the answer, for a theorem that has nothing fishy in it, is a short list of
 Lean's three standard axioms:
@@ -156,10 +156,10 @@ name in the literature and because it is exactly the failure mode that a
 careful reader must watch for.
 
 Suppose a development defines its own function
-\begin{Verbatim}
+\begin{leanquote}
 def myZeta (s : Complex) : Complex := 1
-\end{Verbatim}
-and then proves that \texttt{myZeta} has no zeros in $\Re s > 1/2$. The proof
+\end{leanquote}
+and then proves that \texttt{myZeta} has no zeros in $\mathrm{Re}\,  s > 1/2$. The proof
 compiles. The axiom list is clean. And the theorem is true but irrelevant,
 because \texttt{myZeta} is not the Riemann zeta function. If somewhere in the
 175{,}000 files the symbol used by the top-level theorem resolves to a

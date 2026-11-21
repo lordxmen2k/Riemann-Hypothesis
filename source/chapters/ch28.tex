@@ -20,7 +20,7 @@ rule. No sampling was used. The patterns and results are in
 \centering
 \caption{Static scan of the complete extraction.}
 \label{tab:scan}
-\begin{tabular}{@{}p{0.40\textwidth}r r@{}}
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{0.40\textwidth}r r@{}}
 \toprule
 \textbf{Pattern} & \textbf{This book's scan} & \textbf{Mirror's scan} \\
 \midrule
@@ -64,9 +64,9 @@ they detect is not the one most likely to be present here.
 
 \begin{deeper}{A worked example of the failure mode the scan cannot see}
 Suppose a formalisation wants to prove that the Riemann zeta function has no
-zeros in $\Re s > 1/2$. There is a legitimate-looking way to organise this:
+zeros in $\mathrm{Re}\,  s > 1/2$. There is a legitimate-looking way to organise this:
 
-\begin{Verbatim}
+\begin{leanquote}
 -- A hypothesis bundle, named for a classical theorem
 structure WeilBoundHolds (f : Complex → Complex) : Prop where
   positivity : ∀ (g : Complex → Complex), admissible g →
@@ -77,7 +77,7 @@ theorem zetaHasNoZerosRightOfHalf (h : WeilBoundHolds riemannZeta) :
     ∀ s : Complex, 1/2 < s.re → riemannZeta s ≠ 0 := by
   intro s hs
   exact h.positivity _ admissible s hs
-\end{Verbatim}
+\end{leanquote}
 
 This compiles. The axiom list is clean. There is no \texttt{sorry}. The
 structure is named after a classical theorem. And the development now has a

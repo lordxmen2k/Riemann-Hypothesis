@@ -64,9 +64,14 @@
   ItalicFont={Outfit Regular}, ItalicFeatures={FakeSlant=0.20},
   BoldItalicFont={Outfit Bold}, BoldItalicFeatures={FakeSlant=0.20},
   Ligatures={TeX}]
-\setmonofont{JetBrains Mono}[
-  UprightFont={JetBrains Mono Regular}, BoldFont={JetBrains Mono Bold},
-  ItalicFont={JetBrains Mono Italic}, BoldItalicFont={JetBrains Mono Bold Italic},
+% The book's code face is DejaVu Sans Mono rather than JetBrains Mono: the
+% quotations from the submitted Lean source contain characters (U+207B, U+1D41,
+% U+2229, U+211D) that JetBrains Mono does not carry, and the alternative
+% would be to alter a quoted source. DejaVu covers the full set.
+\setmonofont{DejaVu Sans Mono}[
+  UprightFont={DejaVu Sans Mono}, BoldFont={DejaVu Sans Mono Bold},
+  ItalicFont={DejaVu Sans Mono}, BoldItalicFont={DejaVu Sans Mono Bold},
+  ItalicFeatures={FakeSlant=0.20}, BoldItalicFeatures={FakeSlant=0.20},
   Ligatures={TeX}]
 % Fira Math ships a single weight in this TeX Live installation. The book
 % uses no bold mathematics, so bold maps to the regular face; if bold maths
@@ -78,7 +83,13 @@
 
 \usepackage{textcomp}
 \usepackage{amsmath,bm}
+\usepackage{ragged2e}
 \usepackage{fvextra}
+% The Lean quotations contain characters the book's code face does not carry
+% (U+207B, U+1D41, U+2229, U+211D). The listings are therefore set in a
+% monospace with the full coverage, so that a quoted source is never
+% silently altered to make it fit. The switch is local to the listing, so
+% the inline code face is unchanged.
 % Lean code is quoted verbatim from the submission and many lines are far
 % wider than a 6 x 9 text column. fvextra's line breaking is what keeps those
 % quotes inside the measure instead of running off the page.
@@ -90,8 +101,15 @@
   fontsize=\footnotesize,
   baselinestretch=1.0
 }
-% plain \begin{verbatim} is not fancyvrb's Verbatim, so it needs the same
-% treatment explicitly; otherwise long Lean lines run off the page.
+% A quotation from the submitted source. fancyvrb resets the face to the
+% default monospace on entry, so the family is swapped locally instead.
+\DefineVerbatimEnvironment{leanquote}{Verbatim}{
+  fontsize=\footnotesize,
+  breaklines=true,
+  breakanywhere=true,
+  breaksymbolleft={},
+  fontfamily=tt
+}
 \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
   breaklines=true,
   breakanywhere=true,
@@ -294,6 +312,19 @@
 }
 
 % ---- Math conveniences --------------------------------------------------
+% FiraMath carries neither U+211C (REAL PART SYMBOL) nor U+229E (SQUARED
+% PLUS). Left alone, both render as a missing-glyph box inside an equation.
+% \Re is therefore set upright through \operatorname, and \boxplus is drawn,
+% so that no equation in the book contains a replacement character.
+% \Re and \boxplus are deliberately NOT used: the math font carries
+% neither U+211C nor U+229E, and the font machinery reinstates them as
+% literal characters, so they typeset as a missing-glyph box. \mathrm{Re}
+% and \tboxplus are used instead and are set below.
+\newcommand{\tboxplus}{\mathbin{%
+  \tikz[baseline=-0.44ex,x=1ex,y=1ex,line width=0.5pt]{%
+    \draw (0,0) rectangle (0.66,0.66);%
+    \draw (-0.11,0.33) -- (0.77,0.33);%
+    \draw (0.33,-0.11) -- (0.33,0.77);}}}
 \providecommand{\RiemannHypothesis}{\textsc{RiemannHypothesis}}
 \providecommand{\riemannZeta}{\zeta}
 \providecommand{\dd}{\mathrm{d}}
@@ -311,7 +342,6 @@
 \providecommand{\eps}{\varepsilon}
 \providecommand{\one}{\mathbf{1}}
 \providecommand{\two}{\mathbf{2}}
-\providecommand{\Re}{\operatorname{Re}}
 \providecommand{\Im}{\operatorname{Im}}
 \providecommand{\LL}{\mathcal{L}}
 \providecommand{\HH}{\mathcal{H}}

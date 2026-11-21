@@ -17,7 +17,7 @@ on the CM lattice.
 \textbf{Proposition L (theta lift).} Let $\mu$ be a Hecke character of
 $\mathrm{U}(E,n)$ and let $t$ be a parameter determining $A$. If the weight of
 $\pi$ matches the weight of $\theta_A$, there is at most one representation
-$\pi'$ of $\mathrm{U}(E,n')$ with $n' > n$ whose theta lift is $\pi \boxplus
+$\pi'$ of $\mathrm{U}(E,n')$ with $n' > n$ whose theta lift is $\pi \tboxplus
 \mu[t]$.
 \end{quote}
 
@@ -44,7 +44,7 @@ new character:
 \[
 U(X_0) \longrightarrow U(X_1) \longrightarrow \cdots \longrightarrow U(X_m),
 \]
-at each step a theta lift $\pi \mapsto \pi \boxplus \mu_j[t]$, such that each
+at each step a theta lift $\pi \mapsto \pi \tboxplus \mu_j[t]$, such that each
 step preserves cuspidality, the type conditions and the non-vanishing of the
 period, and such that the composition of the chain is a single lift with
 multiplied kernel and multiplied weight.
@@ -55,14 +55,14 @@ the remark's claim that the chain ``wins multiplicity $m$''.
 
 \begin{seamnote}{The composition law}
 {\footnotesize
-\begin{verbatim}
+\begin{leanquote}
 def KerComp : Prop :=
 forall (R : Type) [CommSemiring R] (i k m : Type) [Fintype
     i] [Fintype k] [Fintype m]
 (w1 : i -> R) (w2 : k -> R) (K1 : i -> k -> R) (K2 : k -> m
       -> R) (f : i -> R),
 kerOp w2 K2 (kerOp w1 K1 f) = kerOp w1 (kerMul w2 K1 K2) f
-\end{verbatim}
+\end{leanquote}
 }
 \end{seamnote}
 
