@@ -17,15 +17,17 @@
 |---|---|
 | Trim size | 6 × 9 in (432 × 648 pt) |
 | Pages | 156 (154 numbered + full-bleed front and back covers) |
-| Word count | 31,736 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
+| Word count | 31,724 (body, front matter and back matter, excluding the cover artwork and the LaTeX control words) |
 | Chapters | 15, in 5 parts |
 | Figures | 9 (4 computed charts, 5 diagrams) |
-| Tables | 4 |
-| Index entries | 95 |
-| Glossary terms | 63 |
+| Tables | 5 |
+| Key Takeaways boxes | 17 |
+| Seamnote / callout boxes | 26 |
+| Index entries | 84 |
+| Glossary terms | 43 |
 | Fonts embedded | Outfit, JetBrains Mono, Fira Math, DejaVu Sans — all subsets, all embedded |
 | PDF bookmarks | 114 outline entries matching the table of contents |
-| Link annotations | 3 external URIs (Apache licence, DOI on the copyright page, DOI in the colophon) plus internal cross-references from the table of contents, figures and lists |
+| Link annotations | 266 in total: 4 external URIs (Apache licence, DOI on the copyright page, DOI in the colophon, and one further DOI) plus internal cross-references from the table of contents, figures, lists and index |
 
 ## Cover
 
@@ -67,11 +69,28 @@ The back cover carries the blurb, the five parts, and the footer.
 just checked for a zero exit status: the front cover, the half-title, the
 title page, the copyright page, a part opener, a chapter opener, a Key
 Takeaways box, a body page, four figure pages, the glossary, a notes page, the
-index, the colophon and the back cover. LaTeX reports **0 errors** and **0
-undefined references**. The extracted text contains **no stray control
-sequences** (checked for `\idx{`, `\begin{`, `\end{`, `\item`, `PLACEHOLDER`,
-`TODO`, `XXX`, code fences). All fonts are embedded. The outline matches the
-contents.
+index, the colophon and the back cover.
+
+Quantitative checks on the finished file:
+
+| Check | Result |
+|---|---|
+| LaTeX errors | **0** |
+| Undefined references | **0** |
+| Overfull hboxes above 25 pt | **0** (largest remaining is 16 pt, in a table cell) |
+| Blank pages | none |
+| Stray control sequences in the extracted text | none (checked for `\idx{`, `\begin{`, `\end{`, `\item`, `\code{`, `\path{`, `PLACEHOLDER`, `TODO`, `XXX`, code fences, `##`, `**`) |
+| Fonts embedded | yes, all |
+| Trim size | 432 × 648 pt = 6 × 9 in |
+| Outline matches the contents | yes, 114 entries |
+| Sparse pages | 23, every one of them a front-matter, part-opener, chapter-tail, figure-only or back-matter page; no accidental gaps |
+
+The diagram figures were rebuilt during the final pass. They are laid out in
+inch coordinates on a 4.6 in canvas — the exact text width — and are included
+at `\textwidth` with no scaling, so every label is at its stated point size in
+the finished book. The long Lean quotations are set in `Verbatim` with
+`breaklines` so that they wrap inside the measure, and the long identifiers and
+file paths are set with `\seqsplit` so that they break between characters.
 
 **Not tested.** The book was not proof-read by a second reader, and the
 mathematics has not been checked by a number theorist. The author is not a

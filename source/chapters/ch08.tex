@@ -28,7 +28,7 @@ conjugate algebraicity, Borel injectivity, the Gelfand--Kazhdan
 correspondence, Jacquet--Shalika rigidity, base change for $\mathrm{GL}_2$.
 
 \textbf{Layer 2: bundles.} Structures such as \texttt{Af.Hypotheses\_2}\idx{Hypotheses\_2},
-\texttt{Alg.LemmaM}, \texttt{GlobalTheory.Ord2.admitted}\idx{admitted (structure)} and \texttt{Hyps}
+\texttt{Alg.LemmaM}, \code{GlobalTheory.Ord2.admitted}\idx{admitted (structure)} and \texttt{Hyps}
 gather those results into packages with the fields a downstream argument
 needs.
 
@@ -52,7 +52,7 @@ propagates silently and without any local sign of trouble.
 
 The statement the whole chain ultimately rests on is
 \texttt{UpperTheory.TP.TLiftK}, defined in
-\texttt{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}. It is a
+\code{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}. It is a
 proposition, not a construction, and its shape is as follows (the statement is
 abbreviated here only by eliding the inner quantifiers; the full text is in
 the file):
@@ -78,12 +78,12 @@ existence statement of the Weil representation, in the form used in the
 Siegel--Weil and theta-lift literature.
 
 \begin{seamnote}{How the theorem is proved}
-\texttt{TLiftK} is proved by \texttt{UpperTheory.TP.tLift\_holds\_k}, which in
+\texttt{TLiftK} is proved by \code{UpperTheory.TP.tLift\_holds\_k}, which in
 turn applies \texttt{tLift\_of\_tools\_k} to the bundle
-\texttt{UpperTheory.TP.Tools\_k}\idx{Tools\_k} and the height theorem
-\texttt{GlobalTheory.ThK.Dbl.hgtEx\_of\_k}. The bundle
+\code{UpperTheory.TP.Tools\_k}\idx{Tools\_k} and the height theorem
+\code{GlobalTheory.ThK.Dbl.hgtEx\_of\_k}. The bundle
 \texttt{Tools\_k} is assembled in
-\texttt{.../ThetaKernels/TPGHolds.lean} from roughly twenty component
+\code{.../ThetaKernels/TPGHolds.lean} from roughly twenty component
 theorems, each a separately named and separately proved result:
 
 \begin{itemize}
@@ -119,11 +119,11 @@ the audit's first open item, and Chapter~14 puts it first.
 \section{Input two: the automorphy bundle \texttt{Hypotheses\_2}}
 
 The automorphy step --- the one Chapter~4 identified as the second barrier ---
-enters the development as \texttt{UpperTheory.V.Af.NewformAut}, and it is
+enters the development as \code{UpperTheory.V.Af.NewformAut}, and it is
 discharged through a structure:
 
-\begin{seamnote}{\texttt{UpperTheory.V.Af.Hypotheses\_2}}
-\begin{verbatim}
+\begin{seamnote}{\code{UpperTheory.V.Af.Hypotheses\_2}}
+\begin{Verbatim}
 structure Hypotheses₂ : Prop where
   litN  : GlobalTheory.Mem.LiteralAutomorphy.LitN
   cohC  : ClozelCohC
@@ -137,11 +137,11 @@ structure Hypotheses₂ : Prop where
   newform : NewformRep
   ss    : Lev.CsdSs := Lev.csdSs_of_full litN.aut.car
   mono  : Lev.CsdMonoOdd := Lev.csdMonoOdd_of_full litN.aut.car
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 And the theorem that turns this bundle into the automorphy statement is
-\texttt{UpperTheory.V.Af.newformAut}\idx{newformAut}, whose proof is, in outline:
+\code{UpperTheory.V.Af.newformAut}\idx{newformAut}, whose proof is, in outline:
 
 \begin{quote}
 ``Given $P : \texttt{Hypotheses\_2}$, take the newform $f$ and the weight $k$
@@ -157,7 +157,7 @@ carrier.
 
 This is the pattern to watch, and it is exactly the pattern that
 \texttt{Af.NewformAut}, \texttt{Af.AdVanishK}, \texttt{Af.AdVanishQ} and
-\texttt{Af.CongruenceNumberRankThree} all follow: each appears as a
+\code{Af.CongruenceNumberRankThree} all follow: each appears as a
 \emph{hypothesis} of a theorem that then produces something.
 
 \begin{seamnote}{Where the bundle's fields come from}
@@ -169,7 +169,7 @@ The bundle's fields are not opaque. They are themselves derived from named
 published results, and the derivation chains are present in the source. For
 instance, \texttt{ClozelConjC} --- Clozel's statement about conjugate
 algebraicity --- is proved in
-\texttt{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean} by
+\code{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean} by
 \texttt{clozelConjC\_of\_steps}, from a list of component results that
 includes:
 
@@ -226,7 +226,7 @@ published theorem it re-derives?}
 \section{Input three: the admissibility and vanishing packages}
 
 The second hypothesis bundle to examine is in
-\texttt{Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean},
+\code{Development/AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean},
 in the namespace \texttt{GlobalTheory.Ord2}. Its central structure is named
 \texttt{admitted} --- and the name deserves a note, because in the context of
 proof assistants it could be misread.
@@ -271,12 +271,12 @@ Chapter~14.
 
 The remark's item 10 is ``Sufficient lower bound on divisibility of the
 $m$-fold iterated lift.'' In the development, the corresponding object appears
-as \texttt{PositivityTheory.ThKEst.EpsOf\_k}\idx{EpsOf\_k}, proved in
-\texttt{.../ThetaKernels/ThkEstEpsOf.lean}. The proof is short, and worth
+as \code{PositivityTheory.ThKEst.EpsOf\_k}\idx{EpsOf\_k}, proved in
+\code{.../ThetaKernels/ThkEstEpsOf.lean}. The proof is short, and worth
 reading in full:
 
 \begin{seamnote}{\texttt{epsOf\_of\_k}}
-\begin{verbatim}
+\begin{Verbatim}
 theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
   intro F E _ _ _ _ _ σ B hB n X r s hX
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
@@ -288,14 +288,14 @@ theorem epsOf_of_k : PositivityTheory.ThKEst.EpsOf_k := by
   · have := SignatureOfHermitianForm.of_sig σ _ hτ X.J Complex.I
         Complex.I_ne_zero (hX.sig w)
     exact ⟨⟨Or.inr hX.skew, this.1⟩, this.2⟩
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 What this proves is the \emph{signature} of a Hermitian form over a CM field:
 given the form and a place $w$, it computes the inertia character, and the
 computation is a case split on whether the form is Hermitian or skew-Hermitian
 at $w$, with the answer furnished by
-\texttt{SignatureOfHermitianForm.of\_sig}.
+\code{SignatureOfHermitianForm.of\_sig}.
 
 This is a genuine and classical piece of arithmetic: the signature of a
 Hermitian form over a CM field, computed from the local invariants, is the
@@ -327,8 +327,8 @@ related but not identical things.
 Two final inputs, examined briefly because both were checked.
 
 \paragraph{The reciprocity condition.} \texttt{recT} is defined in
-\texttt{.../Definitions/NonGaloisDescent/RecT.lean} and
-\texttt{IsRecT}\idx{IsRecT} in \texttt{.../Definitions/NonGaloisDescent/RecTExists.lean},
+\code{.../Definitions/NonGaloisDescent/RecT.lean} and
+\texttt{IsRecT}\idx{IsRecT} in \code{.../Definitions/NonGaloisDescent/RecTExists.lean},
 where it is stated as the existence of a witness $a$ and $ha$ satisfying a
 family of local laws \texttt{LawsT} for every irreducible Weil--Deligne
 representation. This is the natural formalisation of a reciprocity
@@ -337,8 +337,8 @@ condition, and \texttt{recTExists} supplies the witness.
 \paragraph{The \texttt{Hyps} package.} This is the bundle of hyperplane-section
 hypotheses the character-box argument consumes. The point of interest is that
 it is \emph{constructed}, not assumed: the theorem
-\texttt{GlobalTheory.Fc.nonempty\_hyps\_of\_allRows}\idx{Hyps package}, in
-\texttt{.../Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}, produces
+\code{GlobalTheory.Fc.nonempty\_hyps\_of\_allRows}\idx{Hyps package}, in
+\code{.../Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}, produces
 an instance of \texttt{Nonempty (Hyps ...)} from \texttt{AllRows},
 \texttt{ExBL} and \texttt{BaseCond}, assembling the bundle field by field
 from row-wise conditions. That is the right shape, and it is a genuine

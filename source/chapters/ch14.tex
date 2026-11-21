@@ -18,17 +18,17 @@ its purpose is to make the remaining work finite and checkable.
 \subsection{Build}
 
 \begin{seamnote}{Commands}
-\begin{verbatim}
+\begin{Verbatim}
 git clone <the author's distribution, or the mirror>
 cd lean
 elan toolchain install $(cat lean-toolchain)
 lake exe cache get
 lake build Main
-\end{verbatim}
+\end{Verbatim}
 The cache step matters: it fetches Mathlib's prebuilt \texttt{.olean} files
 for the pinned revision, which turns the dependency from a multi-hour compile
 into a download. This book's own attempt confirmed that the pinned revision
-\texttt{0df444a360eaa60ab8c11dca51a86af692955474} is available from the
+\code{0df444a360eaa60ab8c11dca51a86af692955474} is available from the
 community cache.
 \end{seamnote}
 
@@ -39,7 +39,7 @@ does the next reader a genuine service.
 \subsection{Axioms}
 
 \begin{seamnote}{Commands}
-\begin{verbatim}
+\begin{Verbatim}
 # in a scratch file importing the submission
 import Main
 #print axioms Main.riemannHypothesis
@@ -47,14 +47,14 @@ import Main
 #print axioms Main.LFunction_ne_zero_of_half_lt_re
 #print axioms Main.LFunction_eq_zero_re
 #print axioms Main.LFunction_eq_zero_re_of_isPrimitive
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 The expected output is exactly:
 
-\begin{verbatim}
+\begin{Verbatim}
 'Main.riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
-\end{verbatim}
+\end{Verbatim}
 
 and the same for the other four. Anything else --- \texttt{sorryAx},
 \texttt{Lean.ofReduceBool}, a custom axiom --- is a finding, and a
@@ -70,12 +70,12 @@ the same assurance. The Lean FRO documents these tools; they are cited in the
 arXiv literature as ``Lean FRO, 2025/2026''.
 
 \begin{seamnote}{Commands (indicative)}
-\begin{verbatim}
+\begin{Verbatim}
 lake exe export .olean Main.olean > main.json
 # then check main.json with an external kernel, e.g.
 #   python3 -m lean4checker main.json
 # or with a NanoDa-based harness
-\end{verbatim}
+\end{Verbatim}
 The exact invocation depends on the tool's current interface; check the
 tool's own documentation rather than trusting this sketch.
 \end{seamnote}
@@ -83,7 +83,7 @@ tool's own documentation rather than trusting this sketch.
 \subsection{Re-run the static scan}
 
 \begin{seamnote}{Commands}
-\begin{verbatim}
+\begin{Verbatim}
 rg --no-ignore -c '^\s*axiom\s' -g '*.lean' . | wc -l
 rg --no-ignore -c '\bsorry\b' -g '*.lean' . | wc -l
 rg --no-ignore -c '\badmit\b' -g '*.lean' . | wc -l
@@ -92,7 +92,7 @@ rg --no-ignore -c '^\s*opaque\s' -g '*.lean' . | wc -l
 rg --no-ignore -n '\baddDecl\b' -g '*.lean' .
 rg --no-ignore -n 'maxHeartbeats 0' -g '*.lean' .
 rg --no-ignore -l '\b(elab|macro|syntax)\b' -g '*.lean' .
-\end{verbatim}
+\end{Verbatim}
 Compare with \tabref{tab:scan}. Any disagreement with the published scan
 should be resolved before going further, since a disagreement means one of
 the two scans is wrong about something.
@@ -111,12 +111,12 @@ announced.
 \subsection{Confirm the statement is Mathlib's}
 
 \begin{seamnote}{Commands}
-\begin{verbatim}
+\begin{Verbatim}
 grep -n "def RiemannHypothesis" \
   .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
 grep -n "def riemannZeta" \
   .lake/packages/mathlib/Mathlib/NumberTheory/LSeries/RiemannZeta.lean
-\end{verbatim}
+\end{Verbatim}
 Both should come back with \texttt{Mathlib}'s own definitions. The mirror
 records \texttt{RiemannHypothesis} at line 185 and \texttt{riemannZeta} at
 line 121 at the pinned commit.
@@ -136,7 +136,7 @@ in four substantial fields.
 
 \subsection{Step 1: the automorphy bundle}
 
-Read \texttt{UpperTheory.V.Af.Hypotheses\_2} field by field against the
+Read \code{UpperTheory.V.Af.Hypotheses\_2} field by field against the
 published statements.
 
 \begin{description}[style=nextline,leftmargin=0pt,font=\sffamily\bfseries\small,
@@ -153,7 +153,7 @@ question is whether each is the classical theorem.
 and conjectured in general. \emph{Which cases does the formalized statement
 cover?} If it is stated for all $E$ and all $a$ without restriction, and the
 classical result is restricted, that is a finding.
-\item[\texttt{gkR : GelfandKazhdanReal}.] Compare against the Gelfand--Kazhdan
+\item[\code{gkR : GelfandKazhdanReal}.] Compare against the Gelfand--Kazhdan
 correspondence for $\mathrm{GL}_2$.
 \item[\texttt{newform : NewformRep}.] This is the field that supplies the
 automorphic representation. \emph{What exactly does it assert?} It is the
@@ -166,7 +166,7 @@ statements.
 
 \subsection{Step 2: the admissibility and vanishing packages}
 
-Trace where instances of \texttt{GlobalTheory.Ord2.admitted} are
+Trace where instances of \code{GlobalTheory.Ord2.admitted} are
 \emph{constructed}, as opposed to assumed. The structure has seven fields:
 continuity, determinant $\pm 1$, oddness, irreducibility, level away from $l$,
 modularity with a newform and an attached character, and the flag condition.
@@ -183,7 +183,7 @@ hold?
 
 Read \texttt{UpperTheory.TP.TLiftK} against the classical theta-lift
 existence statement, and then read the twenty components of
-\texttt{UpperTheory.TP.Tools\_k} --- in particular
+\code{UpperTheory.TP.Tools\_k} --- in particular
 \texttt{siegelWeilAniso\_of\_k}, \texttt{epsOf\_of\_k}, and
 \texttt{hgtEx\_of\_k} --- against the theorems they are named for.
 
@@ -214,7 +214,7 @@ author has proved something nobody has. If no, then item 17 describes an
 obstacle the artifact does not remove.
 \end{quote}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_protocol.pdf}
 \caption{The protocol, in order. The first three steps are mechanical and

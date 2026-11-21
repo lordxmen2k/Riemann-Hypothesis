@@ -32,7 +32,7 @@ rule. No sampling was used. The patterns and results are in
 \texttt{native\_decide}            & --- & 0 \\
 \texttt{unsafe} / \texttt{implemented\_by} / \texttt{@[extern]} & --- & 0 \\
 \texttt{opaque} declarations       & 0 & 0 \\
-\texttt{set\_option maxHeartbeats 0}\idx{maxHeartbeats} & --- & 4 files \\
+\code{set\_option maxHeartbeats 0}\idx{maxHeartbeats} & --- & 4 files \\
 custom \texttt{macro} / \texttt{elab} / \texttt{syntax} & --- & 22 files \\
 \texttt{addDecl}\idx{addDecl}                   & --- & 1 file \\
 \bottomrule
@@ -72,7 +72,7 @@ they detect is not the one most likely to be present here.
 Suppose a formalisation wants to prove that the Riemann zeta function has no
 zeros in $\Re s > 1/2$. There is a legitimate-looking way to organise this:
 
-\begin{verbatim}
+\begin{Verbatim}
 -- A hypothesis bundle, named for a classical theorem
 structure WeilBoundHolds (f : Complex → Complex) : Prop where
   positivity : ∀ (g : Complex → Complex), admissible g →
@@ -83,11 +83,11 @@ theorem zetaHasNoZerosRightOfHalf (h : WeilBoundHolds riemannZeta) :
     ∀ s : Complex, 1/2 < s.re → riemannZeta s ≠ 0 := by
   intro s hs
   exact h.positivity _ admissible s hs
-\end{verbatim}
+\end{Verbatim}
 
 This compiles. The axiom list is clean. There is no \texttt{sorry}. The
 structure is named after a classical theorem. And the development now has a
-theorem called \texttt{zetaHasNoZerosRightOfHalf} whose proof is one line long.
+theorem called \code{zetaHasNoZerosRightOfHalf} whose proof is one line long.
 
 But what has been shown is: \emph{if the Weil positivity statement holds for
 $\zeta$, then $\zeta$ has no zeros to the right of the critical line}. The
@@ -162,7 +162,7 @@ been a theorem.
 custom elaborator macro can expand a proof obligation into something trivial.
 The defence against this is the same as the defence against any other form of
 the attack: read it. But it must be read.
-\item[\texttt{set\_option maxHeartbeats 0}, four files.] This disables the
+\item[\code{set\_option maxHeartbeats 0}, four files.] This disables the
 elaborator's heartbeat limit for a declaration, which usually means the
 declaration is expensive to elaborate --- a large \texttt{simp} set, a big
 \texttt{decide}, or an exhaustive search. It is not a soundness problem. It is
@@ -180,7 +180,7 @@ reported only the reassuring results would not be doing its job.
 There is one check that would strengthen everything above, and this book
 could not perform it: the axiom check itself.
 
-Running \texttt{\#print axioms riemannHypothesis} requires a working Lean
+Running \code{\#print axioms riemannHypothesis} requires a working Lean
 installation with the project compiled, because the command has to elaborate
 the theorem's transitive dependencies. The static scan establishes that
 there is no \texttt{axiom} keyword anywhere in the source, which is

@@ -21,31 +21,29 @@ The chain has eight links. The following is the complete path, with the file
 each link lives in, taken from the submission at the pinned revision.
 
 \begin{center}
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{\#} & \textbf{Declaration} & \textbf{File} \\
-\midrule
-1 & \texttt{riemannHypothesis}\idx{RiemannHypothesis (Mathlib)} & \texttt{src/Main.lean} \\
-2 & \texttt{UpperTheory.FinalTheorems.riemannHypothesis} &
-  \texttt{Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean} \\
-3 & \texttt{UpperTheory.riemannHypothesis\_of\_everyCharacter} &
-  \texttt{.../CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} \\
-4 & \texttt{UpperTheory.FinalTheorems.everyCharacter} &
-  \texttt{.../CharacterBoxes/MainConclusion.lean} \\
-5 & \texttt{UpperTheory.Gal.Int.galoisLocalGlobalStrong\_recParameter}\idx{galoisLocalGlobalStrong\_recParameter} &
-  \texttt{.../Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean} \\
-6 & \texttt{UpperTheory.Gal.Int.galoisRepresentations\_of\_thetaLift} &
-  \texttt{.../IntegralStructures/GaloisRepresentationsOfThetaLift.lean} \\
-7 & \texttt{UpperTheory.Gal.Int.Geo.geoOne\_holds} &
-  \texttt{.../GeometricFlagBases/WeightOneGeometricRealization.lean} \\
-8 & \texttt{GlobalTheory.T.lefschetz\_fixedPoint\_finite\_etale\_correspondence}\idx{Lefschetz fixed-point formula} &
-  \texttt{Development/AbelianVarietyTheory/Proofs/SatakeParameters/} \\
-  & & \texttt{LefschetzFixedPointFiniteEtaleCorrespondence.lean} \\
-\bottomrule
-\end{tabular}
+{\small
+\begin{enumerate}[leftmargin=1.7em,label=\arabic*.,itemsep=3pt,topsep=2pt]
+\item \code{riemannHypothesis}\idx{RiemannHypothesis (Mathlib)}
+      \quad\normalfont\texttt{src/Main.lean}
+\item \code{UpperTheory.FinalTheorems.riemannHypothesis}
+      \quad\normalfont\texttt{Development/.../CharacterBoxes/MainConclusion.lean}
+\item \code{UpperTheory.riemannHypothesis\_of\_everyCharacter}
+      \quad\normalfont\texttt{.../CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean}
+\item \code{UpperTheory.FinalTheorems.everyCharacter}
+      \quad\normalfont\texttt{.../CharacterBoxes/MainConclusion.lean}
+\item \code{UpperTheory.Gal.Int.galoisLocalGlobalStrong\_recParameter}\idx{galoisLocalGlobalStrong\_recParameter}
+      \quad\normalfont\texttt{.../IntegralStructures/RowSrc.lean}
+\item \code{UpperTheory.Gal.Int.galoisRepresentations\_of\_thetaLift}
+      \quad\normalfont\texttt{.../GaloisRepresentationsOfThetaLift.lean}
+\item \code{UpperTheory.Gal.Int.Geo.geoOne\_holds}
+      \quad\normalfont\texttt{.../WeightOneGeometricRealization.lean}
+\item \code{GlobalTheory.T.lefschetz\_fixedPoint\_finite\_etale\_correspondence}\idx{Lefschetz fixed-point formula}
+      \quad\normalfont\texttt{.../SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean}
+\end{enumerate}
+}
 \end{center}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_chain.pdf}
 \caption{The chain, with the point at which this audit stops. Everything above
@@ -67,10 +65,10 @@ to ``the Riemann hypothesis''. This is the step that a careless formalisation
 would get wrong, so it is worth looking at closely.
 
 Here is the source, in full, from
-\texttt{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean}:
+\code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean}:
 
-\begin{seamnote}{\texttt{UpperTheory.riemannHypothesis\_of\_everyCharacter}}
-\begin{verbatim}
+\begin{seamnote}{\code{UpperTheory.riemannHypothesis\_of\_everyCharacter}}
+\begin{Verbatim}
 theorem UpperTheory.riemannHypothesis_of_everyCharacter
     (h : UpperTheory.EveryCharacter) : RiemannHypothesis := by
   intro s hs hn h1
@@ -91,7 +89,7 @@ theorem UpperTheory.riemannHypothesis_of_everyCharacter
       · exact hs0 (by simpa using hn')
       · exact hn ⟨n, by rw [hn']; push_cast; ring⟩
   · exact UpperTheory.zeta_ne_zero_of_everyCharacter h s hgt h1 hs
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 Read as mathematics, this is exactly right, and it is worth going through the
@@ -102,20 +100,20 @@ get subtly wrong.
 \item The goal is \texttt{RiemannHypothesis}, i.e. ``every zero of $\zeta$
 that is not trivial and not $s=1$ has real part $\tfrac12$''. It is proved by
 contradiction: assume there is a zero $s$ with $\Re s \neq \tfrac12$.
-\item If $\Re s > \tfrac12$, then \texttt{zeta\_ne\_zero\_of\_everyCharacter}\idx{zeta\_ne\_zero\_of\_everyCharacter}
+\item If $\Re s > \tfrac12$, then \code{zeta\_ne\_zero\_of\_everyCharacter}\idx{zeta\_ne\_zero\_of\_everyCharacter}
 applies directly and gives a contradiction. That is the \texttt{hgt} branch.
 \item If $\Re s < \tfrac12$, the argument reflects: a zero at $s$ gives a zero
 at $1-s$ by the functional equation, and $\Re(1-s) > \tfrac12$, so the same
 non-vanishing hypothesis applies to $1-s$. Contradiction.
 \item The reflection is done through the \emph{completed} zeta function,
 $\Lambda(s) = \pi^{-s/2}\Gamma(s/2)\zeta(s)$, using
-\texttt{completedRiemannZeta\_one\_sub}\idx{functional equation}, which is Mathlib's statement of the
+\code{completedRiemannZeta\_one\_sub}\idx{functional equation}, which is Mathlib's statement of the
 functional equation $\Lambda(s) = \Lambda(1-s)$. Since the gamma factor and
 the $\pi^{-s/2}$ factor are non-zero for $\Re s > \tfrac12$, a zero of the
 completed zeta at $s$ is a zero of $\zeta$ at $s$.
 \item The final case split handles the possibility that $\zeta(s) = 0$ comes
 from the gamma factor rather than from $\zeta$: the zeros of $\Gamma(s/2)$ are
-at $s = 0, -2, -4, \dots$, and the branch \texttt{obtain $\langle n, hn'\rangle :=
+at $s = 0, -2, -4, \dots$, and the branch \code{obtain $\langle n, hn'\rangle :=
 Complex.Gammaℝ\_eq\_zero\_iff.1 hs$} is exactly the classification of the
 trivial zeros, which the hypothesis \texttt{hn} excludes.
 \end{itemize}
@@ -133,15 +131,15 @@ strengthening of the hypothesis. It is a clean reduction.
 
 \section{Link 4: the statement being proved}
 
-The hypothesis of link 3 is \texttt{UpperTheory.EveryCharacter}, defined in
-\texttt{CharacterBoxes/EveryCharacter.lean}:
+The hypothesis of link 3 is \code{UpperTheory.EveryCharacter}, defined in
+\code{CharacterBoxes/EveryCharacter.lean}:
 
-\begin{seamnote}{\texttt{UpperTheory.EveryCharacter}}
-\begin{verbatim}
+\begin{seamnote}{\code{UpperTheory.EveryCharacter}}
+\begin{Verbatim}
 def UpperTheory.EveryCharacter : Prop :=
   forall (N : Nat) [NeZero N] (chi : DirichletCharacter Complex N) (s : Complex),
     1/2 < s.re -> (chi != 1 or s != 1) -> DirichletCharacter.LFunction chi s != 0
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 This is the faithful statement. It says: for every modulus $N \ge 1$, for every
@@ -155,8 +153,8 @@ Two checks matter here.
 \begin{enumerate}
 \item \textbf{Is the quantifier over all characters, or only primitive ones?}
 Over all characters. The file also exports
-\texttt{PrimitiveDirichletLZerosOnLine} separately, and
-\texttt{UpperTheory.Top.imprimitive} is the step that lifts the primitive
+\code{PrimitiveDirichletLZerosOnLine} separately, and
+\code{UpperTheory.Top.imprimitive} is the step that lifts the primitive
 case to the imprimitive case. The standard argument is that $L(s,\chi) =
 \prod_{d \mid \mathrm{cond}(\chi)} L_d(s,\chi^*)$ up to finite factors
 invisible in the half-plane of interest, so non-vanishing for primitive
@@ -185,18 +183,18 @@ would be false and no proof could exist.
 Links 5 and 6 are one-liners, and their content is that a theta lift yields a
 local-global reciprocity condition.
 
-\begin{seamnote}{\texttt{RowSrc.lean} and \texttt{GaloisRepresentationsOfThetaLift.lean}}
-\begin{verbatim}
+\begin{seamnote}{\texttt{RowSrc.lean} and \code{GaloisRepresentationsOfThetaLift.lean}}
+\begin{Verbatim}
 theorem UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter :
     UpperTheory.GalStar.Row0b recT :=
   galoisRepresentations_of_thetaLift UpperTheory.TP.K.tLiftK
-\end{verbatim}
-\begin{verbatim}
+\end{Verbatim}
+\begin{Verbatim}
 theorem galoisRepresentations_of_thetaLift (up : UpperTheory.TP.TLiftK) :
     UpperTheory.GalStar.Row0b recT :=
   galoisLocalGlobalStrong_of_geometry_lift
     UpperTheory.Gal.Int.Geo.geoOne_holds up
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 The vocabulary is the technical vocabulary of the theory: \texttt{Row0b} is a
@@ -206,10 +204,10 @@ witness satisfying a family of local laws), and \texttt{TLiftK} is the theta
 lift with prescribed weight.
 
 The development's own summary of the chain, in
-\texttt{CharacterBoxes/MainConclusion.lean}, is:
+\code{CharacterBoxes/MainConclusion.lean}, is:
 
 \begin{seamnote}{\texttt{MainConclusion.lean}}
-\begin{verbatim}
+\begin{Verbatim}
 theorem UpperTheory.FinalTheorems.everyCharacter_of_row
     (h : UpperTheory.GalStar.Row0b fun h rc => UpperTheory.Zero.LLC.IsRecT h rc) :
     UpperTheory.EveryCharacter :=
@@ -219,7 +217,7 @@ theorem UpperTheory.FinalTheorems.everyCharacter_of_row
 theorem UpperTheory.FinalTheorems.everyCharacter : UpperTheory.EveryCharacter :=
   UpperTheory.FinalTheorems.everyCharacter_of_row
     UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 Two things are visible here, and both are worth noting.
@@ -232,9 +230,9 @@ third are the load-bearing mathematical inputs; the second is an existence
 statement about the reciprocity witness.
 
 \textbf{Where the mathematics lives.} Notice that the theorem
-\texttt{galoisLocalGlobalStrong\_recParameter} is \emph{not} proved here. It
+\code{galoisLocalGlobalStrong\_recParameter} is \emph{not} proved here. It
 is quoted from \texttt{RowSrc.lean}, which in turn quotes
-\texttt{galoisRepresentations\_of\_thetaLift}, which in turn quotes the
+\code{galoisRepresentations\_of\_thetaLift}, which in turn quotes the
 theta lift. The chain's weight is not in the lines above; it is in the
 theorem they invoke.
 \end{quote}
@@ -248,24 +246,24 @@ are where the mathematics has to be.
 Link 7 reduces the Galois condition to a geometric one, and link 8 supplies the
 geometry.
 
-\begin{seamnote}{\texttt{WeightOneGeometricRealization.lean}}
-\begin{verbatim}
+\begin{seamnote}{\code{WeightOneGeometricRealization.lean}}
+\begin{Verbatim}
 theorem weight_one_geometric_realization :
     LocalSmoothExtension.HolomorphicLefschetzFormula :=
   GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence
 
 theorem geoOne_holds : GeoOne :=
   geometric_realization_of_weight_one weight_one_geometric_realization
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 And the theorem at the bottom, in
-\texttt{Development/AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean},
+\code{Development/AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean},
 states the holomorphic Lefschetz formula for a finite étale cover of a
 projective scheme over $\CC$:
 
 \begin{seamnote}{The statement, in outline}
-\begin{verbatim}
+\begin{Verbatim}
 theorem GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence :
   forall (Z : Scheme) (s : Z -> Sp Complex) (d : Nat) [SmoothOfRelativeDimension d s],
     IsProjOver s ->
@@ -283,7 +281,7 @@ theorem GlobalTheory.T.lefschetz_fixedPoint_finite_etale_correspondence :
         (hodgeTrace h1 a b <o> hodgePull h2 a b)
       = sum y in F, (Matrix.det (1 + Polynomial.X • (A y).map Polynomial.C)).coeff a
                      / (1 - A y).det
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 Read as mathematics, this says: for a smooth projective scheme $Z$ over
@@ -305,16 +303,15 @@ theorem, and here it can be checked by reading, because the proof is present
 and is not merely a reference.
 
 The proof lives in
-\texttt{Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean},
+\code{Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean},
 and its strategy is visible from its opening moves:
 
-\begin{verbatim}
+\begin{Verbatim}
   obtain ⟨J, _, V, hVd, hVc, hVi⟩ :=
     UpperTheory.Cb.exists_integral_clopen_decomposition_of_smooth Z s d
   ...
   let W : J -> J -> Y.Opens := fun j k => c1 ⁻¹ᵁ V j ∩ c2 ⁻¹ᵁ V k
-```
-\end{verbatim}
+\end{Verbatim}
 
 The proof constructs an \emph{integral clopen decomposition}\idx{clopen decomposition} $\{V_j\}$ of $Z$,
 pulls it back along both maps $c_1$ and $c_2$, forms the cells
@@ -335,7 +332,7 @@ link examined.
 \item The reduction from non-vanishing to RH is the standard argument, handles
 the trivial zeros correctly, and assumes nothing beyond the functional
 equation and the hypothesis.
-\item The statement \texttt{UpperTheory.EveryCharacter} is faithful and
+\item The statement \code{UpperTheory.EveryCharacter} is faithful and
 non-vacuous, and it covers the Riemann zeta function as the $N=1$ instance.
 \item The bottom of the chain is a real proof of an étale Lefschetz fixed-point
 formula, not a placeholder.

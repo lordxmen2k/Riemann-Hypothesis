@@ -26,11 +26,11 @@ language. Here is the whole idea, in miniature.
 Suppose we want to prove that every natural number is either zero or has a
 successor. In a language with two constants and one constructor:
 
-\begin{verbatim}
+\begin{Verbatim}
 inductive Nat where
   | zero
   | succ (n : Nat)
-\end{verbatim}
+\end{Verbatim}
 
 we can write the statement ``for all $n$, $n = 0$ or $n$ is a successor'' and
 prove it by cases on $n$. The proof is a finite term. A checker can verify it by
@@ -55,9 +55,9 @@ and not proofs in disguise.
 That last point is the source of the standard check. When you ask Lean what a
 theorem depends on, you get a list:
 
-\begin{verbatim}
+\begin{Verbatim}
 #print axioms riemannHypothesis
-\end{verbatim}
+\end{Verbatim}
 
 and the answer, for a theorem that has nothing fishy in it, is a short list of
 Lean's three standard axioms:
@@ -163,9 +163,9 @@ name in the literature and because it is exactly the failure mode that a
 careful reader must watch for.
 
 Suppose a development defines its own function
-\begin{verbatim}
+\begin{Verbatim}
 def myZeta (s : Complex) : Complex := 1
-\end{verbatim}
+\end{Verbatim}
 and then proves that \texttt{myZeta} has no zeros in $\Re s > 1/2$. The proof
 compiles. The axiom list is clean. And the theorem is true but irrelevant,
 because \texttt{myZeta} is not the Riemann zeta function. If somewhere in the
@@ -182,7 +182,7 @@ never revisited. The defence is not paranoia; it is reading.
 
 The defence against the specific worry of this artifact is Chapter~2's
 finding: the statement \texttt{RiemannHypothesis} is \emph{Mathlib's own},
-imported from \texttt{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}, and not
+imported from \code{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}, and not
 defined in the submission. That closes the most catastrophic version of the
 attack. It does not close the version where an intermediate input is a
 restatement of the hard content under a classical name --- which is
@@ -220,7 +220,7 @@ formalisation can be checked against a third-party record rather than against
 the authors' own README.
 \end{description}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_architecture.pdf}
 \caption{Three distinct questions sit behind the word ``verified''. The first

@@ -78,6 +78,27 @@
 
 \usepackage{textcomp}
 \usepackage{amsmath,bm}
+\usepackage{fvextra}
+% Lean code is quoted verbatim from the submission and many lines are far
+% wider than a 6 x 9 text column. fvextra's line breaking is what keeps those
+% quotes inside the measure instead of running off the page.
+\fvset{
+  breaklines=true,
+  breakanywhere=true,
+  breaksymbolleft={},
+  breaksymbolright={},
+  fontsize=\footnotesize,
+  baselinestretch=1.0
+}
+% plain \begin{verbatim} is not fancyvrb's Verbatim, so it needs the same
+% treatment explicitly; otherwise long Lean lines run off the page.
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+  breaklines=true,
+  breakanywhere=true,
+  breaksymbolleft={},
+  breaksymbolright={},
+  fontsize=\footnotesize
+}
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -97,6 +118,14 @@
 \usepackage{tocloft}
 \usepackage{pdfpages}
 \usepackage{eso-pic}
+% Long file paths are quoted from the submission and are far wider than a
+% 6 x 9 measure; \path breaks them at slashes instead of running off.
+\usepackage{url}
+\urlstyle{tt}
+\usepackage{seqsplit}
+% Long Lean identifiers have no break opportunity of their own.
+% \code breaks them between characters.
+\newcommand{\code}[1]{\texttt{\seqsplit{#1}}}
 \usepackage{hyperref}
 \usepackage{makeidx}
 \usepackage[english]{babel}

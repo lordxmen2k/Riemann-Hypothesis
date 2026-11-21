@@ -148,7 +148,7 @@ against inference rules. Lean's kernel is roughly a thousand lines.
 \item[Lefschetz fixed-point formula] The identity relating the alternating sum
 of traces of maps induced on cohomology to the fixed points of the map. The
 étale version used in the submission is proved in
-\texttt{EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}.
+\code{EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}.
 
 \item[Level] A positive integer $N$ such that a modular form has good
 reduction away from $N$. A condition on the level is a condition on the
@@ -267,43 +267,43 @@ their path relative to the archive root.
 \item \textbf{Alpöge, Levent.} \emph{Remark}. Four pages, unpublished;
 distributed at \texttt{alpo.ge/remark.pdf} and mirrored on 20 November 2026.
 [artifact] Quoted throughout Parts~I and~II.
-\item \textbf{Submitted Lean development.} \texttt{alpo.ge/lean.tar.gz.part01}
+\item \textbf{Submitted Lean development.} \code{alpo.ge/lean.tar.gz.part01}
 through \texttt{.part14}; 239\,275\,554 bytes; mirrored as
-\texttt{github.com/CocoSgt/riemann-hypothesis-lean}, release \texttt{v2026-11-20},
-SHA-256 \texttt{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc}.
+\code{github.com/CocoSgt/riemann-hypothesis-lean}, release \texttt{v2026-11-20},
+SHA-256 \code{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc}.
 [artifact] All Lean quotations in Chapters~7--9.
 \item \textbf{README of the mirror repository.} \emph{Status}: ``As of mirroring
 (2026-11-20), no independent build or review of this code has been published.
 Treat it as a claimed proof until it has been compiled and checked.'' [artifact]
 Quoted in Chapters~1 and~2 with its date, which matters.
-\item \textbf{\texttt{lean-toolchain}} [artifact]: \texttt{leanprover/lean4:v4.33.1}.
+\item \textbf{\texttt{lean-toolchain}} [artifact]: \code{leanprover/lean4:v4.33.1}.
 \item \textbf{\texttt{lakefile.toml}} [artifact]: Mathlib pinned at
-\texttt{0df444a360eaa60ab8c11dca51a86af692955474}; confirmed locally.
+\code{0df444a360eaa60ab8c11dca51a86af692955474}; confirmed locally.
 \item \textbf{\texttt{src/Main.lean}}, \texttt{src/Statements.lean} [artifact]:
 quoted in full in Chapter~2.
-\item \textbf{\texttt{CharacterBoxes/MainConclusion.lean}},
-\texttt{CharacterBoxes/EveryCharacter.lean},
-\texttt{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} [artifact]:
+\item \textbf{\code{CharacterBoxes/MainConclusion.lean}},
+\code{CharacterBoxes/EveryCharacter.lean},
+\code{CharacterBoxes/RiemannHypothesisOfEveryCharacter.lean} [artifact]:
 quoted in Chapter~7.
-\item \textbf{\texttt{Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean}},
-\texttt{GaloisRepresentationsOfThetaLift.lean},
+\item \textbf{\code{Foundations/GaloisRepresentations/IntegralStructures/RowSrc.lean}},
+\code{GaloisRepresentationsOfThetaLift.lean},
 \texttt{Development.lean},
-\texttt{GeometricFlagBases/WeightOneGeometricRealization.lean} [artifact]:
+\code{GeometricFlagBases/WeightOneGeometricRealization.lean} [artifact]:
 quoted in Chapter~7.
-\item \textbf{\texttt{AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean}}
-and \texttt{AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}
+\item \textbf{\code{AbelianVarietyTheory/Proofs/SatakeParameters/LefschetzFixedPointFiniteEtaleCorrespondence.lean}}
+and \code{AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedPointFiniteEtaleCorrespondence.lean}
 [artifact]: Chapter~7.
-\item \textbf{\texttt{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}},
-\texttt{.../ThetaKernels/TLiftK.lean}, \texttt{.../ThetaKernels/TPGHolds.lean},
-\texttt{.../ThetaKernels/ThkEstEpsOf.lean} [artifact]: Chapter~8.
-\item \textbf{\texttt{AutomorphicVarieties/AutomorphicForms/Hypotheses2.lean}},
-\texttt{.../TemperedLocalComponents/NewformAut.lean},
-\texttt{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean},
-\texttt{.../PublishedTheorems/GelfandKazhdanReal.lean} [artifact]: Chapter~8.
-\item \textbf{\texttt{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean}}
-[artifact]: the structure \texttt{GlobalTheory.Ord2.admitted} and the statement
+\item \textbf{\code{.../ThetaParseval/HalfIndexLattices/TLiftK.lean}},
+\code{.../ThetaKernels/TLiftK.lean}, \code{.../ThetaKernels/TPGHolds.lean},
+\code{.../ThetaKernels/ThkEstEpsOf.lean} [artifact]: Chapter~8.
+\item \textbf{\code{AutomorphicVarieties/AutomorphicForms/Hypotheses2.lean}},
+\code{.../TemperedLocalComponents/NewformAut.lean},
+\code{.../ModularityArgument/ClozelCohomology/ClozelConjC.lean},
+\code{.../PublishedTheorems/GelfandKazhdanReal.lean} [artifact]: Chapter~8.
+\item \textbf{\code{AbelianVarietyTheory/Definitions/Foundations/FinalTheorems.lean}}
+[artifact]: the structure \code{GlobalTheory.Ord2.admitted} and the statement
 \texttt{VanishOrd}; Chapter~8.
-\item \textbf{\texttt{AbelianVarietyTheory/Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}}
+\item \textbf{\code{AbelianVarietyTheory/Proofs/GlobalInterpolation/NonemptyHypsOfAllRows.lean}}
 [artifact]: the construction of the \texttt{Hyps} package; Chapter~8.
 \end{enumerate}
 
@@ -314,8 +314,8 @@ and \texttt{AutomorphicArithmetic/Foundations/EtaleClopenDescent/LefschetzFixedP
 \item \textbf{Alpöge, Levent, and Ralph Furman.} \emph{More than two thirds of
 the zeta zeros are simple and on the critical line}. arXiv:2608.13637,
 13 August 2026. Preprint, 33 pp. with appendices. Accompanying Lean
-formalisation at \texttt{github.com/anthropics/formal-math} (formerly
-\texttt{anthropics/zeta-23-lean}).
+formalisation at \code{github.com/anthropics/formal-math} (formerly
+\code{anthropics/zeta-23-lean}).
 \item \textbf{Lamzouri, Yousouf.} arXiv:2609.02882, 2026. Independently
 reproduces the constants of the preceding paper by a different route and
 credits ``an internal research version of Claude developed by Anthropic'' and
@@ -344,7 +344,7 @@ Iwaniec--Kowalski, \emph{Analytic Number Theory}.
 \item \textbf{Bost, Albert H.} \emph{La conjecture de Weil: preuve d'un théorème
 de D. Bertrand et P. Swinnerton-Dyer}. \emph{Annales scientifiques de l'École
 Normale Supérieure} \textbf{30} (1997), no.~1, 229--288.
-DOI \texttt{10.1016/S0012-9593(97)89923-8}. The precise ``slope inequality''
+DOI \code{10.1016/S0012-9593(97)89923-8}. The precise ``slope inequality''
 as used in the argument was not retrieved from a primary text and is therefore
 paraphrased rather than quoted in this book.
 \item \textbf{Behrend, Theodor.} The construction of Iwasawa towers for
@@ -372,12 +372,12 @@ derivation chains in the artifact are the reference given in the text.
 {\sffamily\bfseries\small The mathematics of the problem}
 
 \begin{enumerate}[leftmargin=1.4em,itemsep=4pt,start=26]
-\item \textbf{Mathlib.} \texttt{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}
-at revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}:
+\item \textbf{Mathlib.} \code{Mathlib/NumberTheory/LSeries/RiemannZeta.lean}
+at revision \code{0df444a360eaa60ab8c11dca51a86af692955474}:
 \texttt{riemannZeta} at line 121, defined as \texttt{hurwitzZetaEven 0}, the
 analytic continuation rather than the Euler product; \texttt{RiemannHypothesis}
 at lines 185--186. The Euler-product zeta function is separate, as
-\texttt{zeta : ArithmeticFunction} $\mathbb{N}$. Both definitions were read directly
+\code{zeta : ArithmeticFunction} $\mathbb{N}$. Both definitions were read directly
 from the source at the pinned commit.
 \item \textbf{The Riemann explicit formula}, the equivalence of RH with
 $\psi(x) = x + O(x^{1/2}\log^2 x)$, and the equivalence with Weil's criterion:
@@ -397,12 +397,12 @@ critical line, as the earlier asymptotic record.
 verifies that a formal statement has a proof, and does not verify that the
 formal statement matches the informal claim it is meant to capture.
 \item \textbf{Lean FRO.} The Formalisation and Reasoning Overview, at
-\texttt{lean-lang.org/fro/about/}. Documents the tools --- Comparator,
+\code{lean-lang.org/fro/about/}. Documents the tools --- Comparator,
 \texttt{lean4export}, \texttt{landrun}, kernel replay, Palomar, and the
 \texttt{formalization.yaml} metadata convention. Cited in the arXiv
 literature as ``Lean FRO, 2025/2026''. No peer-reviewed paper titled
 ``LeanFRO'' was located, and none is cited.
-\item \textbf{\texttt{lean4checker}} (\texttt{github.com/leanprover/lean4checker}),
+\item \textbf{\texttt{lean4checker}} (\code{github.com/leanprover/lean4checker}),
 for third-party checking of a compiled environment.
 \item \textbf{Quanta Magazine.} Kakaes, Konstantin. ``A claimed proof of the
 Riemann hypothesis'', 20 November 2026. Source for the independent
@@ -471,7 +471,7 @@ function-field and number-field towers. Behrend's 1940 construction is the
 origin of the idea invoked in the remark's item 19.
 
 \textbf{For formalisation.} The Lean documentation; the Lean FRO pages at
-\texttt{lean-lang.org/fro/about/}; and the Palomar registry, whose entries
+\code{lean-lang.org/fro/about/}; and the Palomar registry, whose entries
 record the verification status of formalisations including the two-thirds
 theorem's. For the standard of what a formalised proof should be accompanied
 by, arXiv:2606.29493 is the most directly relevant recent statement.

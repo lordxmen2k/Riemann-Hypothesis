@@ -12,7 +12,7 @@ the whole question lives.
 \section{Acquisition}
 
 The remark's first footnote gives the distribution point: a fourteen-part
-tarball at \texttt{alpo.ge/lean.tar.gz.part01} through \texttt{.part14}. All
+tarball at \code{alpo.ge/lean.tar.gz.part01} through \texttt{.part14}. All
 fourteen parts were downloaded for this book, concatenated, and extracted. The
 result is 239{,}275{,}554 bytes of compressed archive expanding to 175{,}187
 Lean source files occupying approximately one gigabyte.
@@ -20,10 +20,10 @@ Lean source files occupying approximately one gigabyte.
 The submission pins two things, and the pins matter:
 
 \begin{itemize}
-\item The toolchain: \texttt{leanprover/lean4:v4.33.1}, read from the
+\item The toolchain: \code{leanprover/lean4:v4.33.1}, read from the
 repository's \texttt{lean-toolchain} file.
 \item The library: Mathlib at revision
-\texttt{0df444a360eaa60ab8c11dca51a86af692955474}, read from the repository's
+\code{0df444a360eaa60ab8c11dca51a86af692955474}, read from the repository's
 \texttt{lakefile.toml}. This revision was confirmed locally after a checkout:
 \texttt{git rev-parse HEAD} in the fetched Mathlib returns exactly that string.
 \end{itemize}
@@ -39,7 +39,7 @@ The tree is not one program but ten libraries, each a separate Lean package
 within the Lake workspace. The census below was computed for this book by
 counting files on disk.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_library.pdf}
 \caption{The submitted development by library, on a logarithmic scale. The
@@ -88,11 +88,11 @@ shared abstractions factored out as they were discovered.
 
 \section{What the artifact claims}
 
-The entire public surface of the submission is \texttt{src/Main.lean}\idx{Lean development:structure of}, which
+The entire public surface of the submission is \path{src/Main.lean}\idx{Lean development:structure of}, which
 is 433 bytes long and reads in full:
 
-\begin{seamnote}{\texttt{src/Main.lean}}
-\begin{verbatim}
+\begin{seamnote}{\path{src/Main.lean}}
+\begin{Verbatim}
 import Statements
 import Supplements.Kernels.MainTheoremsAll
 
@@ -107,7 +107,7 @@ theorem LFunction_eq_zero_re : DirichletLZerosOnLine := claimAll.2.1
 
 theorem LFunction_eq_zero_re_of_isPrimitive :
     PrimitiveDirichletLZerosOnLine := critAll
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 Six theorems, all discharging into named constants. Note what is \emph{not}
@@ -115,13 +115,13 @@ here: no hypotheses, no parameters, no conditional statements, no ``assuming
 the following'', no \texttt{sorry}. The top-level artifact asserts six
 unconditional theorems.
 
-The statements themselves live in \texttt{src/Statements.lean}\idx{Lean development:statements}, 783 bytes, and
+The statements themselves live in \path{src/Statements.lean}\idx{Lean development:statements}, 783 bytes, and
 are equally short. This is the part that most deserves a careful reading,
 because a formalisation claim can always be true in the trivial sense that the
 statement was weakened. Here it is not.
 
-\begin{seamnote}{\texttt{src/Statements.lean} (the two statements that matter)}
-\begin{verbatim}
+\begin{seamnote}{\path{src/Statements.lean} (the two statements that matter)}
+\begin{Verbatim}
 def RiemannZetaZerosOnLine : Prop :=
   forall s : Complex, riemannZeta s = 0 ->
     (not exists n : Nat, s = -2 * ((n : Complex) + 1)) ->
@@ -131,7 +131,7 @@ def DirichletLNonvanishingRightOfHalf : Prop :=
   forall (N : Nat) [NeZero N] (chi : DirichletCharacter Complex N) (s : Complex),
     1 / 2 < s.re -> (chi != 1 or s != 1) ->
     DirichletCharacter.LFunction chi s != 0
-\end{verbatim}
+\end{Verbatim}
 \end{seamnote}
 
 These are the standard formulations, faithfully transcribed. The first says:
@@ -157,7 +157,7 @@ Mathlib's own definition is the one written above.
 \section{The mirror, and one line that matters}
 
 A third party mirrored the archive on GitHub the same day, as
-\texttt{CocoSgt/riemann-hypothesis-lean}\idx{CocoSgt mirror}, with a description that reads:
+\code{CocoSgt/riemann-hypothesis-lean}\idx{CocoSgt mirror}, with a description that reads:
 ``Mirror of Levent Alpöge's Lean proof of the Riemann Hypothesis (with Claude).
 All credit to Levent Alpöge. Source: alpo.ge''. The mirror also records a
 static scan of the archive and a set of recommended verification steps.
@@ -199,7 +199,7 @@ and adds \texttt{admit} 0, \texttt{native\_decide} 0, and
 \item \textbf{The headline statement comes from outside the artifact.} The
 mirror notes, correctly, that \texttt{RiemannHypothesis} is Mathlib's own
 definition, from
-\texttt{Mathlib/NumberTheory/LSeries/RiemannZeta.lean} at line 185 at the
+\code{Mathlib/NumberTheory/LSeries/RiemannZeta.lean} at line 185 at the
 pinned commit. The submission is not asserting a private definition of the
 hypothesis; it is proving the community's.
 \end{enumerate}
@@ -217,7 +217,7 @@ reading of the source gets without running the compiler.
 \section{One more structural observation}
 
 The artifact's own scan reports, and this book's scan confirms, that
-\texttt{set\_option maxHeartbeats 0} appears in four files, that custom
+\code{set\_option maxHeartbeats 0} appears in four files, that custom
 \texttt{macro}/\texttt{elab}/\texttt{syntax} declarations appear in 22 files,
 and that \texttt{addDecl} appears in one file.
 
@@ -251,6 +251,6 @@ without complaint.
 \vspace{8pt}
 \noindent{\small\color{txtdim}\sffamily
 The source tree examined in this book was extracted locally to
-\texttt{/workspace/rr/src/lean/} and all file paths quoted in Chapters~7 to~9
+\code{/workspace/rr/src/lean/} and all file paths quoted in Chapters~7 to~9
 are relative to that root. The scans reported in Chapter~9 were run over the
 complete extraction, not a sample.\par}
